@@ -1,0 +1,6 @@
+# Aquí se manejan todos los nodos de nfs.
+#hostname:dir	parameters
+visnu:/castle	192.168.21.0/24(rw,sync,no_subtree_check)
+visnu:/100g	192.168.21.0/24(rw,sync,no_subtree_check)
+notron:/labs	192.168.21.0/24(rw,sync,no_subtree_check)
+

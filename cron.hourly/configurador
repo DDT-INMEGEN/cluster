@@ -1,0 +1,4 @@
+#!/bin/sh
+etckeeper vcs pull
+cd /etc/cluster/
+/usr/lib/plan9/bin/mk `hostname` || /usr/lib/plan9/bin/mk
