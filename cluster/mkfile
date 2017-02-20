@@ -18,4 +18,4 @@ compartido:V:	/var/lib/cluster/compartido
 	apt install nfs-kernel-server
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
-	> $targets
+	> $target
