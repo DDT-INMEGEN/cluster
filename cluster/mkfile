@@ -27,6 +27,7 @@ montar_fs:V:	/var/lib/cluster/montar_fs
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
 	mount -a
+	awk '{print $2}' $prereq | xargs mkdir -p
 	etckeeper commit -m 'Sistemas de archivos compartidos.'
 	etckeeper vcs push
 	mkdir -p `dirname $target`
