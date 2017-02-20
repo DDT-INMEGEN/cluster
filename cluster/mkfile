@@ -10,7 +10,7 @@ compartir_fs:V:	/var/lib/cluster/compartido
 montar_fs:V:	/var/lib/cluster/montar_fs
 
 /var/lib/cluster/compartido:	/etc/exports
-	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos'
+	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos' || true
 	etckeeper vcs push
 	mkdir -p `dirname $target`
 	touch /var/lib/cluster/compartido
@@ -28,7 +28,7 @@ montar_fs:V:	/var/lib/cluster/montar_fs
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
 	mount -a
 	awk '{print $2}' $prereq | xargs mkdir -p
-	etckeeper commit -m 'Sistemas de archivos compartidos.'
+	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	etckeeper vcs push
 	mkdir -p `dirname $target`
 	touch $target
