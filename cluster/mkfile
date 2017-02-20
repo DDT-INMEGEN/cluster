@@ -7,7 +7,10 @@ notron:V:	compartido
 
 # clases
 compartido:V:	/var/lib/cluster/compartido
+
+/var/lib/cluster/compartido:	/etc/exports
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos'
+	etckeeper vcs push
 	mkdir -p `dirname $target`
 	touch /var/lib/cluster/compartido
 
