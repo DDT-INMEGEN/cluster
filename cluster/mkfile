@@ -15,7 +15,7 @@ compartido:V:	/var/lib/cluster/compartido
 	touch /var/lib/cluster/compartido
 
 /etc/exports:	/etc/cluster/nfs_exports
-	apt install nfs-kernel-server
+	apt-get -y install nfs-kernel-server
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
 	> $target
