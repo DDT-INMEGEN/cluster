@@ -1,12 +1,13 @@
-dummy:V:
+dummy:V:	montar_fs
 	echo "nothing to do"
 
 # Hosts
-visnu:V:	compartido
-notron:V:	compartido
+visnu:V:	compartir_fs
+notron:V:	compartir_fs
 
 # clases
-compartido:V:	/var/lib/cluster/compartido
+compartir_fs:V:	/var/lib/cluster/compartido
+montar_fs:V:	/var/lib/cluster/montar_fs
 
 /var/lib/cluster/compartido:	/etc/exports
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos'
@@ -19,3 +20,14 @@ compartido:V:	/var/lib/cluster/compartido
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
 	> $target
+
+/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
+	apt-get -y install nfs-common
+	cat $prereq \
+	| xargs -l -I{} \
+		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
+	mount -a
+	etckeeper commit -m 'Sistemas de archivos compartidos.'
+	etckeeper vcs push
+	mkdir -p `dirname $target`
+	touch $target
