@@ -1,0 +1,21 @@
+dummy:V:
+	echo "nothing to do"
+
+# Hosts
+visnu:V:	compartido
+notron:V:	compartido
+
+# clases
+compartido:V:	/var/lib/cluster/compartido
+
+/var/lib/cluster/compartido:	/etc/exports
+	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos'
+	etckeeper vcs push
+	mkdir -p `dirname $target`
+	touch /var/lib/cluster/compartido
+
+/etc/exports:	/etc/cluster/nfs_exports
+	apt-get -y install nfs-kernel-server
+	grep -E '^'`hostname`':' $prereq \
+	| sed -e 's#^'`hostname`':##' \
+	> $target
