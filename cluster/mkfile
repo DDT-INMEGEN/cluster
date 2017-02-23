@@ -1,17 +1,21 @@
-dummy:V:	montar_fs	computo
+dummy:V:	montar_fs	htc_computo
 	echo "nothing to do"
 
 # Hosts
 visnu:V:	compartir_fs
-notron:V:	compartir_fs	computo
+notron:V:	compartir_fs	htc_computo
+fai:V:	paquetes_computo
+arenero:V:	htc_submit
 
 # clases
 compartir_fs:V:	/var/lib/cluster/compartido
 montar_fs:V:	/var/lib/cluster/montar_fs
-computo:V:	/var/lib/cluster/computo
+htc_computo:V:	/var/lib/cluster/htc_computo	paquetes_computo
+htc_submit:V:	/var/lib/cluster/htc_submit	paquetes_computo
+paquetes_computo:V:	/var/lib/cluster/paquetes_computo
 
 
-/var/lib/cluster/computo:	/etc/cluster/paquetes_computo
+/var/lib/cluster/paquetes_computo:	/etc/cluster/paquetes_computo
 	mkdir -p `dirname $target`
 	apt-get -y `cat $prereq` \
 	&& touch $target
@@ -23,19 +27,19 @@ computo:V:	/var/lib/cluster/computo
 	&& touch /var/lib/cluster/compartido
 
 /etc/exports:	/etc/cluster/nfs_exports
-	apt-get -y install nfs-kernel-server
-	grep -E '^'`hostname`':' $prereq \
+	apt-get -y install nfs-kernel-server \
+	&& grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
 	> $target
 
 /var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
 	apt-get -y install nfs-common
+	awk '{print $2}' $prereq | xargs mkdir -p \
 	cat $prereq \
 	| xargs -l -I{} \
-		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
-	awk '{print $2}' $prereq | xargs mkdir -p
-	mount -a
-	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
-	etckeeper vcs push
-	mkdir -p `dirname $target`
-	touch $target
+		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab' \
+	&& mount -a \
+	&& etckeeper commit -m 'Sistemas de archivos compartidos.' || true
+	etckeeper vcs push \
+	&& mkdir -p `dirname $target`
+	&& touch $target

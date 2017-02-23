@@ -1,0 +1,7 @@
+apache2
+apt-cacher
+clusterssh
+inetutils-inetd
+isc-dhcp-server
+multitail
+tftpd-hpa
