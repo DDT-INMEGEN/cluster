@@ -1,4 +1,4 @@
-dummy:V:	montar_fs	htc_computo
+dummy:V:	montar_fs	htc_computo	renombrar_git
 	echo "nothing to do"
 
 # Hosts
@@ -13,7 +13,12 @@ montar_fs:V:	/var/lib/cluster/montar_fs
 htc_computo:V:	/var/lib/cluster/htc_computo	paquetes_computo
 htc_submit:V:	/var/lib/cluster/htc_submit	paquetes_computo
 paquetes_computo:V:	/var/lib/cluster/paquetes_computo
+renombrar_git:V:	/var/lib/cluster/renombrar_git
 
+/var/lib/cluster/renombrar_git:
+	etckeeper vcs branch -m `hostname` \
+	&& mkdir -p `dirname $target` \
+	&& touch $target
 
 /var/lib/cluster/paquetes_computo:	/etc/cluster/paquetes_computo
 	mkdir -p `dirname $target`
@@ -39,7 +44,6 @@ paquetes_computo:V:	/var/lib/cluster/paquetes_computo
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab' \
 	&& mount -a \
-	&& etckeeper commit -m 'Sistemas de archivos compartidos.' || true
-	etckeeper vcs push \
+	&& etckeeper commit -m 'Sistemas de archivos compartidos.' || true \
 	&& mkdir -p `dirname $target` \
 	&& touch $target
