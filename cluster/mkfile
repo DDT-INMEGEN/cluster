@@ -41,5 +41,5 @@ paquetes_computo:V:	/var/lib/cluster/paquetes_computo
 	&& mount -a \
 	&& etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	etckeeper vcs push \
-	&& mkdir -p `dirname $target`
+	&& mkdir -p `dirname $target` \
 	&& touch $target
