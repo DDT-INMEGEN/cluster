@@ -31,6 +31,7 @@ computo:V:	/var/lib/cluster/computo
 /var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
 	apt-get -y install nfs-common
 	cat $prereq \
+	| grep -vE '^'`hostname`':' \
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
 	awk '{print $2}' $prereq | xargs mkdir -p
