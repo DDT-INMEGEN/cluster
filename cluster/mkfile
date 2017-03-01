@@ -12,25 +12,30 @@ computo:V:	/var/lib/cluster/computo
 
 
 /var/lib/cluster/computo:	/etc/cluster/paquetes_computo
+	set -x
 	mkdir -p `dirname $target`
-	apt-get -y `cat $prereq` \
+	apt-get -y install `cat $prereq` \
 	&& touch $target
 
 /var/lib/cluster/compartido:	/etc/exports
+	set -x
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos' || true \
 	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
 /etc/exports:	/etc/cluster/nfs_exports
+	set -x
 	apt-get -y install nfs-kernel-server
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
 	> $target
 
 /var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
+	set -x
 	apt-get -y install nfs-common
 	cat $prereq \
+	| grep -vE '^'`hostname`':' \
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
 	awk '{print $2}' $prereq | xargs mkdir -p
