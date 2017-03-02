@@ -22,28 +22,33 @@ renombrar_git:V:	/var/lib/cluster/renombrar_git
 
 /var/lib/cluster/paquetes_computo:	/etc/cluster/paquetes_computo
 	mkdir -p `dirname $target`
-	apt-get -y `cat $prereq` \
+	apt-get -y install `cat $prereq` \
 	&& touch $target
 
 /var/lib/cluster/compartido:	/etc/exports
+	set -x
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos' || true \
 	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
 /etc/exports:	/etc/cluster/nfs_exports
-	apt-get -y install nfs-kernel-server \
-	&& grep -E '^'`hostname`':' $prereq \
+	set -x
+	apt-get -y install nfs-kernel-server
+	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
 	> $target
 
 /var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
+	set -x
 	apt-get -y install nfs-common
-	awk '{print $2}' $prereq | xargs mkdir -p \
-	&& cat $prereq \
+	cat $prereq \
+	| grep -vE '^'`hostname`':' \
 	| xargs -l -I{} \
-		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab' \
-	&& mount -a \
-	&& etckeeper commit -m 'Sistemas de archivos compartidos.' || true \
-	&& mkdir -p `dirname $target` \
-	&& touch $target
+		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
+	awk '{print $2}' $prereq | xargs mkdir -p
+	mount -a
+	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
+	etckeeper vcs push
+	mkdir -p `dirname $target`
+	touch $target
