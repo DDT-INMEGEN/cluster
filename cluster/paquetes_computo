@@ -1,5 +1,6 @@
 9base
 autoconf
+singularity-condor
 docker.io
 etckeeper
 fish
@@ -20,3 +21,12 @@ openjdk-9-jdk-headless
 util-linux
 xorg-dev
 xterm
+r-base-core
+condor
+vis
+apt-file
+samtools
+bcftools
+igv
+picard-tools
+perl

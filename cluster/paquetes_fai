@@ -5,3 +5,11 @@ inetutils-inetd
 isc-dhcp-server
 multitail
 tftpd-hpa
+dpkg-dev
+reprepo
+nginx
+git
+git-flow
+vim
+vis
+bsdtar

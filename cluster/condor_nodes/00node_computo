@@ -2,11 +2,7 @@
 CONDOR_HOST = visnu.cluster.inmegen.gob.mx
 
 BIND_ALL_INTERFACES = TRUE
-#Descomentar para nodo maestro
-#DAEMON_LIST = STARTD, SCHEDD, COLLECTOR, NEGOTIATOR, MASTER
-#Descomentar para nodo de submit
-#DAEMON_LIST = MASTER, SCHEDD 
-Descomentar para nodo de computo
+#Descomentar para nodo de computo
 DAEMON_LIST = STARTD, MASTER
 ALLOW_WRITE = *.cluster.inmegen.gob.mx
 

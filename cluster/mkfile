@@ -2,7 +2,7 @@ dummy:V:	montar_fs	htc_computo	renombrar_git
 	echo "nothing to do"
 
 # Hosts
-visnu:V:	compartir_fs
+visnu:V:	compartir_fs	htc_maestro
 notron:V:	compartir_fs	htc_computo
 fai:V:	paquetes_computo
 arenero:V:	htc_submit
@@ -12,8 +12,16 @@ compartir_fs:V:	/var/lib/cluster/compartido
 montar_fs:V:	/var/lib/cluster/montar_fs
 htc_computo:V:	/var/lib/cluster/htc_computo	paquetes_computo
 htc_submit:V:	/var/lib/cluster/htc_submit	paquetes_computo
+htc_master:V:	/var/lib/cluster/htc_master	paquetes_computo
 paquetes_computo:V:	/var/lib/cluster/paquetes_computo
 renombrar_git:V:	/var/lib/cluster/renombrar_git
+scripts:V:	/var/lib/cluster/scripts
+
+/var/lib/cluster/scripts:	/etc/cluster/scripts/%
+	mkdir -p `dirname $target` \
+	&& mkdir -p /home/itadmin/scripts \
+	&& cp $prereq /home/itadmin/scripts/ \
+	&& echo "done"
 
 /var/lib/cluster/renombrar_git:
 	etckeeper vcs branch -m `hostname` \
@@ -21,8 +29,29 @@ renombrar_git:V:	/var/lib/cluster/renombrar_git
 	&& touch $target
 
 /var/lib/cluster/paquetes_computo:	/etc/cluster/paquetes_computo
-	mkdir -p `dirname $target`
-	apt-get -y install `cat $prereq` \
+	cd
+	curl -LO http://repo.cluster.inmegen.gob.mx/supercomputo.asci \
+	&& apt-key add supercomputo.asc \
+	&& apt update \
+	&& mkdir -p `dirname $target` \
+	&& apt-get -y install `cat $prereq` \
+	&& touch $target
+
+/var/lib/cluster/htc_computo: /var/lib/cluster/htc_config /etc/cluster/condor_nodes/00node_computo
+	cp /etc/cluster/condor_nodes/00node_computo /etc/condor/config.d/00node_computo
+	echo "done"
+
+/var/lib/cluster/htc_submit: /var/lib/cluster/htc_config /etc/cluster/condor_nodes/00node_submit
+	cp /etc/cluster/condor_nodes/00node_submit /etc/condor/config.d/00node_submit
+        echo "done"
+
+/var/lib/cluster/htc_master: /var/lib/cluster/htc_config /etc/cluster/condor_nodes/00node_master
+        cp /etc/cluster/condor_nodes/00node_master /etc/condor/config.d/00node_master
+        echo "done"
+
+/var/lib/cluster/htc_config:	paquetes_computo
+	usermod -a -G docker condor \
+	&& service docker restart \
 	&& touch $target
 
 /var/lib/cluster/compartido:	/etc/exports
