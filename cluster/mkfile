@@ -1,55 +1,48 @@
 dummy:V:	montar_fs	htc_computo	renombrar_git
 	echo "nothing to do"
 
-# Hosts
+# Nodos
 visnu:V:	compartir_fs	htc_maestro
 notron:V:	compartir_fs	htc_computo
-fai:V:	paquetes_computo
+fai:V:	apt_computo	apt_ldap	apt_fai
 arenero:V:	htc_submit
 
-# clases
-compartir_fs:V:	/var/lib/cluster/compartido
-montar_fs:V:	/var/lib/cluster/montar_fs
-htc_computo:V:	/var/lib/cluster/htc_computo	paquetes_computo
-htc_submit:V:	/var/lib/cluster/htc_submit	paquetes_computo
-htc_master:V:	/var/lib/cluster/htc_master	paquetes_computo
-paquetes_computo:V:	/var/lib/cluster/paquetes_computo
+# Clases
+compartir_fs:V:	/var/lib/cluster/compartido	apt_compartir
+montar_fs:V:	/var/lib/cluster/montar_fs	apt_compartido
 renombrar_git:V:	/var/lib/cluster/renombrar_git
-scripts:V:	/var/lib/cluster/scripts
+apt_%:V:	/var/lib/cluster/apt_%
 
-/var/lib/cluster/scripts:	/etc/cluster/scripts/%
-	mkdir -p `dirname $target` \
-	&& mkdir -p /home/itadmin/scripts \
-	&& cp $prereq /home/itadmin/scripts/ \
-	&& echo "done"
+## Las clases htc_% son mutuamente excluyentes
+htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
+htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
+htc_master:V:	/var/lib/cluster/htc_master	apt_computo
+condor_init:V:	/var/lib/cluster/condor_init
 
 /var/lib/cluster/renombrar_git:
+	set -x
 	etckeeper vcs branch -m `hostname` \
 	&& mkdir -p `dirname $target` \
 	&& touch $target
 
-/var/lib/cluster/paquetes_computo:	/etc/cluster/paquetes_computo
-	cd
-	curl -LO http://repo.cluster.inmegen.gob.mx/supercomputo.asci \
-	&& apt-key add supercomputo.asc \
-	&& apt update \
-	&& mkdir -p `dirname $target` \
+/var/lib/cluster/apt_%:	/etc/cluster/apt/%
+	set -x
+	mkdir -p `dirname $target` \
 	&& apt-get -y install `cat $prereq` \
 	&& touch $target
 
-/var/lib/cluster/htc_computo: /var/lib/cluster/htc_config /etc/cluster/condor_nodes/00node_computo
-	cp /etc/cluster/condor_nodes/00node_computo /etc/condor/config.d/00node_computo
+/var/lib/cluster/repo_cluster:	/etc/cluster/apt_computo
+	set -x
+	apt-key add /etc/cluster/supercomputo.asc \
+	&& apt update
+
+/var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
+	set -x
+	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem
 	echo "done"
 
-/var/lib/cluster/htc_submit: /var/lib/cluster/htc_config /etc/cluster/condor_nodes/00node_submit
-	cp /etc/cluster/condor_nodes/00node_submit /etc/condor/config.d/00node_submit
-        echo "done"
-
-/var/lib/cluster/htc_master: /var/lib/cluster/htc_config /etc/cluster/condor_nodes/00node_master
-        cp /etc/cluster/condor_nodes/00node_master /etc/condor/config.d/00node_master
-        echo "done"
-
-/var/lib/cluster/htc_config:	paquetes_computo
+/var/lib/cluster/condor_init:	apt_computo
+	set -x
 	usermod -a -G docker condor \
 	&& service docker restart \
 	&& touch $target
@@ -63,14 +56,12 @@ scripts:V:	/var/lib/cluster/scripts
 
 /etc/exports:	/etc/cluster/nfs_exports
 	set -x
-	apt-get -y install nfs-kernel-server
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
 	> $target
 
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
+/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	apt_compartido
 	set -x
-	apt-get -y install nfs-common
 	cat $prereq \
 	| grep -vE '^'`hostname`':' \
 	| xargs -l -I{} \
