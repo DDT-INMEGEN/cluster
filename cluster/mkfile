@@ -1,17 +1,17 @@
-dummy:V:	montar_fs	htc_computo	renombrar_git
+dummy:V:	montar_fs htc_computo renombrar_git
 	echo "nothing to do"
 
 # Nodos
-visnu:V:	compartir_fs	htc_maestro
-notron:V:	compartir_fs	htc_computo
-fai:V:	apt_computo	apt_ldap	apt_fai
-arenero:V:	htc_submit
+visnu:V:	compartir_fs htc_maestro
+notron:V:	compartir_fs htc_computo
+fai:V:		montar_fs apt_computo apt_ldap apt_fai
+arenero:V:	montar_fs htc_submit
 
 # Clases
 compartir_fs:V:	/var/lib/cluster/compartido	apt_compartir
 montar_fs:V:	/var/lib/cluster/montar_fs	apt_compartido
 renombrar_git:V:	/var/lib/cluster/renombrar_git
-apt_%:V:	/var/lib/cluster/apt_%
+apt_%:V:	/var/lib/cluster/apt/%
 
 ## Las clases htc_% son mutuamente excluyentes
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
@@ -31,7 +31,7 @@ condor_init:V:	/var/lib/cluster/condor_init
 	&& apt-get -y install `cat $prereq` \
 	&& touch $target
 
-/var/lib/cluster/repo_cluster:	/etc/cluster/apt_computo
+/var/lib/cluster/repo_cluster:	/etc/cluster/apt/computo
 	set -x
 	apt-key add /etc/cluster/supercomputo.asc \
 	&& apt update
