@@ -12,12 +12,22 @@ compartir_fs:V:	/var/lib/cluster/compartido	apt_compartir
 montar_fs:V:	/var/lib/cluster/montar_fs	apt_compartido
 renombrar_git:V:	/var/lib/cluster/renombrar_git
 apt_%:V:	/var/lib/cluster/apt_%
+force_update:V:	/var/lib/cluster/force_update
 
 ## Las clases htc_% son mutuamente excluyentes
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
 htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo
 condor_init:V:	/var/lib/cluster/condor_init
+
+/var/lib/cluster/force_update: /etc/cluster/force_update
+	set -x
+	etckeeper commit -m 'Guarda de estado previo a la actualización forzada.' || true \
+	&& /etc/cluster/scripts/auto-update.sh \
+	&& etckeeper commit -m 'Terminada la actualización forzada.' || true \
+	&& /etc/cluster/scripts/clean-kernel.sh \
+	&& etckeeper commit -m 'Terminada la limpieza de kernel forzada.' || true \
+	&& touch $target
 
 /var/lib/cluster/renombrar_git:
 	set -x
@@ -29,29 +39,33 @@ condor_init:V:	/var/lib/cluster/condor_init
 	set -x
 	mkdir -p `dirname $target` \
 	&& apt-get -y install `cat $prereq` \
+	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true \
 	&& touch $target
 
 /var/lib/cluster/repo_cluster:
 	set -x
 	apt-key add /etc/cluster/supercomputo.asc \
+	&& etckeeper commit -m 'Agregado key de repo supercómputo de INMEGEN.' || true \
 	&& apt update \
 	&& touch $target
 
 /var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
 	set -x
 	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
+	&& etckeeper commit -m 'Configuración de nodo de condor correspondiente.' || true \
 	&& sudo /etc/init.d/condor restart \
 	&& touch $target
 
 /var/lib/cluster/condor_init:	apt_computo
 	set -x
 	usermod -a -G docker condor \
+	&& etckeeper commit -m 'Configuración de docker para condor.' || true \
 	&& service docker restart \
 	&& touch $target
 
 /var/lib/cluster/compartido:	/etc/exports
 	set -x
-	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos' || true \
+	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos.' || true \
 	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
