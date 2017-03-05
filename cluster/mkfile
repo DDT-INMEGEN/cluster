@@ -14,12 +14,33 @@ renombrar_git:V: /var/lib/cluster/renombrar_git
 locale:V: 	 /var/lib/cluster/locale
 apt_%:V:	 /var/lib/cluster/apt_%
 force_update:V:	 /var/lib/cluster/force_update
+port_mirror:V:	 /var/lib/cluster/port_mirror
 
 ## Las clases htc_% son mutuamente excluyentes
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
 htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo
 condor_init:V:	/var/lib/cluster/condor_init	locale
+
+/var/lib/cluster/port_mirror:
+	set -x
+	apt update
+	apt install ifenslave
+	if [[ `grep "bonding" /etc/modules | wc -l` == 0 ]]; then
+		echo "bonding" | tee -a /etc/modules \
+		&& modprobe bonding
+	fi
+	case `hostname` in
+		"ibm"* )
+			cp '/etc/cluster/network/interfaces.ibm' '/etc/network/interfaces'
+		;;
+		"dell"* )
+			cp '/etc/cluster/network/interfaces.dell' '/etc/network/interfaces'
+		;;
+	esac
+	etckeeper commit -m 'Terminada la actualización de locale (timezone + lang).' || true \
+	&& mkdir -p `dirname $target` \
+        && touch $target
 
 /var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
 	set -x
