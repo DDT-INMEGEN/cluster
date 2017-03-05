@@ -23,9 +23,10 @@ condor_init:V:	/var/lib/cluster/condor_init
 
 /var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
 	set -x
-	cp '/etc/cluster/locale/timezone' '/etc/timezone' \
+	cp '/etc/cluster/locales/timezone' '/etc/timezone' \
 	&& dpkg-reconfigure -f noninteractive tzdata \
-	&& cp '/etc/cluster/locale/locale.gen' '/etc/locale.gen' \
+	&& cp '/etc/cluster/locales/locale.gen' '/etc/locale.gen' \
+	&& cp '/etc/cluster/locales/default/locale' '/etc/default/locale' \
 	&& locale-gen \
 	&& dpkg-reconfigure --frontend=noninteractive locales \
 	&& update-locale \
