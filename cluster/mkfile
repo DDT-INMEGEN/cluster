@@ -60,7 +60,7 @@ condor_init:V:	/var/lib/cluster/condor_init
 	| sed -e 's#^'`hostname`':##' \
 	> $target
 
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	apt_compartido
+/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	
 	set -x
 	cat $prereq \
 	| grep -vE '^'`hostname`':' \
