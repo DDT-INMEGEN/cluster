@@ -21,7 +21,7 @@ htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo
 condor_init:V:	/var/lib/cluster/condor_init
 
-/var/lib/cluster/locale: /etc/cluster/locale/timezone /etc/cluster/locale/locale.gen /etc/cluster/locale/default/locale
+/var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
 	set -x
 	cp '/etc/cluster/locale/timezone' '/etc/timezone' \
 	&& dpkg-reconfigure -f noninteractive tzdata \
