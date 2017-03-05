@@ -4,21 +4,32 @@ dummy:V:	montar_fs htc_computo renombrar_git
 # Nodos
 visnu:V:	compartir_fs htc_maestro
 notron:V:	compartir_fs montar_fs htc_computo
-fai:V:		montar_fs apt_computo apt_ldap apt_fai
+fai:V:		montar_fs apt_computo apt_ldap apt_fai htc_submit
 arenero:V:	montar_fs htc_submit
 
 # Clases
-compartir_fs:V:	/var/lib/cluster/compartido	apt_compartir
-montar_fs:V:	/var/lib/cluster/montar_fs	apt_compartido
-renombrar_git:V:	/var/lib/cluster/renombrar_git
-apt_%:V:	/var/lib/cluster/apt_%
-force_update:V:	/var/lib/cluster/force_update
+compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
+montar_fs:V:	 /var/lib/cluster/montar_fs	apt_compartido
+renombrar_git:V: /var/lib/cluster/renombrar_git
+locale:V: 	 /var/lib/cluster/locale
+apt_%:V:	 /var/lib/cluster/apt_%
+force_update:V:	 /var/lib/cluster/force_update
 
 ## Las clases htc_% son mutuamente excluyentes
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
 htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo
 condor_init:V:	/var/lib/cluster/condor_init
+
+/var/lib/cluster/locale: /etc/cluster/locale/timezone /etc/cluster/locale/locale.gen /etc/cluster/locale/default/locale
+	set -x
+	cp '/etc/cluster/locale/timezone' '/etc/timezone' \
+	&& dpkg-reconfigure -f noninteractive tzdata \
+	&& cp '/etc/cluster/locale/locale.gen' '/etc/locale.gen' \
+	&& locale-gen \
+	&& dpkg-reconfigure --frontend=noninteractive locales && \
+	&& update-locale \
+	&& touch $target
 
 /var/lib/cluster/force_update: /etc/cluster/force_update
 	set -x
@@ -61,6 +72,7 @@ condor_init:V:	/var/lib/cluster/condor_init
 	usermod -a -G docker condor \
 	&& etckeeper commit -m 'Configuración de docker para condor.' || true \
 	&& service docker restart \
+	&& service condor restart \
 	&& touch $target
 
 /var/lib/cluster/compartido:	/etc/exports
