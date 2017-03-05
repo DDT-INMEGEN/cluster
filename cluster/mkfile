@@ -31,7 +31,7 @@ condor_init:V:	/var/lib/cluster/condor_init
 	&& apt-get -y install `cat $prereq` \
 	&& touch $target
 
-/var/lib/cluster/repo_cluster:	/etc/cluster/apt/computo
+/var/lib/cluster/repo_cluster:
 	set -x
 	apt-key add /etc/cluster/supercomputo.asc \
 	&& apt update \
