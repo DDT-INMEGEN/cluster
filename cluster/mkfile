@@ -39,8 +39,9 @@ condor_init:V:	/var/lib/cluster/condor_init
 
 /var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
 	set -x
-	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem
-	echo "done"
+	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
+	&& sudo /etc/init.d/condor restart \
+	&& touch $target
 
 /var/lib/cluster/condor_init:	apt_computo
 	set -x
