@@ -27,7 +27,7 @@ condor_init:V:	/var/lib/cluster/condor_init
 	&& dpkg-reconfigure -f noninteractive tzdata \
 	&& cp '/etc/cluster/locale/locale.gen' '/etc/locale.gen' \
 	&& locale-gen \
-	&& dpkg-reconfigure --frontend=noninteractive locales && \
+	&& dpkg-reconfigure --frontend=noninteractive locales \
 	&& update-locale \
 	&& etckeeper commit -m 'Terminada la actualización de locale (timezone + lang).' || true \
 	&& touch $target
