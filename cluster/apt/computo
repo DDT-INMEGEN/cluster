@@ -1,4 +1,4 @@
-9base
+9ase
 autoconf
 singularity-condor
 docker.io
@@ -28,7 +28,6 @@ condor
 vis
 apt-file
 samtools
-bcftools
 igv
 picard-tools
 perl
