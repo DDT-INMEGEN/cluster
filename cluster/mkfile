@@ -29,6 +29,7 @@ condor_init:V:	/var/lib/cluster/condor_init
 	&& locale-gen \
 	&& dpkg-reconfigure --frontend=noninteractive locales && \
 	&& update-locale \
+	&& etckeeper commit -m 'Terminada la actualización de locale (timezone + lang).' || true \
 	&& touch $target
 
 /var/lib/cluster/force_update: /etc/cluster/force_update
