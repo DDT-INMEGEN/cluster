@@ -19,7 +19,7 @@ force_update:V:	 /var/lib/cluster/force_update
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
 htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo
-condor_init:V:	/var/lib/cluster/condor_init
+condor_init:V:	/var/lib/cluster/condor_init	locale
 
 /var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
 	set -x
