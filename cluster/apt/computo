@@ -12,6 +12,7 @@ git-flow
 htop
 ifenslave
 iotop
+iftop
 ipython
 ipython3
 libcurl4-openssl-dev
@@ -32,3 +33,7 @@ igv
 picard-tools
 perl
 tree
+meld
+git
+gitg
+
