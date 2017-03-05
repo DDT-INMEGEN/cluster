@@ -11,7 +11,7 @@ arenero:V:	montar_fs htc_submit
 compartir_fs:V:	/var/lib/cluster/compartido	apt_compartir
 montar_fs:V:	/var/lib/cluster/montar_fs	apt_compartido
 renombrar_git:V:	/var/lib/cluster/renombrar_git
-apt_%:V:	/var/lib/cluster/apt/%
+apt_%:V:	/var/lib/cluster/apt_%
 
 ## Las clases htc_% son mutuamente excluyentes
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
