@@ -25,7 +25,7 @@ condor_init:V:	/var/lib/cluster/condor_init
 	&& mkdir -p `dirname $target` \
 	&& touch $target
 
-/var/lib/cluster/apt_%:	/etc/cluster/apt/%
+/var/lib/cluster/apt_%:	/etc/cluster/apt/% /var/lib/cluster/repo_cluster
 	set -x
 	mkdir -p `dirname $target` \
 	&& apt-get -y install `cat $prereq` \
@@ -34,7 +34,8 @@ condor_init:V:	/var/lib/cluster/condor_init
 /var/lib/cluster/repo_cluster:	/etc/cluster/apt/computo
 	set -x
 	apt-key add /etc/cluster/supercomputo.asc \
-	&& apt update
+	&& apt update \
+	&& touch $target
 
 /var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
 	set -x
