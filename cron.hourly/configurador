@@ -1,4 +1,4 @@
 #!/bin/sh
-etckeeper vcs pull origin auto-conf
+etckeeper vcs pull origin auto-conf -X theirs -s recursive --no-edit
 cd /etc/cluster/
 /usr/lib/plan9/bin/mk `hostname` || /usr/lib/plan9/bin/mk
