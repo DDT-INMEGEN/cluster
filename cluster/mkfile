@@ -1,39 +1,122 @@
-dummy:V:	montar_fs	computo
+dummy:V:	montar_fs htc_computo renombrar_git
 	echo "nothing to do"
 
-# Hosts
-visnu:V:	compartir_fs
-notron:V:	compartir_fs	computo
+# Nodos
+visnu:V:	compartir_fs htc_maestro
+notron:V:	compartir_fs montar_fs htc_computo
+fai:V:		montar_fs apt_computo apt_ldap apt_fai htc_submit
+arenero:V:	montar_fs htc_submit
 
-# clases
-compartir_fs:V:	/var/lib/cluster/compartido
-montar_fs:V:	/var/lib/cluster/montar_fs
-computo:V:	/var/lib/cluster/computo
+# Clases
+compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
+montar_fs:V:	 /var/lib/cluster/montar_fs	apt_compartido
+renombrar_git:V: /var/lib/cluster/renombrar_git
+locale:V: 	 /var/lib/cluster/locale
+apt_%:V:	 /var/lib/cluster/apt_%
+force_update:V:	 /var/lib/cluster/force_update
+port_mirror:V:	 /var/lib/cluster/port_mirror
 
+## Las clases htc_% son mutuamente excluyentes
+htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
+htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
+htc_master:V:	/var/lib/cluster/htc_master	apt_computo
+condor_init:V:	/var/lib/cluster/condor_init	locale
 
-/var/lib/cluster/computo:	/etc/cluster/paquetes_computo
+/var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
 	set -x
-	mkdir -p `dirname $target`
-	apt-get -y install `cat $prereq` \
+	apt update
+	apt install ifenslave etckeeper
+	if [ `grep "bonding" /etc/modules | wc -l` -eq 0 ]; then
+		echo "bonding" | sudo tee -a /etc/modules
+	fi
+	case `hostname` in
+		"ibm"* )
+			cp '/etc/cluster/network/interfaces.ibm' '/etc/network/interfaces'
+		;;
+		"dell"* )
+			cp '/etc/cluster/network/interfaces.dell' '/etc/network/interfaces'
+		;;
+		"indra" )
+                        cp '/etc/cluster/network/interfaces.dell' '/etc/network/interfaces'
+                ;;
+	esac
+	etckeeper commit -m 'Terminada la configuraciónd del port mirror.' || true \
+	&& mkdir -p `dirname $target` \
+	&& sudo modprobe bonding \
+        && touch $target
+
+/var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
+	set -x
+	cp '/etc/cluster/locales/timezone' '/etc/timezone' \
+	&& dpkg-reconfigure -f noninteractive tzdata \
+	&& cp '/etc/cluster/locales/locale.gen' '/etc/locale.gen' \
+	&& cp '/etc/cluster/locales/default/locale' '/etc/default/locale' \
+	&& locale-gen \
+	&& dpkg-reconfigure --frontend=noninteractive locales \
+	&& update-locale \
+	&& etckeeper commit -m 'Terminada la actualización de locale (timezone + lang).' || true \
+	&& touch $target
+
+/var/lib/cluster/force_update: /etc/cluster/force_update
+	set -x
+	etckeeper commit -m 'Guarda de estado previo a la actualización forzada.' || true \
+	&& /etc/cluster/scripts/auto-update.sh \
+	&& etckeeper commit -m 'Terminada la actualización forzada.' || true \
+	&& /etc/cluster/scripts/clean-kernel.sh \
+	&& etckeeper commit -m 'Terminada la limpieza de kernel forzada.' || true \
+	&& touch $target
+
+/var/lib/cluster/renombrar_git:
+	set -x
+	etckeeper vcs branch -m `hostname` \
+	&& mkdir -p `dirname $target` \
+	&& touch $target
+
+/var/lib/cluster/apt_%:	/etc/cluster/apt/% /var/lib/cluster/repo_cluster
+	set -x
+	mkdir -p `dirname $target` \
+	&& apt-get -y install `cat $prereq` \
+	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true \
+	&& touch $target
+
+/var/lib/cluster/repo_cluster:
+	set -x
+	apt-key add /etc/cluster/supercomputo.asc \
+	&& etckeeper commit -m 'Agregado key de repo supercómputo de INMEGEN.' || true \
+	&& apt update \
+	&& mkdir -p `dirname $target` \
+	&& touch $target
+
+/var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
+	set -x
+	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
+	&& etckeeper commit -m 'Configuración de nodo de condor correspondiente.' || true \
+	&& sudo /etc/init.d/condor restart \
+	&& touch $target
+
+/var/lib/cluster/condor_init:	apt_computo
+	set -x
+	usermod -a -G docker condor \
+	&& etckeeper commit -m 'Configuración de docker para condor.' || true \
+	&& service docker restart \
+	&& service condor restart \
 	&& touch $target
 
 /var/lib/cluster/compartido:	/etc/exports
 	set -x
-	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos' || true \
+	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos.' || true \
 	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
 /etc/exports:	/etc/cluster/nfs_exports
 	set -x
-	apt-get -y install nfs-kernel-server
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
 	> $target
 
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
+/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	apt_compartido
 	set -x
-	apt-get -y install nfs-common
 	cat $prereq \
 	| grep -vE '^'`hostname`':' \
 	| xargs -l -I{} \
@@ -41,6 +124,5 @@ computo:V:	/var/lib/cluster/computo
 	awk '{print $2}' $prereq | xargs mkdir -p
 	mount -a
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
-	etckeeper vcs push
 	mkdir -p `dirname $target`
 	touch $target
