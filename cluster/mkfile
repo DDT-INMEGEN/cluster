@@ -22,7 +22,7 @@ htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo
 condor_init:V:	/var/lib/cluster/condor_init	locale
 
-/var/lib/cluster/port_mirror:
+/var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
 	set -x
 	apt update
 	apt install ifenslave etckeeper
@@ -81,6 +81,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	apt-key add /etc/cluster/supercomputo.asc \
 	&& etckeeper commit -m 'Agregado key de repo supercómputo de INMEGEN.' || true \
 	&& apt update \
+	&& mkdir -p `dirname $target` \
 	&& touch $target
 
 /var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
