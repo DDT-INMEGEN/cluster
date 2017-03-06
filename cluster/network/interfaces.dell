@@ -1,0 +1,39 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+# and configured slave to bond0 
+auto eno1
+iface eno1 inet manual
+bond-master bond0 
+bond-primary eno1
+
+# The primary network interface
+# and configured slave to bond0 
+auto eno2
+iface eno2 inet manual
+bond-master bond0
+
+auto eno3
+iface eno3 inet manual
+bond-master bond0
+
+auto eno4
+iface eno4 inet manual
+bond-master bond0
+
+# bond0 is the bonded NIC and can be used like any other normal NIC.
+# bond0 is configured using static network information.
+auto bond0
+iface bond0 inet dhcp
+# bond0 uses mode 6 for load and transfer balance
+bond-mode 6
+bond-miimon 100
+bond-lacp-rate 1
+bond-slaves eno1 eno2 eno3 eno4

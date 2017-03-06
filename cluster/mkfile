@@ -25,7 +25,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 /var/lib/cluster/port_mirror:
 	set -x
 	apt update
-	apt install ifenslave
+	apt install ifenslave etckeeper
 	if [[ `grep "bonding" /etc/modules | wc -l` == 0 ]]; then
 		echo "bonding" | tee -a /etc/modules \
 		&& modprobe bonding
@@ -38,7 +38,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 			cp '/etc/cluster/network/interfaces.dell' '/etc/network/interfaces'
 		;;
 	esac
-	etckeeper commit -m 'Terminada la actualización de locale (timezone + lang).' || true \
+	etckeeper commit -m 'Terminada la configuraciónd del port mirror.' || true \
 	&& mkdir -p `dirname $target` \
         && touch $target
 
