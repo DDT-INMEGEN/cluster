@@ -1,0 +1,2 @@
+Acquire::http::Proxy "http://apt.cluster.inmegen.gob.mx:3142";
+
