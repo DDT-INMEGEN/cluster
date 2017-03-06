@@ -11,7 +11,7 @@ arenero:V:	montar_fs htc_submit
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
 montar_fs:V:	 /var/lib/cluster/montar_fs	apt_compartido
 renombrar_git:V: /var/lib/cluster/renombrar_git
-locale:V: 	 /var/lib/cluster/locale
+locale:V:	 /var/lib/cluster/locale
 apt_%:V:	 /var/lib/cluster/apt_%
 force_update:V:	 /var/lib/cluster/force_update
 port_mirror:V:	 /var/lib/cluster/port_mirror
@@ -25,7 +25,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
 	set -x
 	apt update
-	apt install ifenslave etckeeper
+	apt install ifenslave
 	if [ `grep "bonding" /etc/modules | wc -l` -eq 0 ]; then
 		echo "bonding" | sudo tee -a /etc/modules
 	fi
@@ -43,7 +43,8 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	etckeeper commit -m 'Terminada la configuraciónd del port mirror.' || true \
 	&& mkdir -p `dirname $target` \
 	&& sudo modprobe bonding \
-        && touch $target
+	&& touch $target \
+	&& reboot
 
 /var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
 	set -x
@@ -121,7 +122,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	| grep -vE '^'`hostname`':' \
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
-	awk '{print $2}' $prereq | xargs mkdir -p
+	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
 	mount -a
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
