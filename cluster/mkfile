@@ -26,7 +26,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	set -x
 	apt update
 	apt install ifenslave etckeeper
-	if [[ `grep "bonding" /etc/modules | wc -l` == 0 ]]; then
+	if [ `grep "bonding" /etc/modules | wc -l` -eq 0 ]; then
 		echo "bonding" | sudo tee -a /etc/modules
 	fi
 	case `hostname` in
