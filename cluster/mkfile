@@ -28,7 +28,6 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	apt install ifenslave etckeeper
 	if [[ `grep "bonding" /etc/modules | wc -l` == 0 ]]; then
 		echo "bonding" | sudo tee -a /etc/modules
-		modprobe bonding
 	fi
 	case `hostname` in
 		"ibm"* )
@@ -40,6 +39,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	esac
 	etckeeper commit -m 'Terminada la configuraciónd del port mirror.' || true \
 	&& mkdir -p `dirname $target` \
+	&& sudo modprobe bonding \
         && touch $target
 
 /var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
