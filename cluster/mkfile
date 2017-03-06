@@ -36,6 +36,9 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 		"dell"* )
 			cp '/etc/cluster/network/interfaces.dell' '/etc/network/interfaces'
 		;;
+		"indra" )
+                        cp '/etc/cluster/network/interfaces.dell' '/etc/network/interfaces'
+                ;;
 	esac
 	etckeeper commit -m 'Terminada la configuraciónd del port mirror.' || true \
 	&& mkdir -p `dirname $target` \
