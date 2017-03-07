@@ -1,7 +1,12 @@
 ##El nodo que sera el maestro es ibm1
 CONDOR_HOST = ibm1.cluster.inmegen.gob.mx
 
-BIND_ALL_INTERFACES = TRUE
+##Fai tiene dos intefaces con ips diferentes
+##No debe tener bind a todas las interfaces
+BIND_ALL_INTERFACES = FALSE
+NETWORK_INTERFACE = 192.168.21.254
+NEGOTIATOR = $(SBIN)/condor_negotiator
+COLLECTOR = $(SBIN)/condor_collector
 #Descomentar para nodo maestro
 DAEMON_LIST = COLLECTOR, NEGOTIATOR, MASTER
 ALLOW_WRITE = *.cluster.inmegen.gob.mx
