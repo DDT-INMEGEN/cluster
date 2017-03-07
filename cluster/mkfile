@@ -2,10 +2,9 @@ dummy:V:	montar_fs htc_computo renombrar_git
 	echo "nothing to do"
 
 # Nodos
-visnu:V:	compartir_fs montar_fs htc_master
+castillo:V:	compartir_fs montar_fs htc_submit
 notron:V:	compartir_fs montar_fs htc_computo
-fai:V:		montar_fs apt_computo apt_ldap apt_fai htc_submit
-arenero:V:	montar_fs htc_submit
+fai:V:		montar_fs apt_computo apt_ldap apt_fai htc_master
 
 # Clases
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
@@ -90,6 +89,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 
 /var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
 	set -x
+	rm /var/lib/cluster/htc_* /etc/condor/config.d/00node_*
 	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
 	&& etckeeper commit -m 'Configuración de nodo de condor correspondiente.' || true \
 	&& sudo /etc/init.d/condor restart \
