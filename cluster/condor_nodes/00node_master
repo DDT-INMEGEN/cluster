@@ -5,10 +5,14 @@ CONDOR_HOST = ibm1.cluster.inmegen.gob.mx
 ##No debe tener bind a todas las interfaces
 BIND_ALL_INTERFACES = FALSE
 NETWORK_INTERFACE = 192.168.21.254
-NEGOTIATOR = $(SBIN)/condor_negotiator
-COLLECTOR = $(SBIN)/condor_collector
+#NEGOTIATOR = $(SBIN)/condor_negotiator
+#COLLECTOR = $(SBIN)/condor_collector
 #Descomentar para nodo maestro
 DAEMON_LIST = COLLECTOR, NEGOTIATOR, MASTER
+
+#HOST permitions
+ALLOW_ADMINISTRATOR = $(CONDOR_HOST)
+ALLOW_READ  = *.cluster.inmegen.gob.mx
 ALLOW_WRITE = *.cluster.inmegen.gob.mx
 
 START = TRUE
