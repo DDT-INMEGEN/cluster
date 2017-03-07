@@ -1,5 +1,5 @@
-##El nodo que sera el maestro es visnu
-CONDOR_HOST = visnu.cluster.inmegen.gob.mx
+##El nodo que sera el maestro es ibm1
+CONDOR_HOST = ibm1.cluster.inmegen.gob.mx
 
 BIND_ALL_INTERFACES = TRUE
 #Descomentar para nodo de computo
