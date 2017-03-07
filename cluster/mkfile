@@ -1,10 +1,10 @@
-dummy:V:	montar_fs htc_computo renombrar_git
+dummy:V:	montar_fs htc_computo renombrar_git log
 	echo "nothing to do"
 
 # Nodos
-castillo:V:	compartir_fs montar_fs htc_submit
-notron:V:	compartir_fs montar_fs htc_computo
-fai:V:		montar_fs apt_computo apt_ldap apt_fai htc_master
+castillo:V:	compartir_fs montar_fs htc_submit log
+notron:V:	compartir_fs montar_fs htc_computo log
+fai:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log
 
 # Clases
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
@@ -14,6 +14,7 @@ locale:V:	 /var/lib/cluster/locale
 apt_%:V:	 /var/lib/cluster/apt_%
 force_update:V:	 /var/lib/cluster/force_update
 port_mirror:V:	 /var/lib/cluster/port_mirror
+log:V:	/var/log/journal
 
 ## Las clases htc_% son mutuamente excluyentes
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
@@ -127,3 +128,8 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
 	touch $target
+
+/var/log/journal:
+	mkdir -p /var/log/journal
+	systemd-tmpfiles --create --prefix /var/log/journal
+	systemctl restart systemd-journald
