@@ -90,7 +90,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 
 /var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
 	set -x
-	rm /var/lib/cluster/htc_* /etc/condor/config.d/00node_*
+	rm -f /var/lib/cluster/htc_* /etc/condor/config.d/00node_*
 	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
 	&& etckeeper commit -m 'Configuración de nodo de condor correspondiente.' || true \
 	&& sudo /etc/init.d/condor restart \
