@@ -1,19 +1,18 @@
 ##El nodo que sera el maestro es ibm1
-CONDOR_HOST = ibm1.cluster.inmegen.gob.mx
+CONDOR_HOST = 192.168.21.254
 
-##Fai tiene dos intefaces con ips diferentes
-##No debe tener bind a todas las interfaces
+##IBM1 tiene dos intefaces con ips diferentes,
+##Una para usar con condor y la otra externa para repos-
+##No debe tener bind a todas las interfaces, solo usar la interna.
 BIND_ALL_INTERFACES = FALSE
 NETWORK_INTERFACE = 192.168.21.254
-#NEGOTIATOR = $(SBIN)/condor_negotiator
-#COLLECTOR = $(SBIN)/condor_collector
 #Descomentar para nodo maestro
-DAEMON_LIST = COLLECTOR, NEGOTIATOR, MASTER, SCHEDD, STARD
+DAEMON_LIST = COLLECTOR, NEGOTIATOR, MASTER, SCHEDD, STARTD
 
-#HOST permitions
-ALLOW_ADMINISTRATOR = $(CONDOR_HOST)
-ALLOW_READ  = *.cluster.inmegen.gob.mx
-ALLOW_WRITE = *.cluster.inmegen.gob.mx
+#HOST permissions
+ALLOW_ADMINISTRATOR = 192.168.21.254
+ALLOW_READ  = 192.168.21.*
+ALLOW_WRITE = 192.168.21.*
 ALLOW_OWNER = $(FULL_HOSTNAME), $(ALLOW_ADMINISTRATOR)
 
 START = TRUE
@@ -22,9 +21,9 @@ CONTINUE = TRUE
 PREEMPT = FALSE
 KILL = FALSE
 
-UID_DOMAIN = visnu.cluster.inmegen.gob.mx
+UID_DOMAIN = $(CONDOR_HOST)
 TRUST_UID_DOMAIN = TRUE
-USE_NFS = FALSE
+USE_NFS = TRUE
 
 #Si hiciera falta se pone explicito que java
 #JAVA=/usr/bin/java
