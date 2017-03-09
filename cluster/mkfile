@@ -96,9 +96,10 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	&& sudo /etc/init.d/condor restart \
 	&& touch $target
 
-/var/lib/cluster/condor_init:	apt_computo
+/var/lib/cluster/condor_init:	apt_computo	usuarios
 	set -x
-	usermod -a -G docker condor \
+	#usermod -a -G docker condor \
+	true \
 	&& etckeeper commit -m 'Configuración de docker para condor.' || true \
 	&& service docker restart \
 	&& service condor restart \
