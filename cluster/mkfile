@@ -137,7 +137,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 
 usuarios:V:
 	sudo etckeeper commit -m 'Antes de sincronizar usuarios.' || true
-	sudo etckeeper vcs fetch origin ibm1
-	sudo etckeeper vcs checkout remotes/origin/ibm1 --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
+	sudo etckeeper vcs fetch origin castillo
+	sudo etckeeper vcs checkout remotes/origin/castillo --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
 	sudo etckeeper init
 	sudo etckeeper commit -m 'Sincronizar usuarios.' || true
