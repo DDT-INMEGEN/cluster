@@ -1,10 +1,10 @@
-dummy:V:	montar_fs htc_computo renombrar_git log
+dummy:V:	montar_fs htc_computo renombrar_git log	usuarios
 	echo "nothing to do"
 
 # Nodos
-castillo:V:	compartir_fs montar_fs htc_submit log
-notron:V:	compartir_fs montar_fs htc_computo log
-ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log
+castillo:V:	compartir_fs montar_fs htc_submit log usuarios
+notron:V:	compartir_fs montar_fs htc_computo log usuarios
+ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios
 
 # Clases
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
@@ -133,3 +133,10 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	mkdir -p /var/log/journal
 	systemd-tmpfiles --create --prefix /var/log/journal
 	systemctl restart systemd-journald
+
+usuarios:V:
+	sudo etckeeper commit -m 'Antes de sincronizar usuarios.'
+	sudo etckeeper vcs fetch origin ibm1
+	sudo etckeeper vcs checkout remotes/origin/ibm1 --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
+	sudo etckeeper init
+	sudo etckeeper commit -m 'Sincronizar usuarios.'
