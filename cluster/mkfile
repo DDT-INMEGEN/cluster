@@ -88,7 +88,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	&& mkdir -p `dirname $target` \
 	&& touch $target
 
-/var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
+/var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init	/etc/condor/config.d/01_general
 	set -x
 	rm -f /var/lib/cluster/htc_* /etc/condor/config.d/00node_*
 	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
