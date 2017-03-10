@@ -13,8 +13,10 @@ CONTINUE = TRUE
 PREEMPT = FALSE
 KILL = FALSE
 
-# UID_DOMAIN = $(CONDOR_HOST)
-# TRUST_UID_DOMAIN = TRUE
+#Dominios
+UID_DOMAIN = ibm1.cluster.inmegen.gob.mx
+TRUST_UID_DOMAIN = TRUE
+FILESYSTEM_DOMAIN = ibm1.cluster.inmegen.gob.mx
 USE_NFS = TRUE
 
 #Si hiciera falta se pone explicito que java
