@@ -136,8 +136,9 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	systemctl restart systemd-journald
 
 usuarios:V:
-	sudo etckeeper commit -m 'Antes de sincronizar usuarios.' || true
-	sudo etckeeper vcs fetch origin castillo
-	sudo etckeeper vcs checkout remotes/origin/castillo --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
-	sudo etckeeper init
-	sudo etckeeper commit -m 'Sincronizar usuarios.' || true
+	set -x
+	etckeeper commit -m 'Antes de sincronizar usuarios.' || true
+	etckeeper vcs fetch origin castillo
+	etckeeper vcs checkout remotes/origin/castillo --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
+	etckeeper init
+	etckeeper commit -m 'Sincronizar usuarios.' || true
