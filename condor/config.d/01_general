@@ -13,8 +13,8 @@ CONTINUE = TRUE
 PREEMPT = FALSE
 KILL = FALSE
 
-UID_DOMAIN = $(CONDOR_HOST)
-TRUST_UID_DOMAIN = TRUE
+# UID_DOMAIN = $(CONDOR_HOST)
+# TRUST_UID_DOMAIN = TRUE
 USE_NFS = TRUE
 
 #Si hiciera falta se pone explicito que java
@@ -26,16 +26,17 @@ NUM_SLOTS_TYPE_1 = 1
 SLOT_TYPE_1 = 100%
 SLOT_TYPE_1_PARTITIONABLE = TRUE
 
-# SSL Auth
-
-AUTH_SSL_CLIENT_CAFILE = /etc/condor/condor.crt
-AUTH_SSL_CLIENT_CERTFILE = /etc/condor/condor.crt
-AUTH_SSL_CLIENT_KEYFILE = /etc/condor/condor.key
-
-AUTH_SSL_SERVER_CAFILE = /etc/condor/condor.crt
-AUTH_SSL_SERVER_CERTFILE = /etc/condor/condor.crt
-AUTH_SSL_SERVER_KEYFILE = /etc/condor/condor.key
-
-CERTIFICATE_MAPFILE = /etc/condor/condor.map
-SEC_DAEMON_AUTHENTICATION = REQUIRED
-SEC_DAEMON_AUTHENTICATION_METHODS = SSL
+# # SSL Auth
+#
+# AUTH_SSL_CLIENT_CAFILE = /etc/condor/condor.crt
+# AUTH_SSL_CLIENT_CERTFILE = /etc/condor/condor.crt
+# AUTH_SSL_CLIENT_KEYFILE = /etc/condor/condor.key
+#
+# AUTH_SSL_SERVER_CAFILE = /etc/condor/condor.crt
+# AUTH_SSL_SERVER_CERTFILE = /etc/condor/condor.crt
+# AUTH_SSL_SERVER_KEYFILE = /etc/condor/condor.key
+#
+# CERTIFICATE_MAPFILE = /etc/condor/condor.map
+# SEC_DAEMON_AUTHENTICATION = REQUIRED
+# SEC_DAEMON_AUTHENTICATION_METHODS = SSL
+# SEC_DAEMON_AUTHENTICATION_METHODS = CLAIMTOBE
