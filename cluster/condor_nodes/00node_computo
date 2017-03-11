@@ -1,26 +1,6 @@
-##El nodo que sera el maestro es ibm1
-CONDOR_HOST = ibm1.cluster.inmegen.gob.mx
 
 BIND_ALL_INTERFACES = TRUE
-#Descomentar para nodo de computo
+
 DAEMON_LIST = STARTD, MASTER
-ALLOW_WRITE = *.cluster.inmegen.gob.mx
 
-START = TRUE
-SUSPEND = FALSE
-CONTINUE = TRUE
-PREEMPT = FALSE
-KILL = FALSE
-
-UID_DOMAIN = visnu.cluster.inmegen.gob.mx
-TRUST_UID_DOMAIN = TRUE
-USE_NFS = FALSE
-
-#Si hiciera falta se pone explicito que java
-#JAVA=/usr/bin/java
-
-NUM_SLOTS = 1
-NUM_SLOTS_TYPE_1 = 1
-SLOT_TYPE_1 = 100%
-SLOT_TYPE_1_PARTITIONABLE = TRUE
 

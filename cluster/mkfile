@@ -88,17 +88,20 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	&& mkdir -p `dirname $target` \
 	&& touch $target
 
-/var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init
+/var/lib/cluster/htc_%:	/etc/cluster/condor_nodes/00node_%	condor_init	/etc/condor/config.d/01_general
 	set -x
 	rm -f /var/lib/cluster/htc_* /etc/condor/config.d/00node_*
 	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
+	&& chown condor:root /etc/condor/condor.key /etc/condor/condor.crt \
+	&& chmod 440 /etc/condor/condor.key /etc/condor/condor.crt \
 	&& etckeeper commit -m 'Configuración de nodo de condor correspondiente.' || true \
 	&& sudo /etc/init.d/condor restart \
 	&& touch $target
 
-/var/lib/cluster/condor_init:	apt_computo
+/var/lib/cluster/condor_init:	apt_computo	usuarios
 	set -x
-	usermod -a -G docker condor \
+	#usermod -a -G docker condor \
+	true \
 	&& etckeeper commit -m 'Configuración de docker para condor.' || true \
 	&& service docker restart \
 	&& service condor restart \
@@ -135,8 +138,8 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	systemctl restart systemd-journald
 
 usuarios:V:
-	sudo etckeeper commit -m 'Antes de sincronizar usuarios.'
-	sudo etckeeper vcs fetch origin ibm1
-	sudo etckeeper vcs checkout remotes/origin/ibm1 --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
+	sudo etckeeper commit -m 'Antes de sincronizar usuarios.' || true
+	sudo etckeeper vcs fetch origin castillo
+	sudo etckeeper vcs checkout remotes/origin/castillo --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
 	sudo etckeeper init
-	sudo etckeeper commit -m 'Sincronizar usuarios.'
+	sudo etckeeper commit -m 'Sincronizar usuarios.' || true
