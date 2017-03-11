@@ -1,34 +1,7 @@
-##El nodo que sera el maestro es ibm1
-CONDOR_HOST = 192.168.21.254
 
-##Castillo sale por la externa
-##Visnu sale por la interna
 BIND_ALL_INTERFACES = FALSE
 NETWORK_INTERFACE = 192.168.21.110
-#Descomentar para nodo de submit
+
 DAEMON_LIST = MASTER, SCHEDD
 
-#HOST permissions
-ALLOW_ADMINISTRATOR = 192.168.21.254
-ALLOW_READ  = 192.168.21.*
-ALLOW_WRITE = 192.168.21.*
-ALLOW_OWNER = $(FULL_HOSTNAME), $(ALLOW_ADMINISTRATOR)
-
-START = TRUE
-SUSPEND = FALSE
-CONTINUE = TRUE
-PREEMPT = FALSE
-KILL = FALSE
-
-UID_DOMAIN = $(CONDOR_HOST)
-TRUST_UID_DOMAIN = TRUE
-USE_NFS = TRUE
-
-#Si hiciera falta se pone explicito que java
-#JAVA=/usr/bin/java
-
-NUM_SLOTS = 1
-NUM_SLOTS_TYPE_1 = 1
-SLOT_TYPE_1 = 100%
-SLOT_TYPE_1_PARTITIONABLE = TRUE
 
