@@ -5,6 +5,7 @@ dummy:V:	montar_fs htc_computo renombrar_git log	usuarios
 castillo:V:	compartir_fs montar_fs htc_submit log usuarios
 notron:V:	compartir_fs montar_fs htc_computo log usuarios
 ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios
+ilum:V:		log	usuarios
 
 # Clases
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
