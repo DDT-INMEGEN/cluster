@@ -38,6 +38,7 @@ r-base-core
 samtools
 singularity-condor
 smalt
+tophat
 tree
 trimmomatic
 util-linux
