@@ -28,7 +28,6 @@ ipython3
 libcurl4-openssl-dev
 liblapack-dev
 make
-meld
 multitail
 nfs-common
 openjdk-9-jdk-headless
@@ -47,3 +46,7 @@ vcsh
 vis
 xorg-dev
 xterm
+meld
+git
+gitg
+inmegen-bundle
