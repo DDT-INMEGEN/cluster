@@ -5,6 +5,7 @@ dummy:V:	montar_fs htc_computo renombrar_git log	usuarios
 castillo:V:	compartir_fs montar_fs htc_submit log usuarios
 notron:V:	compartir_fs montar_fs htc_computo log usuarios
 ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios
+ilum:V:		log	usuarios
 
 # Clases
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
@@ -100,10 +101,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 
 /var/lib/cluster/condor_init:	apt_computo	usuarios
 	set -x
-	#usermod -a -G docker condor \
-	true \
-	&& etckeeper commit -m 'Configuración de docker para condor.' || true \
-	&& service docker restart \
+	service docker restart \
 	&& service condor restart \
 	&& touch $target
 
@@ -138,8 +136,9 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	systemctl restart systemd-journald
 
 usuarios:V:
-	sudo etckeeper commit -m 'Antes de sincronizar usuarios.' || true
-	sudo etckeeper vcs fetch origin castillo
-	sudo etckeeper vcs checkout remotes/origin/castillo --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
-	sudo etckeeper init
-	sudo etckeeper commit -m 'Sincronizar usuarios.' || true
+	set -x
+	etckeeper commit -m 'Antes de sincronizar usuarios.' || true
+	etckeeper vcs fetch origin castillo
+	etckeeper vcs checkout remotes/origin/castillo --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
+	etckeeper init
+	etckeeper commit -m 'Sincronizar usuarios.' || true
