@@ -145,7 +145,7 @@ usuarios:V:
 	etckeeper init
 	etckeeper commit -m 'Sincronizar usuarios.' || true
 
-/var/lib/cluster/java:V:
+/var/lib/cluster/java:
 	set -x
 	etckeeper commit -m 'Antes de instalar oracle-java8.' || true \
 	&& mv /etc/apt/apt.conf.d/90-apt-proxy /tmp/ \
