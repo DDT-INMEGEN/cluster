@@ -1,10 +1,10 @@
-dummy:V:	montar_fs htc_computo renombrar_git log	usuarios
+dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
 	echo "nothing to do"
 
 # Nodos
-castillo:V:	compartir_fs montar_fs htc_submit log usuarios
-notron:V:	compartir_fs montar_fs htc_computo log usuarios
-ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios
+castillo:V:	compartir_fs montar_fs htc_submit log usuarios java
+notron:V:	compartir_fs montar_fs htc_computo log usuarios java
+ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java
 ilum:V:		log	usuarios
 
 # Clases
@@ -18,10 +18,11 @@ port_mirror:V:	 /var/lib/cluster/port_mirror
 log:V:	/var/log/journal
 
 ## Las clases htc_% son mutuamente excluyentes
-htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo
-htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo
-htc_master:V:	/var/lib/cluster/htc_master	apt_computo
+htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init
+htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init
+htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init
 condor_init:V:	/var/lib/cluster/condor_init	locale
+java:V:	/var/lib/cluster/java
 
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
 	set -x
@@ -77,6 +78,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 /var/lib/cluster/apt_%:	/etc/cluster/apt/% /var/lib/cluster/repo_cluster
 	set -x
 	mkdir -p `dirname $target` \
+	&& apt-get update \
 	&& apt-get -y install `cat $prereq` \
 	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true \
 	&& touch $target
@@ -99,7 +101,7 @@ condor_init:V:	/var/lib/cluster/condor_init	locale
 	&& sudo /etc/init.d/condor restart \
 	&& touch $target
 
-/var/lib/cluster/condor_init:	apt_computo	usuarios
+/var/lib/cluster/condor_init:	usuarios
 	set -x
 	service docker restart \
 	&& service condor restart \
@@ -142,3 +144,15 @@ usuarios:V:
 	etckeeper vcs checkout remotes/origin/castillo --  /etc/passwd /etc/shadow /etc/group /etc/gshadow
 	etckeeper init
 	etckeeper commit -m 'Sincronizar usuarios.' || true
+
+/var/lib/cluster/java:V:
+	set -x
+	etckeeper commit -m 'Antes de instalar oracle-java8.' || true \
+	&& mv /etc/apt/apt.conf.d/90-apt-proxy /tmp/ \
+	&& add-apt-repository ppa:webupd8team/java \
+	&& apt-get update \
+	&& echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections \
+	&& apt-get install -y oracle-java8-installer oracle-java8-set-default \
+	&& mv /tmp/90-apt-proxy /etc/apt/apt.conf.d/ \
+	&& etckeeper commit -m 'Después de instalar oracle-java8.' || true \
+	&& touch $target
