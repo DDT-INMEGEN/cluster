@@ -1,11 +1,13 @@
 9base
 apt-file
+aracne
 autoconf
 bedtools
 bowtie
 bowtie2
 bwa
 condor
+condormk
 docker.io
 etckeeper
 fastqc
@@ -22,12 +24,15 @@ htop
 ifenslave
 iftop
 igv
+inmegen-bundle
 iotop
 ipython
 ipython3
 libcurl4-openssl-dev
 liblapack-dev
+louvain
 make
+meld
 multitail
 nfs-common
 openjdk-9-jdk-headless
@@ -46,7 +51,3 @@ vcsh
 vis
 xorg-dev
 xterm
-meld
-git
-gitg
-inmegen-bundle
