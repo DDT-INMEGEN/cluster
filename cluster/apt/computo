@@ -2,6 +2,7 @@
 apt-file
 aracne
 autoconf
+bcftools
 bedtools
 bowtie
 bowtie2
