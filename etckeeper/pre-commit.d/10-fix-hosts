@@ -1,0 +1,4 @@
+#!/bin/sh
+umask 0002
+sed -ri -e 's#@hostname@#'`hostname`'#g' /etc/hosts
+chmod 644 /etc/hosts
