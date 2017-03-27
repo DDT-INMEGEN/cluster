@@ -75,13 +75,13 @@ java:V:	/var/lib/cluster/java
 	&& mkdir -p `dirname $target` \
 	&& touch $target
 
-/var/lib/cluster/apt_%:	/etc/cluster/apt/% /var/lib/cluster/repo_cluster
+/var/lib/cluster/apt_%:	/etc/cluster/apt/%
 	set -x
 	mkdir -p `dirname $target` \
 	&& apt-get update \
 	&& apt-get -y install `cat $prereq` \
-	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true \
-	&& touch $target
+	&& touch $target \
+	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true
 
 /var/lib/cluster/repo_cluster:
 	set -x
