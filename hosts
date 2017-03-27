@@ -11,7 +11,7 @@ ff02::2 ip6-allrouters
 192.168.21.144	indra.cluster.inmegen.gob.mx
 
 192.168.21.254	ibm1.cluster.inmegen.gob.mx
-192.168.10.220	fai.cluster.inmegen.gob.mx	repo.cluster.inmegen.gob.mx	apt.cluster.inmegen.gob.mx	cluster.inmegen.gob.mx	git.cluster.inmegen.gob.mx
+192.168.105.220	fai.cluster.inmegen.gob.mx	repo.cluster.inmegen.gob.mx	apt.cluster.inmegen.gob.mx	cluster.inmegen.gob.mx	git.cluster.inmegen.gob.mx
 192.168.21.102	ibm2.cluster.inmegen.gob.mx
 192.168.21.142  ibm3.cluster.inmegen.gob.mx
 192.168.21.120  ibm4.cluster.inmegen.gob.mx	build.cluster.inmegen.gob.mx
@@ -25,4 +25,4 @@ ff02::2 ip6-allrouters
 192.168.21.148	dell2.cluster.inmegen.gob.mx
 192.168.21.125	dell3.cluster.inmegen.gob.mx
 
-192.168.10.221	castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx	sarlacc.cluster.inmegen.gob.mx
+192.168.105.221	castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx	sarlacc.cluster.inmegen.gob.mx
