@@ -75,11 +75,15 @@ java:V:	/var/lib/cluster/java
 	&& mkdir -p `dirname $target` \
 	&& touch $target
 
-/var/lib/cluster/apt_%:	/etc/cluster/apt/%
+# Desinstalar los paquetes en /etc/cluster/apt/%-
+# e instalar los de /etc/cluster/apt/%
+#
+/var/lib/cluster/apt_%:	/etc/cluster/apt/%	/etc/cluster/apt/%-
 	set -x
 	mkdir -p `dirname $target` \
 	&& apt-get update \
-	&& apt-get -y install `cat $prereq` \
+	&& apt-get -y purge `cat '/etc/cluster/apt/'$stem'-'` \
+	&& apt-get -y install `cat '/etc/cluster/apt/'$stem` \
 	&& touch $target \
 	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true
 
@@ -120,6 +124,9 @@ java:V:	/var/lib/cluster/java
 	| sed -e 's#^'`hostname`':##' \
 	> $target
 
+# Seleccionar los puntos de montaje en nfs_mounts
+# sin incluirse a sí mismos y sin duplicar entradas.
+#
 /var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	apt_compartido
 	set -x
 	cat $prereq \
@@ -132,11 +139,15 @@ java:V:	/var/lib/cluster/java
 	mkdir -p `dirname $target`
 	touch $target
 
+# Activar los logs persistentes en el sistema.
+#
 /var/log/journal:
 	mkdir -p /var/log/journal
 	systemd-tmpfiles --create --prefix /var/log/journal
 	systemctl restart systemd-journald
 
+# Sincronizar los usuarios desde castillo.cluster.inmegen.gob.mx
+#
 usuarios:V:
 	set -x
 	etckeeper commit -m 'Antes de sincronizar usuarios.' || true
@@ -145,6 +156,9 @@ usuarios:V:
 	etckeeper init
 	etckeeper commit -m 'Sincronizar usuarios.' || true
 
+# Instalar oracle-java sin intervanción humana.
+# Es necesario deshabilitar el proxy durante la instalación.
+#
 /var/lib/cluster/java:
 	set -x
 	etckeeper commit -m 'Antes de instalar oracle-java8.' || true \
