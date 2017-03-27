@@ -3,5 +3,6 @@ umask '0002'
 etckeeper commit -m 'Auto commit before applying cluster config.'
 etckeeper vcs pull origin auto-conf -X theirs -s recursive --no-edit
 etckeeper init
+chmod 644 /etc/hosts
 cd /etc/cluster/
 /usr/lib/plan9/bin/mk `hostname` || /usr/lib/plan9/bin/mk
