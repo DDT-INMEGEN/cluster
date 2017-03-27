@@ -24,5 +24,7 @@ ff02::2 ip6-allrouters
 192.168.21.123  dell1.cluster.inmegen.gob.mx
 192.168.21.148	dell2.cluster.inmegen.gob.mx
 192.168.21.125	dell3.cluster.inmegen.gob.mx
+192.168.21.154  dell4.cluster.inmegen.gob.mx
+192.168.21.114  dell6.cluster.inmegen.gob.mx
 
 192.168.105.221	castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx	sarlacc.cluster.inmegen.gob.mx
