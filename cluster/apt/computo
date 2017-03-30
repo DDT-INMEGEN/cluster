@@ -16,7 +16,6 @@ docker.io
 etckeeper
 fastqc
 fish
-freebayes
 g++
 gcc
 gdebi-core
@@ -24,6 +23,7 @@ gfortran
 git
 git-flow
 gitg
+gnuplot
 htop
 ifenslave
 iftop
@@ -44,6 +44,7 @@ nfs-common
 openjdk-9-jdk-headless
 perl
 picard-tools
+python-htseq
 r-base-core
 singularity-condor
 smalt
