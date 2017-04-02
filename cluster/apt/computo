@@ -1,4 +1,5 @@
 9base
+angsd-inmegen
 apt-file
 aracne
 autoconf
@@ -9,6 +10,7 @@ bowtie2
 bwa
 condor
 condormk
+delly-inmegen
 docker.io
 etckeeper
 fastqc
@@ -30,6 +32,7 @@ iotop
 ipython
 ipython3
 libcurl4-openssl-dev
+libhtseq-inmegen
 liblapack-dev
 louvain
 make
