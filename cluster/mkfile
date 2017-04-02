@@ -134,7 +134,7 @@ java:V:	/var/lib/cluster/java
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
 	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
-	mount -a
+	mount -a || true
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
 	touch $target
