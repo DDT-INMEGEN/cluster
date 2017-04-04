@@ -8,7 +8,9 @@ bcftools-inmegen
 bedtools
 bowtie
 bowtie2
+bsdtar
 bwa
+commfind
 condor
 condormk
 delly-inmegen
@@ -37,6 +39,7 @@ libcurl4-openssl-dev
 libhtseq-inmegen
 liblapack-dev
 louvain
+louvain
 make
 meld
 multitail
@@ -44,7 +47,19 @@ nfs-common
 openjdk-9-jdk-headless
 perl
 picard-tools
+python3-matplotlib
+python3-networkx
+python3-pandas
+python3-scipy
+python3-seaborn
+python3-virtualenv
 python-htseq
+python-matplotlib
+python-networkx
+python-pandas
+python-scipy
+python-seaborn
+python-virtualenv
 r-base-core
 singularity-condor
 smalt
