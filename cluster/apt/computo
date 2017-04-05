@@ -47,12 +47,14 @@ nfs-common
 openjdk-9-jdk-headless
 perl
 picard-tools
+python3-cutadapt
 python3-matplotlib
 python3-networkx
 python3-pandas
 python3-scipy
 python3-seaborn
 python3-virtualenv
+python-cutadapt
 python-htseq
 python-matplotlib
 python-networkx
