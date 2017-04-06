@@ -18,6 +18,7 @@ docker.io
 etckeeper
 fastqc
 fish
+freebayes
 g++
 gcc
 gdebi-core
@@ -38,7 +39,6 @@ ipython3
 libcurl4-openssl-dev
 libhtseq-inmegen
 liblapack-dev
-louvain
 louvain
 make
 meld
