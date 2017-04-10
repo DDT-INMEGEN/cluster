@@ -37,6 +37,7 @@ iotop
 ipython
 ipython3
 libcurl4-openssl-dev
+libdbi-perl
 libhtseq-inmegen
 liblapack-dev
 louvain
