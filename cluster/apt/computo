@@ -46,6 +46,7 @@ meld
 multitail
 nfs-common
 openjdk-9-jdk-headless
+parallel
 perl
 picard-tools
 python3-cutadapt
