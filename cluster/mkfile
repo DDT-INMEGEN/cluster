@@ -127,8 +127,17 @@ java:V:	/var/lib/cluster/java
 # sin incluirse a sí mismos y sin duplicar entradas.
 #
 # También eliminar las entradas que se encuentren en nfs_mounts-
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	/etc/cluster/nfs_mounts-
+/var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
+	mount -a || true
+	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
+	mkdir -p `dirname $target`
+	touch $target
+
+# Agregar a fstab los sistemas compartidos en nfs_mounts
+# y quitar los de nfs_mounts-
+#
+/etc/fstab:	/etc/cluster/nfs_mounts	/etc/cluster/nfs_mounts-
 	grep -vf /etc/cluster/nfs_mounts- /etc/fstab > /etc/fstab.2 \
 	&& mv /etc/fstab.2 /etc/fstab
 	#
@@ -137,10 +146,6 @@ java:V:	/var/lib/cluster/java
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
 	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
-	mount -a || true
-	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
-	mkdir -p `dirname $target`
-	touch $target
 
 # Activar los logs persistentes en el sistema.
 #
