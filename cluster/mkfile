@@ -122,7 +122,9 @@ java:V:	/var/lib/cluster/java
 	set -x
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
-	> $target
+	> $target.build \
+	&& mv $target.build $target
+	exportfs -a
 
 # Seleccionar los puntos de montaje en nfs_mounts
 # sin incluirse a sí mismos y sin duplicar entradas.
