@@ -127,9 +127,13 @@ java:V:	/var/lib/cluster/java
 # Seleccionar los puntos de montaje en nfs_mounts
 # sin incluirse a sí mismos y sin duplicar entradas.
 #
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
+# También eliminar las entradas que se encuentren en nfs_mounts-
+/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	/etc/cluster/nfs_mounts-
 	set -x
-	cat $prereq \
+	grep -vf /etc/cluster/nfs_mounts- /etc/fstab > /etc/fstab.2 \
+	&& mv /etc/fstab.2 /etc/fstab
+	#
+	cat /etc/cluster/nfs_mounts \
 	| grep -vE '^'`hostname`':' \
 	| xargs -l -I{} \
 		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
