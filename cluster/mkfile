@@ -114,7 +114,6 @@ java:V:	/var/lib/cluster/java
 /var/lib/cluster/compartido:	/etc/exports
 	set -x
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos.' || true \
-	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
