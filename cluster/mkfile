@@ -21,7 +21,8 @@ log:V:	/var/log/journal
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init
 htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init
-condor_init:V:	/var/lib/cluster/condor_init	locale
+condor_init:V:	/var/lib/cluster/condor_init	server_init
+server_init:V:	/var/lib/cluster/server_init	locale
 java:V:	/var/lib/cluster/java
 
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
@@ -114,7 +115,6 @@ java:V:	/var/lib/cluster/java
 /var/lib/cluster/compartido:	/etc/exports
 	set -x
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos.' || true \
-	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
@@ -122,22 +122,33 @@ java:V:	/var/lib/cluster/java
 	set -x
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
-	> $target
+	> $target.build \
+	&& mv $target.build $target
+	exportfs -a
 
 # Seleccionar los puntos de montaje en nfs_mounts
 # sin incluirse a sí mismos y sin duplicar entradas.
 #
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts
+/var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
-	cat $prereq \
-	| grep -vE '^'`hostname`':' \
-	| xargs -l -I{} \
-		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
-	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
 	mount -a || true
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
 	touch $target
+
+# Agregar a fstab los sistemas compartidos en nfs_mounts
+# y quitar los de nfs_mounts-
+#
+/etc/fstab:	/etc/cluster/nfs_mounts	/etc/cluster/nfs_mounts-
+	set -x
+	grep -vf /etc/cluster/nfs_mounts- /etc/fstab > /etc/fstab.2 \
+	&& mv /etc/fstab.2 /etc/fstab
+	#
+	cat /etc/cluster/nfs_mounts \
+	| grep -vE '^'`hostname`':' \
+	| xargs -l -I{} \
+		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
+	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
 
 # Activar los logs persistentes en el sistema.
 #
@@ -170,3 +181,10 @@ usuarios:V:
 	&& mv /tmp/90-apt-proxy /etc/apt/apt.conf.d/ \
 	&& etckeeper commit -m 'Después de instalar oracle-java8.' || true \
 	&& touch $target
+
+# Configurar git para evitar problemas con etckeeper.
+#
+/var/lib/cluster/server_init:
+	etckeeper vcs config user.name 'Joshua Haase'
+	etckeeper vcs config user.email cluster@inmegen.gob.mx
+	etckeeper vcs config push.default simple

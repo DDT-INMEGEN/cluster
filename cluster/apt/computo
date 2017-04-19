@@ -18,6 +18,7 @@ docker.io
 etckeeper
 fastqc
 fish
+freebayes
 g++
 gcc
 gdebi-core
@@ -36,15 +37,16 @@ iotop
 ipython
 ipython3
 libcurl4-openssl-dev
+libdbi-perl
 libhtseq-inmegen
 liblapack-dev
-louvain
 louvain
 make
 meld
 multitail
 nfs-common
 openjdk-9-jdk-headless
+parallel
 perl
 picard-tools
 python3-cutadapt
