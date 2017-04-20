@@ -7,8 +7,8 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
 192.168.21.110	visnu.cluster.inmegen.gob.mx
-192.168.21.116	notron.cluster.inmegen.gob.mx
-192.168.21.144	indra.cluster.inmegen.gob.mx
+192.168.21.168	notron.cluster.inmegen.gob.mx
+192.168.21.171	indra.cluster.inmegen.gob.mx
 
 192.168.21.254	ibm1.cluster.inmegen.gob.mx
 192.168.105.220	fai.cluster.inmegen.gob.mx	repo.cluster.inmegen.gob.mx	apt.cluster.inmegen.gob.mx	cluster.inmegen.gob.mx	git.cluster.inmegen.gob.mx
