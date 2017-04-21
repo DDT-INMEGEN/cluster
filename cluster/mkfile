@@ -2,7 +2,7 @@ dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
 	echo "nothing to do"
 
 # Nodos
-castillo:V:	compartir_fs montar_fs htc_submit log java
+castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo
 notron:V:	compartir_fs montar_fs htc_computo log usuarios java
 ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java
 ilum:V:		log	usuarios
