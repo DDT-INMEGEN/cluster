@@ -2,6 +2,6 @@
 #hostname:dir	parameters
 castillo:/home	192.168.21.0/24(rw,sync,no_subtree_check)
 castillo:/castle	192.168.21.0/24(rw,sync,no_subtree_check)
-#notron:/100g	192.168.21.0/24(rw,sync,no_subtree_check)
+notron:/100g	192.168.21.0/24(rw,sync,no_subtree_check)
 castillo:/labs	192.168.21.0/24(rw,sync,no_subtree_check)
 castillo:/vault	192.168.21.0/24(rw,sync,no_subtree_check)
