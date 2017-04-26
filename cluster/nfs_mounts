@@ -2,4 +2,4 @@ visnu:/labs	/labs	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0
 visnu:/vault	/vault	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
 visnu:/castle	/castle	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
 visnu:/home	/home	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
-visnu:/100g	/100g	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
+notron:/100g	/100g	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
