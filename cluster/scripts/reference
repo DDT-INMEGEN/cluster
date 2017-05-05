@@ -1,0 +1,22 @@
+#!/bin/sh
+
+REFERENCE_DIR=/reference
+
+# Verificar que el lugar donde se encuentran las referencias:
+#
+# - Tenga permisos de lectura para todos.
+# - La escritura de los directorios esté restringida al grupo "reference".
+# - Los archivos de verificación puedan escribirse por el grupo reference.
+# - Los archivos sólo puedan eliminarse intencionalmente (no accidentalmente).
+# - Los archivos de referencia no puedan escribirse por nadie.
+
+find $REFERENCE_DIR \
+	-type d \
+	-exec chmod 775 '{}' + \
+	-exec chmod g+st '{}' + \
+
+find $REFERENCE_DIR \
+	-type f \
+	-exec chmod 444 '{}' + \
+	-exec chmod g+st '{}' + \
+
