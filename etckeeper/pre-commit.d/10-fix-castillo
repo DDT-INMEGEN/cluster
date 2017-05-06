@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 [[ "x`hostname`" == "xcastillo" ]] \
 && {
 	grep -v visnu /etc/fstab > /etc/fstab.2 \
