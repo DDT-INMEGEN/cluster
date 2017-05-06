@@ -131,6 +131,7 @@ java:V:	/var/lib/cluster/java
 #
 /var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
+	systemctl daemon-reload
 	mount -a || true
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
