@@ -1,0 +1,7 @@
+#!/bin/sh
+set -x
+[[ "x`hostname`" == "xcastillo" ]] \
+&& {
+	grep -v visnu /etc/fstab > /etc/fstab.2 \
+	&& mv /etc/fstab.2 /etc/fstab
+}
