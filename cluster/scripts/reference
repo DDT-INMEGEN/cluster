@@ -10,13 +10,14 @@ REFERENCE_DIR=/reference
 # - Los archivos sólo puedan eliminarse intencionalmente (no accidentalmente).
 # - Los archivos de referencia no puedan escribirse por nadie.
 
+chgrp -R reference $REFERENCE_DIR
+
 find $REFERENCE_DIR \
 	-type d \
 	-exec chmod 775 '{}' + \
-	-exec chmod g+st '{}' + \
+	-exec chmod g+st '{}' +
 
 find $REFERENCE_DIR \
 	-type f \
-	-exec chmod 444 '{}' + \
-	-exec chmod g+st '{}' + \
+	-exec chmod 444 '{}' +
 
