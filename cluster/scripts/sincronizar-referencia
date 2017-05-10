@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Confirmar que hay espacio suficiente para análisis (50G) y
+# para el tamaño de la referencia.
+#
+# Si hay espacio suficiente copiar el archivo.
+#
+# En caso contrario vincularlo desde /remote/reference.
+
+reference_size() {
+	# reference_size <reference>
+	du -bs "$1" \
+	| awk '{print $1}'
+}
+
+available_size() {
+	# available_size <directory>
+	df --block-size=1 "$1" \
+	| awk 'END {print $4}'
+}
+
+enough_space() {
+	# enough_space <required_space> <reference> <directory>
+	local REQUIRED_SIZE="$1"
+	local REFERENCE="$2"
+	local DIR="$3"
+	# usable_size = available_size - reference_size
+	local USABLE_SIZE=$(( $(available_size "$DIR") - $(reference_size "$REFERENCE") ))
+	[ "$USABLE_SIZE" -gt "$REQUIRED_SIZE" ]	\
+	&& true \
+	|| false
+}
+
+link_or_copy() {
+	# link_or_copy <required-size> <reference> <directory>
+	local REQUIRED_SIZE="$1"
+	local REFERENCE="$2"
+	local DIR="$3"
+	enough_space "$REQUIRED_SIZE" "$REFERENCE" "$DIR" \
+	&& rsync -abvr "$REFERENCE" "$DIR" \
+	|| ln -s "$REFERENCE" "$DIR"
+}
+
+main() {
+	source /etc/cluster/reference.conf
+	MIN_SPACE=50000000000 # 50 GB
+	REFERENCE="$1"
+	link_or_copy "$MIN_SPACE" "$REFERENCE" "$REFERENCE_DIR"
+}
