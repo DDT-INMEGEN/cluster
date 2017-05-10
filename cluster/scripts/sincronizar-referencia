@@ -1,11 +1,16 @@
 #!/bin/sh
 
-# Confirmar que hay espacio suficiente para análisis (50G) y
+# Confirmar que hay espacio suficiente para análisis (MIN_SPACE) y
 # para el tamaño de la referencia.
 #
 # Si hay espacio suficiente copiar el archivo.
 #
 # En caso contrario vincularlo desde /remote/reference.
+#
+# La configuración de este script se encuentra en `/etc/cluster/reference.conf`.
+# REFERENCE_DIR es el destino donde se sincroniza la referencia,
+# REFERENCE_SOURCE es el origen de la referencia,
+# MIN_SPACE es el espacio de trabajo solicitado.
 
 reference_size() {
 	# reference_size <reference>
@@ -47,3 +52,5 @@ main() {
 	REFERENCE="$1"
 	link_or_copy "$MIN_SPACE" "$REFERENCE" "$REFERENCE_DIR"
 }
+
+main "$@"
