@@ -1,6 +1,6 @@
 #!/bin/sh
 
-REFERENCE_DIR=/reference
+source /etc/cluster/reference.conf
 
 # Verificar que el lugar donde se encuentran las referencias:
 #
@@ -21,10 +21,8 @@ find $REFERENCE_DIR \
 find $REFERENCE_DIR \
 	-type f \
 	-exec chmod 444 '{}' ';'\
-	-exec chmod g-st '{}' ';'
+	-exec chmod ugo-st '{}' ';'
 
 # Dejar que los miembros del grupo `reference` editen la documentación de la referencia
 
-chmod g+w "$REFERENCE_DIR/README.md"
-chmod g+rwX -R .git
-chmod -t -R .git
+chmod g+rwX,ugo-t -R "$REFERENCE_DIR/README.md" "$REFERENCE_DIR/.git" || true
