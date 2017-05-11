@@ -118,7 +118,7 @@ java:V:	/var/lib/cluster/java
 /var/lib/cluster/reference: /etc/cluster/sync-reference /etc/cluster/sync-reference-
 	set -x
 	mkdir -p `dirname $target`
-	source /etc/cluster/reference.conf
+	. /etc/cluster/reference.conf
 	#
 	# Comprobar permisos de referencia
 	/etc/cluster/scripts/reference || true

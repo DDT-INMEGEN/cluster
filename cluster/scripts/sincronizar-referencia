@@ -47,7 +47,7 @@ link_or_copy() {
 }
 
 main() {
-	source /etc/cluster/reference.conf
+	. /etc/cluster/reference.conf
 	MIN_SPACE=50000000000 # 50 GB
 	REFERENCE="$1"
 	link_or_copy "$MIN_SPACE" "$REFERENCE" "$REFERENCE_DIR"
