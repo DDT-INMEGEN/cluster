@@ -7,4 +7,3 @@ etckeeper vcs pull origin $RAMA -X theirs -s recursive --no-edit
 etckeeper init
 /etc/cron.hourly/configurador
 etckeeper commit -m "Después de probar rama $RAMA"
-etckeeper vcs push origin
