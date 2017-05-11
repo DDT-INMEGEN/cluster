@@ -1,6 +1,6 @@
 #!/bin/sh
 
-REFERENCE_DIR=/reference
+. /etc/cluster/reference.conf
 
 # Verificar que el lugar donde se encuentran las referencias:
 #
@@ -10,13 +10,19 @@ REFERENCE_DIR=/reference
 # - Los archivos sólo puedan eliminarse intencionalmente (no accidentalmente).
 # - Los archivos de referencia no puedan escribirse por nadie.
 
+chown -R root:reference $REFERENCE_DIR
+
 find $REFERENCE_DIR \
 	-type d \
-	-exec chmod 775 '{}' + \
-	-exec chmod g+st '{}' + \
+	-exec chmod 775 '{}' ';' \
+	-exec chmod g+s '{}' ';' \
+	-exec chmod +t '{}' ';'
 
 find $REFERENCE_DIR \
 	-type f \
-	-exec chmod 444 '{}' + \
-	-exec chmod g+st '{}' + \
+	-exec chmod 444 '{}' ';'\
+	-exec chmod ugo-st '{}' ';'
 
+# Dejar que los miembros del grupo `reference` editen la documentación de la referencia
+
+chmod g+rwX,ugo-t -R "$REFERENCE_DIR/README.md" "$REFERENCE_DIR/.git" 2>/dev/null || true

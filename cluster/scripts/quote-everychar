@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# This script prints an escape before every char.
+# This is useful for passing files to `xargs`.
+
+sed -r -e 's#(.)#\\\1#g' "$@"
