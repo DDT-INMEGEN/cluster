@@ -189,3 +189,4 @@ usuarios:V:
 	etckeeper vcs config user.name 'Joshua Haase'
 	etckeeper vcs config user.email cluster@inmegen.gob.mx
 	etckeeper vcs config push.default simple
+	touch $target
