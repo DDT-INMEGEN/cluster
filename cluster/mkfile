@@ -126,7 +126,8 @@ java:V:	/var/lib/cluster/java
 	# Eliminar referencias innecesarias
 	grep -vE '^#' /etc/cluster/sync-reference- \
 	| /etc/cluster/scripts/quote-everychar \
-	| xargs rm -r
+	| xargs rm -r \
+	|| true
 	#
 	# Sincronizar las referencias que no existen
 	grep -vE '^#' /etc/cluster/sync-reference \
