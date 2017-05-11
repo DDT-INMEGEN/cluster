@@ -25,4 +25,4 @@ find $REFERENCE_DIR \
 
 # Dejar que los miembros del grupo `reference` editen la documentación de la referencia
 
-chmod g+rwX,ugo-t -R "$REFERENCE_DIR/README.md" "$REFERENCE_DIR/.git" || true
+chmod g+rwX,ugo-t -R "$REFERENCE_DIR/README.md" "$REFERENCE_DIR/.git" 2>/dev/null || true
