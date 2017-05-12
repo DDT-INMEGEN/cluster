@@ -68,6 +68,7 @@ python-virtualenv
 r-base-core
 singularity-condor
 smalt
+snap-aligner
 suckless-tools
 tophat
 tree
