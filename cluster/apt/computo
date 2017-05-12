@@ -45,6 +45,7 @@ picard-tools
 r-base-core
 singularity-condor
 smalt
+snap-aligner
 tophat
 tree
 trimmomatic
