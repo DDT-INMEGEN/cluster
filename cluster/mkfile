@@ -1,8 +1,8 @@
-dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
+dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java reference
 	echo "nothing to do"
 
 # Nodos
-castillo:V:	compartir_fs montar_fs htc_submit log java
+castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo reference
 notron:V:	compartir_fs montar_fs htc_computo log usuarios java
 ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java
 ilum:V:		log	usuarios
@@ -16,12 +16,14 @@ apt_%:V:	 /var/lib/cluster/apt_%
 force_update:V:	 /var/lib/cluster/force_update
 port_mirror:V:	 /var/lib/cluster/port_mirror
 log:V:	/var/log/journal
+reference:V:	/var/lib/cluster/reference
 
 ## Las clases htc_% son mutuamente excluyentes
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init
 htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init
-condor_init:V:	/var/lib/cluster/condor_init	locale
+condor_init:V:	/var/lib/cluster/condor_init	server_init
+server_init:V:	/var/lib/cluster/server_init	locale
 java:V:	/var/lib/cluster/java
 
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
@@ -111,10 +113,33 @@ java:V:	/var/lib/cluster/java
 	&& service condor restart \
 	&& touch $target
 
+# Liberar espacio en las referencias y luego instalar referencias
+# de forma local usando el nfs.
+/var/lib/cluster/reference: /etc/cluster/sync-reference /etc/cluster/sync-reference-
+	set -x
+	mkdir -p `dirname $target`
+	. /etc/cluster/reference.conf
+	#
+	# Comprobar permisos de referencia
+	/etc/cluster/scripts/reference || true
+	#
+	# Eliminar referencias innecesarias
+	grep -vE '^#' /etc/cluster/sync-reference- \
+	| /etc/cluster/scripts/quote-everychar \
+	| xargs rm -r \
+	|| true
+	#
+	# Sincronizar las referencias que no existen
+	grep -vE '^#' /etc/cluster/sync-reference \
+	| /etc/cluster/scripts/quote-everychar \
+	| xargs -I '{}' \
+		/etc/cluster/scripts/sincronizar-referencia \
+		"$REFERENCE_SOURCE/"{} \
+	&& touch $target
+
 /var/lib/cluster/compartido:	/etc/exports
 	set -x
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos.' || true \
-	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
@@ -122,22 +147,34 @@ java:V:	/var/lib/cluster/java
 	set -x
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
-	> $target
+	> $target.build \
+	&& mv $target.build $target
+	exportfs -a
 
 # Seleccionar los puntos de montaje en nfs_mounts
 # sin incluirse a sí mismos y sin duplicar entradas.
 #
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	apt_compartido
+/var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
-	cat $prereq \
-	| grep -vE '^'`hostname`':' \
-	| xargs -l -I{} \
-		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
-	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
+	systemctl daemon-reload
 	mount -a || true
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
 	touch $target
+
+# Agregar a fstab los sistemas compartidos en nfs_mounts
+# y quitar los de nfs_mounts-
+#
+/etc/fstab:	/etc/cluster/nfs_mounts	/etc/cluster/nfs_mounts-
+	set -x
+	grep -vf /etc/cluster/nfs_mounts- /etc/fstab > /etc/fstab.2 \
+	&& mv /etc/fstab.2 /etc/fstab
+	#
+	cat /etc/cluster/nfs_mounts \
+	| grep -vE '^'`hostname`':' \
+	| xargs -l -I{} \
+		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
+	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
 
 # Activar los logs persistentes en el sistema.
 #
@@ -170,3 +207,11 @@ usuarios:V:
 	&& mv /tmp/90-apt-proxy /etc/apt/apt.conf.d/ \
 	&& etckeeper commit -m 'Después de instalar oracle-java8.' || true \
 	&& touch $target
+
+# Configurar git para evitar problemas con etckeeper.
+#
+/var/lib/cluster/server_init:
+	etckeeper vcs config user.name 'Joshua Haase'
+	etckeeper vcs config user.email cluster@inmegen.gob.mx
+	etckeeper vcs config push.default simple
+	touch $target
