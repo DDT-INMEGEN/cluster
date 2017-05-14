@@ -28,13 +28,13 @@ MEMORY = $(DETECTED_MEMORY)*2
 
 # single-core slots get 1 core each
 SLOT_TYPE_1 = cpus=1
-#NUM_SLOTS_TYPE_1 = $(DETECTED_CORES)
+NUM_SLOTS_TYPE_1 = $(DETECTED_CORES)
 
 # slot dinámico
-NUM_SLOTS = 1
-NUM_SLOTS_TYPE_1 = 1
+#NUM_SLOTS = 1
+#NUM_SLOTS_TYPE_1 = 1
 #SLOT_TYPE_1 = 100%
-SLOT_TYPE_1_PARTITIONABLE = TRUE
+#SLOT_TYPE_1_PARTITIONABLE = TRUE
 
 # whole-machine slot gets as many cores and RAM as the machine has
 SLOT_TYPE_2 = cpus=$(DETECTED_CORES), mem=$(DETECTED_MEMORY)
