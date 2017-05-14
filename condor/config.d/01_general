@@ -28,6 +28,97 @@ NUM_SLOTS_TYPE_1 = 1
 SLOT_TYPE_1 = 100%
 SLOT_TYPE_1_PARTITIONABLE = TRUE
 
+# whole-machine slot gets as many cores and RAM as the machine has
+SLOT_TYPE_2 = cpus=$(DETECTED_CORES), mem=$(DETECTED_MEMORY)
+NUM_SLOTS_TYPE_2 = 1
+
+# Macro specifying the slot id of the whole-machine slot
+# Example: on an 8-core machine, the whole-machine slot is 9.
+WHOLE_MACHINE_SLOT = ($(DETECTED_CORES)+1)
+
+# ClassAd attribute that is True/False depending on whether this slot is
+# the whole-machine slot
+CAN_RUN_WHOLE_MACHINE = SlotID == $(WHOLE_MACHINE_SLOT)
+STARTD_EXPRS = $(STARTD_EXPRS) CAN_RUN_WHOLE_MACHINE
+
+# advertise state of each slot as SlotX_State in ClassAds of all other slots
+STARTD_SLOT_EXPRS = $(STARTD_SLOT_EXPRS) State
+
+# Macro for referencing state of the whole-machine slot.
+# Relies on eval(), which was added in HTCondor 7.3.2.
+WHOLE_MACHINE_SLOT_STATE = \
+  eval(strcat("Slot",$(WHOLE_MACHINE_SLOT),"_State"))
+
+# Macro that is true if any single-core slots are claimed
+# WARNING: THERE MUST BE AN ENTRY FOR ALL SLOTS
+# IN THE EXPRESSION BELOW.  If you have more slots, you must
+# extend this expression to cover them.  If you have fewer
+# slots, extra entries are harmless.
+SINGLE_CORE_SLOTS_CLAIMED = \
+  ($(WHOLE_MACHINE_SLOT_STATE) =?= "Claimed") < \
+  (Slot1_State =?= "Claimed") + \
+  (Slot2_State =?= "Claimed") + \
+  (Slot3_State =?= "Claimed") + \
+  (Slot4_State =?= "Claimed") + \
+  (Slot5_State =?= "Claimed") + \
+  (Slot6_State =?= "Claimed") + \
+  (Slot7_State =?= "Claimed") + \
+  (Slot8_State =?= "Claimed") + \
+  (Slot9_State =?= "Claimed") + \
+  (Slot10_State =?= "Claimed") + \
+  (Slot11_State =?= "Claimed") + \
+  (Slot12_State =?= "Claimed") + \
+  (Slot13_State =?= "Claimed") + \
+  (Slot14_State =?= "Claimed") + \
+  (Slot15_State =?= "Claimed") + \
+  (Slot16_State =?= "Claimed") + \
+  (Slot17_State =?= "Claimed") + \
+  (Slot18_State =?= "Claimed") + \
+  (Slot19_State =?= "Claimed") + \
+  (Slot20_State =?= "Claimed") + \
+  (Slot21_State =?= "Claimed") + \
+  (Slot22_State =?= "Claimed") + \
+  (Slot23_State =?= "Claimed") + \
+  (Slot24_State =?= "Claimed") + \
+  (Slot25_State =?= "Claimed") + \
+  (Slot26_State =?= "Claimed") + \
+  (Slot27_State =?= "Claimed") + \
+  (Slot28_State =?= "Claimed") + \
+  (Slot29_State =?= "Claimed") + \
+  (Slot30_State =?= "Claimed") + \
+  (Slot31_State =?= "Claimed") + \
+  (Slot32_State =?= "Claimed") + \
+  (Slot33_State =?= "Claimed")
+
+# Single-core jobs must run on single-core slots
+START_SINGLE_CORE_JOB = \
+  TARGET.RequiresWholeMachine =!= True && MY.CAN_RUN_WHOLE_MACHINE == False && \
+  $(WHOLE_MACHINE_SLOT_STATE) =!= "Claimed"
+
+# Whole-machine jobs must run on the whole-machine slot
+START_WHOLE_MACHINE_JOB = \
+  TARGET.RequiresWholeMachine =?= True && MY.CAN_RUN_WHOLE_MACHINE
+
+START = ($(START)) && ( \
+  ($(START_SINGLE_CORE_JOB)) || \
+  ($(START_WHOLE_MACHINE_JOB)) )
+
+# Suspend the whole-machine job until single-core jobs finish.
+#SUSPEND = ($(SUSPEND)) || ( \
+#  MY.CAN_RUN_WHOLE_MACHINE && ($(SINGLE_CORE_SLOTS_CLAIMED)) )
+
+# Suspend single-core jobs while the whole-machine job runs
+SUSPEND = ($(SUSPEND)) || ( \
+  MY.CAN_RUN_WHOLE_MACHINE =!= True && $(WHOLE_MACHINE_SLOT_STATE) =?= "Claimed" )
+
+CONTINUE = ($(SUSPEND)) =!= True
+
+WANT_SUSPEND = ($(WANT_SUSPEND)) || ($(SUSPEND))
+
+# In case group-quotas are being used, trim down the size
+# of the "pie" to avoid double-counting.
+#GROUP_DYNAMIC_MACH_CONSTRAINT = CAN_RUN_WHOLE_MACHINE == False
+
 # Security
 #SEC_READ_AUTHENTICATION = OPTIONAL
 SEC_READ_AUTHENTICATION_METHODS = FS, SSL, CLAIMTOBE
