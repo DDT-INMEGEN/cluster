@@ -22,6 +22,14 @@ USE_NFS = TRUE
 #Si hiciera falta se pone explicito que java
 #JAVA=/usr/bin/java
 
+# we will double-allocate resources to overlapping slots
+NUM_CPUS = $(DETECTED_CORES)*2
+MEMORY = $(DETECTED_MEMORY)*2
+
+# single-core slots get 1 core each
+#SLOT_TYPE_1 = cpus=1
+#NUM_SLOTS_TYPE_1 = $(DETECTED_CORES)
+
 # slot dinámico
 NUM_SLOTS = 1
 NUM_SLOTS_TYPE_1 = 1
