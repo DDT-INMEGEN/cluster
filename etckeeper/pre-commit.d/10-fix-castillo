@@ -3,4 +3,5 @@
 && {
 	grep -v visnu /etc/fstab > /etc/fstab.2 \
 	&& mv /etc/fstab.2 /etc/fstab
-}
+} \
+|| true
