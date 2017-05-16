@@ -10,6 +10,8 @@
 # - Los archivos sólo puedan eliminarse intencionalmente (no accidentalmente).
 # - Los archivos de referencia no puedan escribirse por nadie.
 
+mkdir -p $REFERENCE_DIR
+
 chown -R root:reference $REFERENCE_DIR
 
 find $REFERENCE_DIR \
