@@ -54,6 +54,7 @@ python3-cutadapt
 python3-matplotlib
 python3-networkx
 python3-pandas
+python3-regex
 python3-requests
 python3-scipy
 python3-seaborn
@@ -63,6 +64,7 @@ python-htseq
 python-matplotlib
 python-networkx
 python-pandas
+python-regex
 python-requests
 python-scipy
 python-seaborn
