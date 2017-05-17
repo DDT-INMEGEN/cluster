@@ -54,6 +54,7 @@ python3-cutadapt
 python3-matplotlib
 python3-networkx
 python3-pandas
+python3-requests
 python3-scipy
 python3-seaborn
 python3-virtualenv
@@ -62,6 +63,7 @@ python-htseq
 python-matplotlib
 python-networkx
 python-pandas
+python-requests
 python-scipy
 python-seaborn
 python-virtualenv
