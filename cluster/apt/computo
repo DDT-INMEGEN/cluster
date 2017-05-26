@@ -69,6 +69,7 @@ python-requests
 python-scipy
 python-seaborn
 python-virtualenv
+qiime
 r-base-core
 singularity-condor
 smalt
