@@ -70,6 +70,7 @@ python-scipy
 python-seaborn
 python-virtualenv
 qiime
+qualimap-inmegen
 r-base-core
 singularity-condor
 smalt
