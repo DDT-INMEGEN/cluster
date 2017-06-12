@@ -65,6 +65,7 @@ python-htseq
 python-matplotlib
 python-networkx
 python-pandas
+python-pip
 python-regex
 python-requests
 python-scipy
