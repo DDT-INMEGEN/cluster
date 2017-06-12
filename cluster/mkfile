@@ -94,7 +94,7 @@ java:V:	/var/lib/cluster/java
 	mkdir -p `dirname $target` \
 	&& etckeeper commit -m 'Guarda de estado previo a la actualización de paquetes de pip.' || true \
         && apt-get update \
-	&& apt-get -y install phyton-pip \
+	&& apt-get -y install python-pip \
 	&& pip install --upgrade `cat '/etc/cluster/pip/upgrade'` \
 	&& touch $target \
 	&& etckeeper commit -m 'Se actualizan los paquetes de phyton requeridos.' || true
