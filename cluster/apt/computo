@@ -17,6 +17,7 @@ delly-inmegen
 docker.io
 etckeeper
 fastqc
+fastx-toolkit
 fish
 freebayes
 g++
