@@ -16,11 +16,12 @@ apt_%:V:	 /var/lib/cluster/apt_%
 force_update:V:	 /var/lib/cluster/force_update
 port_mirror:V:	 /var/lib/cluster/port_mirror
 log:V:	/var/log/journal
+pip:V:	/var/log/pip
 
 ## Las clases htc_% son mutuamente excluyentes
-htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init
-htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init
-htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init
+htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init pip
+htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init pip
+htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init pip
 condor_init:V:	/var/lib/cluster/condor_init	server_init
 server_init:V:	/var/lib/cluster/server_init	locale
 java:V:	/var/lib/cluster/java
@@ -87,6 +88,16 @@ java:V:	/var/lib/cluster/java
 	&& apt-get -y install `cat '/etc/cluster/apt/'$stem` \
 	&& touch $target \
 	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true
+
+/var/log/pip: /etc/cluster/pip/upgrade
+	set -x
+	mkdir -p `dirname $target` \
+	&& etckeeper commit -m 'Guarda de estado previo a la actualización de paquetes de pip.' || true \
+        && apt-get update \
+	&& apt-get -y install python-pip \
+	&& pip install --upgrade `cat '/etc/cluster/pip/upgrade'` \
+	&& touch $target \
+	&& etckeeper commit -m 'Se actualizan los paquetes de phyton requeridos.' || true
 
 /var/lib/cluster/repo_cluster:
 	set -x
