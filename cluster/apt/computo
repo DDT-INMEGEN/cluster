@@ -78,6 +78,9 @@ smalt
 snap-aligner
 soapdenovo
 soapdenovo2
+sra-toolkit
+sra-toolkit-libs0
+sra-toolkit-libs-dev
 suckless-tools
 tophat
 tree
