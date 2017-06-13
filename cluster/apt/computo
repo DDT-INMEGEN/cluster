@@ -74,6 +74,7 @@ python-virtualenv
 qiime
 qualimap-inmegen
 r-base-core
+samtools
 singularity-condor
 smalt
 snap-aligner
