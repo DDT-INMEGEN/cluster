@@ -3,8 +3,6 @@ angsd-inmegen
 apt-file
 aracne
 autoconf
-bcftools
-bcftools-inmegen
 bedtools
 bowtie
 bowtie2
