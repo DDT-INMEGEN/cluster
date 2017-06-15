@@ -49,6 +49,7 @@ oslom
 parallel
 perl
 picard-tools
+python3-biopython
 python3-cutadapt
 python3-matplotlib
 python3-networkx
@@ -58,6 +59,7 @@ python3-requests
 python3-scipy
 python3-seaborn
 python3-virtualenv
+python-biopython
 python-cutadapt
 python-htseq
 python-matplotlib
