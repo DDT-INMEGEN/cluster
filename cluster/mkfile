@@ -2,7 +2,7 @@ dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
 	echo "nothing to do"
 
 # Nodos
-castillo:V:	compartir_fs montar_fs htc_submit log java
+castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo
 notron:V:	compartir_fs montar_fs htc_computo log usuarios java
 ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java
 ilum:V:		log	usuarios
@@ -16,12 +16,14 @@ apt_%:V:	 /var/lib/cluster/apt_%
 force_update:V:	 /var/lib/cluster/force_update
 port_mirror:V:	 /var/lib/cluster/port_mirror
 log:V:	/var/log/journal
+pip:V:	/var/log/pip
 
 ## Las clases htc_% son mutuamente excluyentes
-htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init
-htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init
-htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init
-condor_init:V:	/var/lib/cluster/condor_init	locale
+htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init pip
+htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init pip
+htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init pip
+condor_init:V:	/var/lib/cluster/condor_init	server_init
+server_init:V:	/var/lib/cluster/server_init	locale
 java:V:	/var/lib/cluster/java
 
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
@@ -75,13 +77,27 @@ java:V:	/var/lib/cluster/java
 	&& mkdir -p `dirname $target` \
 	&& touch $target
 
-/var/lib/cluster/apt_%:	/etc/cluster/apt/% /var/lib/cluster/repo_cluster
+# Desinstalar los paquetes en /etc/cluster/apt/%-
+# e instalar los de /etc/cluster/apt/%
+#
+/var/lib/cluster/apt_%:	/etc/cluster/apt/%	/etc/cluster/apt/%-
 	set -x
 	mkdir -p `dirname $target` \
 	&& apt-get update \
-	&& apt-get -y install `cat $prereq` \
-	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true \
-	&& touch $target
+	&& apt-get -y purge `cat '/etc/cluster/apt/'$stem'-'` \
+	&& apt-get -y install `cat '/etc/cluster/apt/'$stem` \
+	&& touch $target \
+	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true
+
+/var/log/pip: /etc/cluster/pip/upgrade
+	set -x
+	mkdir -p `dirname $target` \
+	&& etckeeper commit -m 'Guarda de estado previo a la actualización de paquetes de pip.' || true \
+        && apt-get update \
+	&& apt-get -y install python-pip \
+	&& pip install --upgrade `cat '/etc/cluster/pip/upgrade'` \
+	&& touch $target \
+	&& etckeeper commit -m 'Se actualizan los paquetes de phyton requeridos.' || true
 
 /var/lib/cluster/repo_cluster:
 	set -x
@@ -110,7 +126,6 @@ java:V:	/var/lib/cluster/java
 /var/lib/cluster/compartido:	/etc/exports
 	set -x
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos.' || true \
-	&& etckeeper vcs push \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
@@ -118,25 +133,44 @@ java:V:	/var/lib/cluster/java
 	set -x
 	grep -E '^'`hostname`':' $prereq \
 	| sed -e 's#^'`hostname`':##' \
-	> $target
+	> $target.build \
+	&& mv $target.build $target
+	exportfs -a
 
-/var/lib/cluster/montar_fs:	/etc/cluster/nfs_mounts	apt_compartido
+# Seleccionar los puntos de montaje en nfs_mounts
+# sin incluirse a sí mismos y sin duplicar entradas.
+#
+/var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
-	cat $prereq \
-	| grep -vE '^'`hostname`':' \
-	| xargs -l -I{} \
-		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
-	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
-	mount -a
+	systemctl daemon-reload
+	mount -a || true
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
 	touch $target
 
+# Agregar a fstab los sistemas compartidos en nfs_mounts
+# y quitar los de nfs_mounts-
+#
+/etc/fstab:	/etc/cluster/nfs_mounts	/etc/cluster/nfs_mounts-
+	set -x
+	grep -vf /etc/cluster/nfs_mounts- /etc/fstab > /etc/fstab.2 \
+	&& mv /etc/fstab.2 /etc/fstab
+	#
+	cat /etc/cluster/nfs_mounts \
+	| grep -vE '^'`hostname`':' \
+	| xargs -l -I{} \
+		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
+	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
+
+# Activar los logs persistentes en el sistema.
+#
 /var/log/journal:
 	mkdir -p /var/log/journal
 	systemd-tmpfiles --create --prefix /var/log/journal
 	systemctl restart systemd-journald
 
+# Sincronizar los usuarios desde castillo.cluster.inmegen.gob.mx
+#
 usuarios:V:
 	set -x
 	etckeeper commit -m 'Antes de sincronizar usuarios.' || true
@@ -145,6 +179,9 @@ usuarios:V:
 	etckeeper init
 	etckeeper commit -m 'Sincronizar usuarios.' || true
 
+# Instalar oracle-java sin intervanción humana.
+# Es necesario deshabilitar el proxy durante la instalación.
+#
 /var/lib/cluster/java:
 	set -x
 	etckeeper commit -m 'Antes de instalar oracle-java8.' || true \
@@ -156,3 +193,11 @@ usuarios:V:
 	&& mv /tmp/90-apt-proxy /etc/apt/apt.conf.d/ \
 	&& etckeeper commit -m 'Después de instalar oracle-java8.' || true \
 	&& touch $target
+
+# Configurar git para evitar problemas con etckeeper.
+#
+/var/lib/cluster/server_init:
+	etckeeper vcs config user.name 'Joshua Haase'
+	etckeeper vcs config user.email cluster@inmegen.gob.mx
+	etckeeper vcs config push.default simple
+	touch $target
