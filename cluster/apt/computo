@@ -42,6 +42,7 @@ libcurl4-openssl-dev
 libdbi-perl
 libgd-barcode-perl
 libgd-graph3d-perl
+libgd-histogram-perl-inmegen
 libhtseq-inmegen
 liblapack-dev
 libstatistics-descriptive-perl
