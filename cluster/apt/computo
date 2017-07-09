@@ -8,10 +8,7 @@ bedtools
 bowtie
 bowtie2
 breakdancer-max-inmegen
-<<<<<<< HEAD
 bsdtar
-=======
->>>>>>> release/0.7.3.6
 bwa
 clustalo
 commfind
