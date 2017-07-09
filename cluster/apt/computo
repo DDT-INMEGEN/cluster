@@ -8,6 +8,7 @@ bcftools-inmegen
 bedtools
 bowtie
 bowtie2
+breakdancer-max-inmegen
 bwa
 condor
 condormk
