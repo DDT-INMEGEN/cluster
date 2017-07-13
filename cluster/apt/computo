@@ -52,6 +52,8 @@ meld
 multitail
 nfs-common
 openjdk-9-jdk-headless
+pandoc
+pandoc-citeproc
 parallel
 perl
 picard-tools
@@ -90,6 +92,10 @@ sra-toolkit
 sra-toolkit-libs-dev
 sra-toolkit-libs0
 suckless-tools
+taskwarrior
+texlive-latex-recommended
+texlive-luatex
+texlive-xetex
 tophat
 tree
 trimmomatic
