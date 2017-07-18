@@ -30,6 +30,7 @@ git-flow
 gitg
 gnuplot
 htop
+htslib-inmegen
 ifenslave
 iftop
 igv
@@ -52,6 +53,8 @@ meld
 multitail
 nfs-common
 openjdk-9-jdk-headless
+pandoc
+pandoc-citeproc
 parallel
 perl
 picard-tools
@@ -80,7 +83,7 @@ python3-virtualenv
 qiime
 qualimap-inmegen
 r-base-core
-samtools
+samtools-inmegen
 singularity-condor
 smalt
 snap-aligner
@@ -90,6 +93,10 @@ sra-toolkit
 sra-toolkit-libs-dev
 sra-toolkit-libs0
 suckless-tools
+taskwarrior
+texlive-latex-recommended
+texlive-luatex
+texlive-xetex
 tophat
 tree
 trimmomatic
