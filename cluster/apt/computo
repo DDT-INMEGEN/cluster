@@ -30,6 +30,7 @@ git-flow
 gitg
 gnuplot
 htop
+htslib-inmegen
 ifenslave
 iftop
 igv
@@ -80,7 +81,7 @@ python3-virtualenv
 qiime
 qualimap-inmegen
 r-base-core
-samtools
+samtools-inmegen
 singularity-condor
 smalt
 snap-aligner
