@@ -4,7 +4,7 @@ angsd-inmegen
 apt-file
 aracne
 autoconf
-bedtools
+bcftools-inmegen
 bowtie
 bowtie2
 breakdancer-max-inmegen
@@ -104,6 +104,8 @@ trinity-inmegen
 util-linux
 vcftools
 vcsh
+velvet
+velvetoptimiser
 vis
 xclip
 xorg-dev
