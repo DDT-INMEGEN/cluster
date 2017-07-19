@@ -104,6 +104,8 @@ trinity-inmegen
 util-linux
 vcftools
 vcsh
+velvet
+velvetoptimiser
 vis
 xclip
 xorg-dev
