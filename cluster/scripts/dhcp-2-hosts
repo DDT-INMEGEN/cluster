@@ -1,5 +1,8 @@
 #!/bin/sh
-journalctl -u isc-dhcp-server.service \
+YESTERDAY="$(date +"%F %R" -d @$(( $(date +%s) - 86400 )))"
+journalctl \
+	-u isc-dhcp-server.service \
+	--since="$YESTERDAY" \
 | awk 'BEGIN {
 	month = 1
 	day = 2
@@ -48,7 +51,7 @@ END {
 
 function host_header() {
 	"hostname" | getline host
-	print "127.0.0.1       localhost\n127.0.1.1       " host "    " host ".cluster.inmegen.gob.mx\n\n# The following lines are desirable for IPv6 capable hosts\n::1     localhost ip6-localhost ip6-loopback\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n\n192.168.105.220 fai.cluster.inmegen.gob.mx      repo.cluster.inmegen.gob.mx     apt.cluster.inmegen.gob.mx      cluster.inmegen.gob.mx  git.cluster.inmegen.gob.mx\n192.168.105.221 castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx  sarlacc.cluster.inmegen.gob.mx\n\n"
+	print "127.0.0.1       localhost\n127.0.1.1       " host "    " host ".cluster.inmegen.gob.mx\n\n# The following lines are desirable for IPv6 capable hosts\n::1     localhost ip6-localhost ip6-loopback\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n\n192.168.105.220 fai.cluster.inmegen.gob.mx      repo.cluster.inmegen.gob.mx     apt.cluster.inmegen.gob.mx      cluster.inmegen.gob.mx  git.cluster.inmegen.gob.mx\n192.168.105.221 castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx  sarlacc.cluster.inmegen.gob.mx\n"
 }
 
 function is_hostname(str) {
