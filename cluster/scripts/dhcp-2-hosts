@@ -1,0 +1,45 @@
+#!/bin/sh
+journalctl -u isc-dhcp-server.service \
+| awk 'BEGIN {
+	month = 1
+	day = 2
+	time = 3
+	localhost = 4
+	service = 5
+	order = 6
+	connector = 7
+	ip = 8
+	connector2 = 9
+	mac = 10
+	hostname = 11
+
+}
+# Por cada admisión de DHCP,
+# asignar a el servidor la IP.
+#
+/DHCPACK/ {
+	gsub(/[()]/, "", $hostname)
+
+	# registrar servidores nuevos
+	if (! has_content(ips[$hostname])) {
+		# contar el número de servidores
+		n++
+		# guardar el servidor nuevo
+		servers[n] = $hostname
+	}
+
+	# asignar la ip al servidor
+	ips[$hostname] = $ip
+}
+
+# Al terminar:
+# imprimir la IP de cada servidor
+END {
+	for (i = 1; i <= n; i++) {
+		print servers[i], ips[servers[i]]
+	}
+}
+
+function has_content(a) {
+        if (length(a) > 1) {return 1} else {return 0}
+}'
