@@ -47,6 +47,7 @@ libgd-histogram-perl-inmegen
 libhtseq-inmegen
 liblapack-dev
 libstatistics-descriptive-perl
+linux-image-virtual-hwe-16.04
 louvain
 make
 meld
