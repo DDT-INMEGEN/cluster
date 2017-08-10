@@ -117,7 +117,7 @@ java:V:	/var/lib/cluster/java
 	&& sudo /etc/init.d/condor restart \
 	&& touch $target
 
-/var/lib/cluster/condor_init:	usuarios
+/var/lib/cluster/condor_init:
 	set -x
 	service docker restart \
 	&& service condor restart \
