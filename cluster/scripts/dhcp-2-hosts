@@ -17,6 +17,9 @@ journalctl \
 	hostname = 11
 
 	OFS="\t"
+
+	# visnu está como dirección estática
+	print "192.168.105.110\tvisnu.cluster.inmegen.gob.mx"
 }
 # Por cada admisión de DHCP,
 # asignar a el servidor la IP.
