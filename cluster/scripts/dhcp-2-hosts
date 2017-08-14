@@ -18,8 +18,6 @@ journalctl \
 
 	OFS="\t"
 
-	# visnu está como dirección estática
-	print "192.168.105.110\tvisnu.cluster.inmegen.gob.mx"
 }
 # Por cada admisión de DHCP,
 # asignar a el servidor la IP.
@@ -54,7 +52,15 @@ END {
 
 function host_header() {
 	"hostname" | getline host
-	print "127.0.0.1       localhost\n127.0.1.1       " host "    " host ".cluster.inmegen.gob.mx\n\n# The following lines are desirable for IPv6 capable hosts\n::1     localhost ip6-localhost ip6-loopback\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n\n192.168.105.220 fai.cluster.inmegen.gob.mx      repo.cluster.inmegen.gob.mx     apt.cluster.inmegen.gob.mx      cluster.inmegen.gob.mx  git.cluster.inmegen.gob.mx\n192.168.105.221 castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx  sarlacc.cluster.inmegen.gob.mx\n"
+	print "127.0.0.1       localhost\n127.0.1.1       " host "    " host ".cluster.inmegen.gob.mx\n\n" \
+		"# The following lines are desirable for IPv6 capable hosts\n" \
+		"::1     localhost ip6-localhost ip6-loopback\n" \
+		"ff02::1	ip6-allnodes\n" \
+		"ff02::2	ip6-allrouters\n" \
+		"\n" \
+		"192.168.105.220 fai.cluster.inmegen.gob.mx      repo.cluster.inmegen.gob.mx     apt.cluster.inmegen.gob.mx      cluster.inmegen.gob.mx  git.cluster.inmegen.gob.mx\n" \
+		"192.168.105.221 castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx  sarlacc.cluster.inmegen.gob.mx\n" \
+		"192.168.105.110\tvisnu.cluster.inmegen.gob.mx\n"
 }
 
 function is_hostname(str) {
