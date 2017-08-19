@@ -36,6 +36,7 @@ iftop
 igv
 infomap
 inmegen-bundle
+inmegen-vep
 iotop
 ipython
 ipython3
@@ -47,7 +48,6 @@ libgd-histogram-perl-inmegen
 libhtseq-inmegen
 liblapack-dev
 libstatistics-descriptive-perl
-linux-image-virtual-hwe-16.04
 louvain
 make
 meld
