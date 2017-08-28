@@ -83,6 +83,7 @@ python3-virtualenv
 qiime
 qualimap-inmegen
 r-base-core
+salmon-inmegen
 samtools-inmegen
 singularity-condor
 smalt
