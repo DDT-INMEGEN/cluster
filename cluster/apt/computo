@@ -60,6 +60,8 @@ pandoc-citeproc
 parallel
 perl
 picard-tools
+plink
+plink1.9
 python3-biopython
 python3-cutadapt
 python3-matplotlib
