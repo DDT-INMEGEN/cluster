@@ -53,6 +53,7 @@ louvain
 make
 meld
 multitail
+muscle
 nfs-common
 openjdk-9-jdk-headless
 pandoc
