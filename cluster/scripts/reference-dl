@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# download a reference using the entire path for the URL.
+
+REFERENCE_DIR=/remote/reference
+
+cd $REFERENCE_DIR
+wget \
+	--force-directories \
+	--page-requisites \
+	--convert-links \
+	--user-agent "Mozilla/5.0 (X11; U; Unix; en-US) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15 Surf/0.7" \
+	"$@"
