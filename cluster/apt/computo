@@ -16,10 +16,12 @@ condormk
 delly-inmegen
 docker.io
 edac-utils
+EIG
 etckeeper
 fastqc
 fastx-toolkit
 fish
+flash-inmegen
 freebayes
 g++
 gcc
@@ -52,6 +54,7 @@ louvain
 make
 meld
 multitail
+muscle
 nfs-common
 openjdk-9-jdk-headless
 pandoc
@@ -59,6 +62,8 @@ pandoc-citeproc
 parallel
 perl
 picard-tools
+plink
+plink1.9
 python3-biopython
 python3-cutadapt
 python3-matplotlib
@@ -84,6 +89,7 @@ python-virtualenv
 qiime
 qualimap-inmegen
 r-base-core
+salmon-inmegen
 samtools-inmegen
 singularity-condor
 smalt
@@ -93,6 +99,7 @@ soapdenovo2
 sra-toolkit
 sra-toolkit-libs0
 sra-toolkit-libs-dev
+stringtie-inmegen
 suckless-tools
 taskwarrior
 texlive-latex-recommended
@@ -100,6 +107,7 @@ texlive-luatex
 texlive-xetex
 tophat
 tree
+treemix-inmegen
 trimmomatic
 trinity-inmegen
 util-linux
@@ -110,4 +118,5 @@ velvetoptimiser
 vis
 xclip
 xorg-dev
+xpclr
 xterm
