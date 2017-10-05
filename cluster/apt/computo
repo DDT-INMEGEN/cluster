@@ -1,4 +1,5 @@
 9base
+admixtools
 agrep
 angsd-inmegen
 apt-file
@@ -16,7 +17,6 @@ condor
 condormk
 delly-inmegen
 docker.io
-dos2unix
 edac-utils
 EIG
 etckeeper
