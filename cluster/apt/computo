@@ -16,6 +16,7 @@ condor
 condormk
 delly-inmegen
 docker.io
+dos2unix
 edac-utils
 EIG
 etckeeper
