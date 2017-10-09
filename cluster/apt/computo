@@ -1,9 +1,12 @@
 9base
+admixtools
+admixture
 agrep
 angsd-inmegen
 apt-file
 aracne
 autoconf
+bcl2fastq2
 bowtie
 bowtie2
 breakdancer-max-inmegen
@@ -15,7 +18,6 @@ condor
 condormk
 delly-inmegen
 docker.io
-dos2unix
 edac-utils
 EIG
 etckeeper
