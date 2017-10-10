@@ -1,6 +1,6 @@
 9base
-admixtools
-admixture
+admixtools-inmegen
+admixture-inmegen
 agrep
 angsd-inmegen
 apt-file
@@ -64,6 +64,7 @@ pandoc
 pandoc-citeproc
 parallel
 perl
+phylip
 picard-tools
 plink
 plink1.9
@@ -121,5 +122,5 @@ velvetoptimiser
 vis
 xclip
 xorg-dev
-xpclr
+xpclr-inmegen
 xterm
