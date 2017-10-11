@@ -19,7 +19,6 @@ condormk
 delly-inmegen
 docker.io
 edac-utils
-EIG
 etckeeper
 fastqc
 fastx-toolkit
@@ -96,6 +95,7 @@ qualimap-inmegen
 r-base-core
 salmon-inmegen
 samtools-inmegen
+shapeit.inmegen
 singularity-condor
 smalt
 snap-aligner
@@ -104,6 +104,7 @@ soapdenovo2
 sra-toolkit
 sra-toolkit-libs0
 sra-toolkit-libs-dev
+src
 stringtie
 suckless-tools
 taskwarrior
