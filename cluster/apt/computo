@@ -6,6 +6,7 @@ angsd-inmegen
 apt-file
 aracne
 autoconf
+basespace-inmegen
 bcl2fastq2
 bowtie
 bowtie2
