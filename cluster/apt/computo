@@ -1,6 +1,6 @@
 9base
-admixtools
-admixture
+admixtools-inmegen
+admixture-inmegen
 agrep
 angsd-inmegen
 apt-file
@@ -19,7 +19,6 @@ condormk
 delly-inmegen
 docker.io
 edac-utils
-EIG
 etckeeper
 fastqc
 fastx-toolkit
@@ -34,6 +33,7 @@ git
 git-flow
 gitg
 gnuplot
+hisat2-inmegen
 htop
 htslib-inmegen
 ifenslave
@@ -64,6 +64,7 @@ pandoc
 pandoc-citeproc
 parallel
 perl
+phylip
 picard-tools
 plink
 plink1.9
@@ -94,6 +95,7 @@ qualimap-inmegen
 r-base-core
 salmon-inmegen
 samtools-inmegen
+shapeit.inmegen
 singularity-condor
 smalt
 snap-aligner
@@ -102,7 +104,8 @@ soapdenovo2
 sra-toolkit
 sra-toolkit-libs0
 sra-toolkit-libs-dev
-stringtie-inmegen
+src
+stringtie
 suckless-tools
 taskwarrior
 texlive-latex-recommended
@@ -110,7 +113,7 @@ texlive-luatex
 texlive-xetex
 tophat
 tree
-treemix-inmegen
+treemix
 trimmomatic
 trinity-inmegen
 util-linux
@@ -121,5 +124,5 @@ velvetoptimiser
 vis
 xclip
 xorg-dev
-xpclr
+xpclr-inmegen
 xterm
