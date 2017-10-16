@@ -34,6 +34,7 @@ git
 git-flow
 gitg
 gnuplot
+gdsfmt-inmegen
 hisat2-inmegen
 htop
 htslib-inmegen
@@ -100,6 +101,7 @@ shapeit.inmegen
 singularity-condor
 smalt
 snap-aligner
+snprelate-inmegen
 soapdenovo
 soapdenovo2
 sra-toolkit
