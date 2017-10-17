@@ -95,6 +95,10 @@ python-virtualenv
 qiime
 qualimap-inmegen
 r-base-core
+r-base-dev
+r-cran-getopt
+r-cran-rgl
+r-cran-phangorn
 salmon-inmegen
 samtools-inmegen
 shapeit.inmegen
@@ -112,7 +116,7 @@ stringtie
 suckless-tools
 taskwarrior
 texlive-latex-recommended
-texlive-luatex
+texlive-luatexgit 
 texlive-xetex
 tophat
 tree
