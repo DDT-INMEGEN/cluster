@@ -31,12 +31,12 @@ funseq2-inmegen
 g++
 gcc
 gdebi-core
+gdsfmt-inmegen
 gfortran
 git
 git-flow
 gitg
 gnuplot
-gdsfmt-inmegen
 hisat2-inmegen
 htop
 htslib-inmegen
@@ -49,6 +49,7 @@ inmegen-vep
 iotop
 ipython
 ipython3
+libarchive-extract-perl
 libcurl4-openssl-dev
 libdbi-perl
 libgd-barcode-perl
@@ -101,8 +102,8 @@ qualimap-inmegen
 r-base-core
 r-base-dev
 r-cran-getopt
-r-cran-rgl
 r-cran-phangorn
+r-cran-rgl
 salmon-inmegen
 samtools-inmegen
 shapeit.inmegen
