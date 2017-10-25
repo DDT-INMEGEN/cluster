@@ -144,7 +144,13 @@ java:V:	/var/lib/cluster/java
 /var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
 	systemctl daemon-reload
-	mount -a || true
+	# montar los sistemas de archivos nfs
+	# que no se encuentran montados actualmente
+	grep nfs /etc/fstab \
+	| grep -v -f <(awk '/nfs/ {print $2}' /proc/mounts ) \
+	| awk '{print $2}' \
+	| xargs -l sudo mount
+	# Guardar los cambios
 	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
 	mkdir -p `dirname $target`
 	touch $target
