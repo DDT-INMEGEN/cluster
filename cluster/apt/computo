@@ -77,6 +77,8 @@ python3-cutadapt
 python3-matplotlib
 python3-networkx
 python3-pandas
+python3-pip
+python3-pyvcf
 python3-regex
 python3-requests
 python3-scipy
