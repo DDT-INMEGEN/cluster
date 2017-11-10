@@ -1,0 +1,7 @@
+#!/bin/sh
+set -x
+sudo rm -rf /var/www/html/repo.cluster.inmegen.gob.mx/ubuntu
+sudo cp -r /var/cluster/repos/ubuntu/ /var/www/html/repo.cluster.inmegen.gob.mx/
+sudo chown -R root:www-data /var/www/html/repo.cluster.inmegen.gob.mx/
+/etc/cluster/scripts/create-repo
+sudo chown -R root:www-data /var/www/html/repo.cluster.inmegen.gob.mx/
