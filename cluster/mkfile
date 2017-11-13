@@ -4,12 +4,12 @@ dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
 # Nodos
 castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo
 notron:V:	compartir_fs montar_fs htc_computo log usuarios java
-indra:V:	compartir_fs montar_fs htc_computo log usuarios java apt_almacenamiento
+indra:V:	compartir_fs montar_fs htc_computo log usuarios java
 ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java
 ilum:V:		log	usuarios
 
 # Clases
-compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
+compartir_fs:V:	 /var/lib/cluster/compartido	apt_almacenamiento
 montar_fs:V:	 /var/lib/cluster/montar_fs	apt_compartido
 renombrar_git:V: /var/lib/cluster/renombrar_git
 locale:V:	 /var/lib/cluster/locale
