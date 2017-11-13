@@ -14,6 +14,7 @@ bowtie2
 breakdancer-max-inmegen
 bsdtar
 bwa
+bwidget
 clustalo
 commfind
 condor
@@ -28,6 +29,7 @@ fish
 flash-inmegen
 freebayes
 funseq2-inmegen
+freeglut3-dev
 g++
 gcc
 gdebi-core
@@ -54,12 +56,15 @@ libdbi-perl
 libgd-barcode-perl
 libgd-graph3d-perl
 libgd-histogram-perl-inmegen
+libglu1-mesa-dev
 libhtseq-inmegen
 liblapack-dev
+libnlopt-dev
 libstatistics-descriptive-perl
 louvain
 make
 meld
+mesa-common-dev
 multitail
 muscle
 nfs-common
