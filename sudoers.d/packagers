@@ -10,4 +10,4 @@ User_Alias PACKAGER = \
 PACKAGER        ALL=(ALL:ALL) NOPASSWD:\
         /etc/cluster/scripts/configurador, \
         /etc/cluster/scripts/create-repo, \
-        /etc/cluster/scripts/regenerar-repo
+        /etc/cluster/scripts/regenerar-repos
