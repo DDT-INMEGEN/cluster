@@ -1,3 +1,5 @@
 #!/bin/bash
 cd /var/www/html/repo.cluster.inmegen.gob.mx/ubuntu
-reprepro includedeb xenial /var/cluster/deb/*.deb
+reprepro includedeb xenial \
+	--gnupghome /var/cluster/.gnupg \
+	/var/cluster/deb/*.deb
