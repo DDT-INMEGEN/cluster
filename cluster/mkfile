@@ -1,31 +1,61 @@
+# Configuración de servidores
+# ====================
+
+# Nodo por defecto
+# ----------------
+#
 dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
 	echo "nothing to do"
 
-# Nodos
+# Nodos con condiciones particulares
+#
 castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo
 notron:V:	compartir_fs montar_fs htc_computo log usuarios java
-ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java
+indra:V:	compartir_fs montar_fs htc_computo log usuarios java
+ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java dns
 ilum:V:		log	usuarios
 
-# Clases
+# Clases de configuración
+# =======================
+
+# Configuración de almacenamiento en red.
+#
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_compartir
 montar_fs:V:	 /var/lib/cluster/montar_fs	apt_compartido
-renombrar_git:V: /var/lib/cluster/renombrar_git
-locale:V:	 /var/lib/cluster/locale
-apt_%:V:	 /var/lib/cluster/apt_%
-force_update:V:	 /var/lib/cluster/force_update
-port_mirror:V:	 /var/lib/cluster/port_mirror
-log:V:	/var/log/journal
-pip:V:	/var/log/pip
 
-## Las clases htc_% son mutuamente excluyentes
+# Configuración del perfil de la cola de trabajo
+# ----------------------------------------------
+#
+# **Las clases htc_% son mutuamente excluyentes.**
+#
 htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init pip
 htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init pip
 htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init pip
+
+# Configuración inicial de los servidores
+# ---------------------------------------
+#
+port_mirror:V:	 /var/lib/cluster/port_mirror
 condor_init:V:	/var/lib/cluster/condor_init	server_init
 server_init:V:	/var/lib/cluster/server_init	locale
+renombrar_git:V: /var/lib/cluster/renombrar_git
+locale:V:	 /var/lib/cluster/locale
+log:V:	/var/log/journal
+
+# Configuración de software.
+#
+apt_%:V:	 /var/lib/cluster/apt_%
+pip:V:	/var/log/pip
 java:V:	/var/lib/cluster/java
 
+force_update:V:	 /var/lib/cluster/force_update
+
+# Configuración inicial
+# =====================
+
+# Configurar interfaz de red virtual para aprovechar el máximo ancho de banda
+# que permite la configuración de red de cada nodo.
+#
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
 	set -x
 	apt update
@@ -44,12 +74,14 @@ java:V:	/var/lib/cluster/java
                         cp '/etc/cluster/network/interfaces.dell' '/etc/network/interfaces'
                 ;;
 	esac
-	etckeeper commit -m 'Terminada la configuraciónd del port mirror.' || true \
+	etckeeper commit -m 'Terminada la configuración del port mirror.' || true \
 	&& mkdir -p `dirname $target` \
 	&& sudo modprobe bonding \
 	&& touch $target \
 	&& reboot
 
+# Configuración de idioma
+#
 /var/lib/cluster/locale: /etc/cluster/locales/timezone /etc/cluster/locales/locale.gen /etc/cluster/locales/default/locale
 	set -x
 	cp '/etc/cluster/locales/timezone' '/etc/timezone' \
@@ -123,12 +155,17 @@ java:V:	/var/lib/cluster/java
 	&& service condor restart \
 	&& touch $target
 
+# Los sistemas de archivos que cada nodo exporta por NFS
+# se configuran en `cluster/nfs_exports`.
+#
 /var/lib/cluster/compartido:	/etc/exports
 	set -x
 	etckeeper commit -m 'Generar configuración para compartir sistemas de archivos.' || true \
 	&& mkdir -p `dirname $target` \
 	&& touch /var/lib/cluster/compartido
 
+# Generar las entradas a exportar por nfs usando la información del clúster.
+#
 /etc/exports:	/etc/cluster/nfs_exports
 	set -x
 	grep -E '^'`hostname`':' $prereq \
@@ -197,7 +234,45 @@ usuarios:V:
 # Configurar git para evitar problemas con etckeeper.
 #
 /var/lib/cluster/server_init:
-	etckeeper vcs config user.name 'Joshua Haase'
+	etckeeper vcs config user.name 'Auto commit'
 	etckeeper vcs config user.email cluster@inmegen.gob.mx
 	etckeeper vcs config push.default simple
 	touch $target
+
+# DNS
+# ===
+#
+# La configuración del DNS se genera automáticamente
+# a partir de la información del DHCP.
+#
+# Esta es una operación de mantenimiento y debe ejecutarse cada hora
+# en el nodo asignado como DNS del clúster.
+#
+dns:
+	# Actualizar la configuración del DNS completa
+	# sin importar que los prerequisitos estén actualizados o no.
+	#
+	/usr/lib/plan9/bin/mk \
+		-f /etc/cluster \
+		-a /etc/tinydns/root/data.cbd
+
+# Generar `/etc/hosts` a partir del log del DHCP.
+#
+/etc/hosts:
+	/etc/cluster/scripts/dhcp-2-hosts \
+	> "$target"'.build' \
+	&& mv "$target"'.build' "$target"
+
+# Generar la configuración del DNS a partir de la información de hosts.
+#
+/etc/tinydns/root/data:	/etc/hosts
+	/etc/cluster/scripts/hosts-2-tinydns \
+		"$prereq" \
+	> "$target"'.build' \
+	&& mv "$target"'.build' "$target"
+
+# Actualizar la configuración del DNS.
+#
+/etc/tinydns/root/data.cbd:	/etc/tinydns/root/data
+	cd /etc/tinydns/root
+	/usr/bin/tinydns-data
