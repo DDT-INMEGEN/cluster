@@ -253,7 +253,7 @@ dns:
 	# sin importar que los prerequisitos estén actualizados o no.
 	#
 	/usr/lib/plan9/bin/mk \
-		-f /etc/cluster \
+		-f /etc/cluster/mkfile \
 		-a /etc/tinydns/root/data.cbd
 
 # Generar `/etc/hosts` a partir del log del DHCP.
