@@ -114,6 +114,7 @@ samtools-inmegen
 shapeit.inmegen
 singularity-condor
 smalt
+smartmontools
 snap-aligner
 snphylo-inmegen
 snprelate-inmegen
