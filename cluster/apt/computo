@@ -83,6 +83,7 @@ r-base-core
 samtools
 singularity-condor
 smalt
+smartmontools
 snap-aligner
 soapdenovo
 soapdenovo2
