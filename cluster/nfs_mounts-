@@ -7,6 +7,7 @@ notron:/reference	/remote/reference	nfs	x-systemd.automount,x-systemd.device-tim
 notron:/vault	/vault	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
 visnu:/100g	/100g	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
 visnu:/castle	/castle	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
+visnu:/castle	/castle	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14,nodev,noauto	0	0
 visnu:/castle	/castle	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14,nodev,noexec,noauto	0	0
 visnu:/home	/home	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
 visnu:/home	/home	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14,nodev,noauto	0	0
@@ -14,4 +15,5 @@ visnu:/home	/home	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14,n
 visnu:/labs	/labs	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
 visnu:/labs	/labs	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14,nodev,noexec,noauto	0	0
 visnu:/vault	/vault	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14	0	0
+visnu:/vault	/vault	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14,nodev,noauto	0	0
 visnu:/vault	/vault	nfs	x-systemd.automount,x-systemd.device-timeout=10,timeo=14,nodev,noexec,noauto	0	0
