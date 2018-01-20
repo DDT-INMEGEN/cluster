@@ -13,7 +13,6 @@ castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo
 notron:V:	compartir_fs montar_fs htc_computo log usuarios java
 indra:V:	compartir_fs montar_fs htc_computo log usuarios java
 ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java dns
-ilum:V:		log	usuarios
 
 # Clases de configuración
 # =======================
@@ -180,31 +179,57 @@ force_update:V:	 /var/lib/cluster/force_update
 MKSHELL=/bin/bash
 /var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
+	#
+	# Generar el punto de montaje de todos los directorios.
+	#
+	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
+	#
+	# Recargar los puntos de montaje.
+	#
 	systemctl daemon-reload
+	#
+	# Desmontar los sistemas de archivos nfs
+	# que se encuentran montados actualmente
+	# pero no deberían.
+	#
+	grep -w nfs /proc/mounts \
+	| grep -v -f <(awk '/nfs/ {print $1}' /etc/fstab ) \
+	| awk '{print $2}' \
+	| xargs -l umount
+	#
 	# montar los sistemas de archivos nfs
-	# que no se encuentran montados actualmente
+	# que no se encuentran montados actualmente.
+	#
 	grep nfs /etc/fstab \
 	| grep -v -f <(awk '/nfs/ {print $2}' /proc/mounts ) \
 	| awk '{print $2}' \
-	| xargs -l sudo mount
-	# Guardar los cambios
-	etckeeper commit -m 'Sistemas de archivos compartidos.' || true
+	| xargs -l mount
 	mkdir -p `dirname $target`
 	touch $target
 
 # Agregar a fstab los sistemas compartidos en nfs_mounts
-# y quitar los de nfs_mounts-
+# y quitar los demás nfs
 #
-/etc/fstab:	/etc/cluster/nfs_mounts	/etc/cluster/nfs_mounts-
+/etc/fstab:	/etc/cluster/nfs_mounts
 	set -x
-	grep -vf /etc/cluster/nfs_mounts- /etc/fstab > /etc/fstab.2 \
-	&& mv /etc/fstab.2 /etc/fstab
 	#
-	cat /etc/cluster/nfs_mounts \
+	# Quitar los nfs de fstab
+	#
+	grep -v nfs "${target}" > "${target}.build"
+	#
+	# Agregar los NFS del archivo canónico
+	# excepto los que corresponden al propio nodo.
+	#
+	cat "${prereq}" \
 	| grep -vE '^'`hostname`':' \
-	| xargs -l -I{} \
-		sh -c 'grep "{}" /etc/fstab || echo "{}" >> /etc/fstab'
-	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
+	>> "${target}.build" \
+	&& mv "${target}.build" "${target}"
+	#
+	# Guardar la configuración.
+	#
+	# En este paso se corrige el caso especial de castillo/visnu.
+	#
+	etckeeper commit -m 'Nuevos sistemas de archivos compartidos.' || true
 
 # Activar los logs persistentes en el sistema.
 #
