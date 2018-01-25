@@ -192,10 +192,10 @@ MKSHELL=/bin/bash
 	# que se encuentran montados actualmente
 	# pero no deberían.
 	#
-	grep -w nfs /proc/mounts \
+	grep -w nfs4 /proc/mounts \
 	| grep -v -f <(awk '/nfs/ {print $1}' /etc/fstab ) \
 	| awk '{print $2}' \
-	| xargs -l umount
+	| xargs -l umount || true
 	#
 	# montar los sistemas de archivos nfs
 	# que no se encuentran montados actualmente.
