@@ -61,8 +61,7 @@ function host_header() {
 		"192.168.105.220 fai.cluster.inmegen.gob.mx      repo.cluster.inmegen.gob.mx     apt.cluster.inmegen.gob.mx      cluster.inmegen.gob.mx  git.cluster.inmegen.gob.mx\n" \
 		"192.168.105.221\tcastillo.cluster.inmegen.gob.mx\tarenero.cluster.inmegen.gob.mx\tsarlacc.cluster.inmegen.gob.mx\tcastillo\tsarlacc\n" \
 		"192.168.21.254\tibm1.cluster.inmegen.gob.mx\tibm1\n" \
-		"192.168.21.110\tvisnu.cluster.inmegen.gob.mx\tvisnu\n" \
-		"192.168.21.253\tchiquis.cluster.inmegen.gob.mx\tchiquis\n"
+		"192.168.21.110\tvisnu.cluster.inmegen.gob.mx\tvisnu\n"
 }
 
 function is_hostname(str) {
