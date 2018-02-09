@@ -69,6 +69,10 @@ mesa-common-dev
 multitail
 muscle
 nfs-common
+nsclient++-bin
+nsclient++-client
+nsclient++-nsca
+nsclient++-server
 openjdk-9-jdk-headless
 pandoc
 pandoc-citeproc
