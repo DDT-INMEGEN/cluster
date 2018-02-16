@@ -286,7 +286,8 @@ dns:
 	#
 	/usr/lib/plan9/bin/mk \
 		-f /etc/cluster/mkfile \
-		-a /etc/tinydns/root/data.cbd
+		-a /etc/tinydns/root/data.cbd \
+	&& svc -t /etc/service/dnscache
 
 # Generar `/etc/hosts` a partir del log del DHCP.
 #
