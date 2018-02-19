@@ -12,7 +12,7 @@ dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
 castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo
 notron:V:	compartir_fs montar_fs htc_computo log usuarios java
 indra:V:	compartir_fs montar_fs htc_computo log usuarios java
-ibm1:V:		montar_fs apt_computo apt_ldap apt_fai htc_master log usuarios java dns
+ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns
 
 # Clases de configuración
 # =======================
@@ -286,7 +286,8 @@ dns:
 	#
 	/usr/lib/plan9/bin/mk \
 		-f /etc/cluster/mkfile \
-		-a /etc/tinydns/root/data.cbd
+		-a /etc/tinydns/root/data.cbd \
+	&& svc -t /etc/service/dnscache
 
 # Generar `/etc/hosts` a partir del log del DHCP.
 #
