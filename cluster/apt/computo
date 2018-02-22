@@ -70,6 +70,7 @@ parallel
 perl
 phylip
 picard-tools
+pindel-inmegen
 plink
 plink1.9
 python3-biopython
