@@ -50,6 +50,7 @@ oslom
 parallel
 perl
 picard-tools
+pindel-inmegen
 python3-cutadapt
 python3-matplotlib
 python3-networkx
