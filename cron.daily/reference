@@ -1,0 +1,22 @@
+#!/bin/sh
+
+. /etc/cluster/reference.conf
+
+# Comprobar permisos de referencia
+/etc/cluster/scripts/reference
+
+# `notron` contiene las referencias canónicas, nada qué hacer
+test `hostname` = "notron" && exit 0 || true
+
+# Eliminar referencias innecesarias
+grep -vE '^#' /etc/cluster/sync-reference- \
+| /etc/cluster/scripts/quote-everychar \
+| xargs rm -r \
+|| true
+
+# Sincronizar las referencias que no existen
+grep -vE '^#' /etc/cluster/sync-reference \
+| /etc/cluster/scripts/quote-everychar \
+| xargs -I '{}' \
+	/etc/cluster/scripts/sincronizar-referencia \
+	"$REFERENCE_SOURCE/"{}

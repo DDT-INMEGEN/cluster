@@ -1,0 +1,73 @@
+#!/bin/sh
+YESTERDAY="$(date +"%F %R" -d @$(( $(date +%s) - 86400 )))"
+journalctl \
+	-u isc-dhcp-server.service \
+	--since="$YESTERDAY" \
+| awk 'BEGIN {
+	month = 1
+	day = 2
+	time = 3
+	localhost = 4
+	service = 5
+	order = 6
+	connector = 7
+	ip = 8
+	connector2 = 9
+	mac = 10
+	hostname = 11
+
+	OFS="\t"
+
+}
+# Por cada admisión de DHCP,
+# asignar a el servidor la IP.
+#
+/DHCPACK/ {
+	if (is_hostname($hostname)) {
+		gsub(/[()]/, "", $hostname)
+	} else {
+		next
+	}
+
+	# registrar servidores nuevos
+	if (! has_content(ips[$hostname])) {
+		# contar el número de servidores
+		n++
+		# guardar el servidor nuevo
+		servers[n] = $hostname
+	}
+
+	# asignar la ip al servidor
+	ips[$hostname] = $ip
+}
+
+# Al terminar:
+# imprimir la IP de cada servidor
+END {
+	host_header()
+	for (i = 1; i <= n; i++) {
+		print ips[servers[i]], servers[i] ".cluster.inmegen.gob.mx"
+	}
+}
+
+function host_header() {
+	"hostname" | getline host
+	print "127.0.0.1       localhost\n127.0.1.1       " host "    " host ".cluster.inmegen.gob.mx\n\n" \
+		"# The following lines are desirable for IPv6 capable hosts\n" \
+		"::1     localhost ip6-localhost ip6-loopback\n" \
+		"ff02::1	ip6-allnodes\n" \
+		"ff02::2	ip6-allrouters\n" \
+		"\n" \
+		"192.168.105.220 fai.cluster.inmegen.gob.mx      repo.cluster.inmegen.gob.mx     apt.cluster.inmegen.gob.mx      cluster.inmegen.gob.mx  git.cluster.inmegen.gob.mx\n" \
+		"192.168.105.221\tcastillo.cluster.inmegen.gob.mx\tarenero.cluster.inmegen.gob.mx\tsarlacc.cluster.inmegen.gob.mx\tcastillo\tsarlacc\n" \
+		"192.168.21.254\tibm1.cluster.inmegen.gob.mx\tibm1\n" \
+		"192.168.21.110\tvisnu.cluster.inmegen.gob.mx\tvisnu\n"
+}
+
+function is_hostname(str) {
+	if (str ~ /^\([^)]+\)$/) { return 1 } else { return 0 }
+}
+
+function has_content(a) {
+        if (length(a) > 1) {return 1} else {return 0}
+}'

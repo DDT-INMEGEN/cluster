@@ -5,26 +5,3 @@
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-
-192.168.21.110	visnu.cluster.inmegen.gob.mx
-192.168.21.168	notron.cluster.inmegen.gob.mx
-192.168.21.171	indra.cluster.inmegen.gob.mx
-
-192.168.21.254	ibm1.cluster.inmegen.gob.mx
-192.168.105.220	fai.cluster.inmegen.gob.mx	repo.cluster.inmegen.gob.mx	apt.cluster.inmegen.gob.mx	cluster.inmegen.gob.mx	git.cluster.inmegen.gob.mx
-192.168.21.102	ibm2.cluster.inmegen.gob.mx
-192.168.21.142  ibm3.cluster.inmegen.gob.mx
-192.168.21.120  ibm4.cluster.inmegen.gob.mx	build.cluster.inmegen.gob.mx
-192.168.21.122  ibm5.cluster.inmegen.gob.mx
-192.168.21.137	ibm6.cluster.inmegen.gob.mx
-192.168.21.152	ibm7.cluster.inmegen.gob.mx
-192.168.21.150	ibm8.cluster.inmegen.gob.mx
-192.168.21.153	ibm9.cluster.inmegen.gob.mx
-
-192.168.21.123  dell1.cluster.inmegen.gob.mx
-192.168.21.148	dell2.cluster.inmegen.gob.mx
-192.168.21.125	dell3.cluster.inmegen.gob.mx
-192.168.21.154  dell4.cluster.inmegen.gob.mx
-192.168.21.114  dell6.cluster.inmegen.gob.mx
-
-192.168.105.221	castillo.cluster.inmegen.gob.mx arenero.cluster.inmegen.gob.mx	sarlacc.cluster.inmegen.gob.mx

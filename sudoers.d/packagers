@@ -1,0 +1,13 @@
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/etc/cluster/scripts"
+
+User_Alias PACKAGER = \
+        cfresno, \
+        hachepunto, \
+        jaalvarado, \
+        raulfj, \
+        xihh
+
+PACKAGER        ALL=(ALL:ALL) NOPASSWD:\
+        /etc/cluster/scripts/configurador, \
+        /etc/cluster/scripts/create-repo, \
+        /etc/cluster/scripts/regenerar-repos
