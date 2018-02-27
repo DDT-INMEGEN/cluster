@@ -108,6 +108,7 @@ python-scipy
 python-seaborn
 python-virtualenv
 qiime
+quagga
 qualimap-inmegen
 r-base-core
 r-base-dev
