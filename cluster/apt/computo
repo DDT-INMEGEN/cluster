@@ -19,6 +19,7 @@ clustalo
 commfind
 condor
 condormk
+daemontools
 delly-inmegen
 docker.io
 edac-utils
