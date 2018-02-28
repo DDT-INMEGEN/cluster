@@ -180,10 +180,6 @@ MKSHELL=/bin/bash
 /var/lib/cluster/montar_fs:		/etc/fstab
 	set -x
 	#
-	# Generar el punto de montaje de todos los directorios.
-	#
-	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
-	#
 	# Recargar los puntos de montaje.
 	#
 	systemctl daemon-reload
@@ -197,7 +193,11 @@ MKSHELL=/bin/bash
 	| awk '{print $2}' \
 	| xargs -l umount || true
 	#
-	# montar los sistemas de archivos nfs
+	# Generar el punto de montaje de todos los directorios.
+	#
+	awk '{print $2}' /etc/cluster/nfs_mounts | xargs mkdir -p
+	#
+	# Montar los sistemas de archivos nfs
 	# que no se encuentran montados actualmente.
 	#
 	grep nfs /etc/fstab \
