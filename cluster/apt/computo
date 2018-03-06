@@ -70,6 +70,10 @@ mesa-common-dev
 multitail
 muscle
 nfs-common
+nsclient++-bin
+nsclient++-client
+nsclient++-nsca
+nsclient++-server
 openjdk-9-jdk-headless
 pandoc
 pandoc-citeproc
@@ -77,6 +81,7 @@ parallel
 perl
 phylip
 picard-tools
+pindel-inmegen
 plink
 plink1.9
 python3-biopython
@@ -104,6 +109,7 @@ python-scipy
 python-seaborn
 python-virtualenv
 qiime
+quagga
 qualimap-inmegen
 r-base-core
 r-base-dev
