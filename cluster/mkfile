@@ -192,6 +192,7 @@ MKSHELL=/bin/bash
 	| grep -v -f <(awk '/nfs/ {print $1}' /etc/fstab ) \
 	| awk '{print $2}' \
 	| xargs -l umount || true
+	systemctl daemon-reload
 	#
 	# Generar el punto de montaje de todos los directorios.
 	#
