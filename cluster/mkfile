@@ -177,8 +177,12 @@ force_update:V:	 /var/lib/cluster/force_update
 # sin incluirse a sí mismos y sin duplicar entradas.
 #
 MKSHELL=/bin/bash
-/var/lib/cluster/montar_fs:		/etc/fstab
+/var/lib/cluster/montar_fs:
 	set -x
+	#
+	# Regenerar el /etc/fstab si es necesario
+	#
+	/usr/lib/plan9/mk -f /etc/cluster -e /etc/fstab
 	#
 	# Recargar los puntos de montaje.
 	#
