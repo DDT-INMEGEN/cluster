@@ -4,6 +4,7 @@ admixture-inmegen
 agrep
 angsd-inmegen
 apt-file
+apt-rdepends
 aracne
 autoconf
 basemount
