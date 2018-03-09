@@ -9,6 +9,7 @@ aracne
 autoconf
 basemount
 basespace-inmegen
+bcftools-inmegen
 bcl2fastq2
 bowtie
 bowtie2
