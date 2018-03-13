@@ -43,6 +43,7 @@ log:V:	/var/log/journal
 
 # Configuración de software.
 #
+apt_computo:V:	/var/lib/cluster/apt_computo	java
 apt_%:V:	 /var/lib/cluster/apt_%
 pip:V:	/var/log/pip
 java:V:	/var/lib/cluster/java
