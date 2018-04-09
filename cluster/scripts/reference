@@ -12,19 +12,25 @@
 
 mkdir -p $REFERENCE_DIR
 
-chown -R root:reference $REFERENCE_DIR
+chown -R root:reference $REFERENCE_DIR $REFERENCE_SOURCE
 
-find $REFERENCE_DIR \
+
+find $REFERENCE_DIR $REFERENCE_SOURCE \
 	-type d \
 	-exec chmod 775 '{}' ';' \
 	-exec chmod g+s '{}' ';' \
 	-exec chmod +t '{}' ';'
 
-find $REFERENCE_DIR \
+find $REFERENCE_DIR $REFERENCE_SOURCE \
 	-type f \
 	-exec chmod 444 '{}' ';'\
 	-exec chmod ugo-st '{}' ';'
 
 # Dejar que los miembros del grupo `reference` editen la documentación de la referencia
 
-chmod g+rwX,ugo-t -R "$REFERENCE_DIR/README.md" "$REFERENCE_DIR/.git" 2>/dev/null || true
+chmod g+rwX,ugo-t -R \
+	"$REFERENCE_DIR/README.md" \
+	"$REFERENCE_DIR/.git" \
+	"$REFERENCE_SOURCE/README.md" \
+	"$REFERENCE_SOURCE/.git" \
+2>/dev/null || true
