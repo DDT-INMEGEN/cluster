@@ -4,15 +4,15 @@
 # Nodo por defecto
 # ----------------
 #
-dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java
+dummy:V:	montar_fs htc_computo renombrar_git log	usuarios java monitoring
 	echo "nothing to do"
 
 # Nodos con condiciones particulares
 #
-castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo
-notron:V:	compartir_fs montar_fs htc_computo log usuarios java
-indra:V:	compartir_fs montar_fs htc_computo log usuarios java
-ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns
+castillo:V:	compartir_fs montar_fs htc_submit log java apt_castillo monitoring
+notron:V:	compartir_fs montar_fs htc_computo log usuarios java monitoring
+indra:V:	compartir_fs montar_fs htc_computo log usuarios java monitoring
+ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns monitoring
 
 # Clases de configuración
 # =======================
@@ -21,6 +21,7 @@ ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns
 #
 compartir_fs:V:	 /var/lib/cluster/compartido	apt_almacenamiento
 montar_fs:V:	 /var/lib/cluster/montar_fs	apt_compartido
+monitoring:V:	/var/lib/cluster/monitoring
 
 # Configuración del perfil de la cola de trabajo
 # ----------------------------------------------
@@ -117,7 +118,9 @@ force_update:V:	 /var/lib/cluster/force_update
 	mkdir -p `dirname $target` \
 	&& apt-get update \
 	&& apt-get -y purge `cat '/etc/cluster/apt/'$stem'-'` \
-	&& apt-get -y install `cat '/etc/cluster/apt/'$stem` \
+	&& apt-get -y \
+		-o Dpkg::Options::="--force-confold" \
+		install `cat '/etc/cluster/apt/'$stem` \
 	&& touch $target \
 	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true
 
@@ -315,3 +318,18 @@ dns:
 /etc/tinydns/root/data.cbd:	/etc/tinydns/root/data
 	cd /etc/tinydns/root
 	/usr/bin/tinydns-data
+
+
+# Monitoreo
+# =========
+#
+# Se configuraron en `apt/computo` los requisitos para el monitoreo.
+# Se agregaron los archivos necesarios para la configuración del monitoreo.
+#
+# Si cualquiera de los archivos de configuración cambia,
+# reiniciar el servicio `nagios-nrpe-server`:
+#
+/var/lib/cluster/monitoring:	/etc/nagios/nrpe.cfg /etc/nagios/nrpe.d
+	systemctl stop nagios-nrpe-server
+	systemctl start nagios-nrpe-server \
+	&& touch $target

@@ -65,12 +65,15 @@ libhtseq-inmegen
 liblapack-dev
 libnlopt-dev
 libstatistics-descriptive-perl
+libsys-statistics-linux-perl
 louvain
 make
 meld
 mesa-common-dev
+monitoring-plugins
 multitail
 muscle
+nagios-nrpe-server
 nfs-common
 nsclient++-bin
 nsclient++-client
