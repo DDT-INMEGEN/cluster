@@ -69,8 +69,10 @@ louvain
 make
 meld
 mesa-common-dev
+monitoring-plugins
 multitail
 muscle
+nagios-nrpe-server
 nfs-common
 nsclient++-bin
 nsclient++-client
