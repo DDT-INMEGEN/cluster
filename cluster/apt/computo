@@ -65,6 +65,7 @@ libhtseq-inmegen
 liblapack-dev
 libnlopt-dev
 libstatistics-descriptive-perl
+libsys-statistics-linux-perl
 louvain
 make
 meld
