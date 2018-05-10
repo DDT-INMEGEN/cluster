@@ -315,3 +315,18 @@ dns:
 /etc/tinydns/root/data.cbd:	/etc/tinydns/root/data
 	cd /etc/tinydns/root
 	/usr/bin/tinydns-data
+
+
+# Monitoreo
+# =========
+#
+# Se configuraron en `apt/computo` los requisitos para el monitoreo.
+# Se agregaron los archivos necesarios para la configuración del monitoreo.
+#
+# Si cualquiera de los archivos de configuración cambia,
+# reiniciar el servicio `nagios-nrpe-server`:
+#
+/var/lib/cluster/monitoring:	/etc/nagios/nrpe.cfg /etc/nagios/nrpe.d
+	systemctl stop nagios-nrpe-server
+	systemctl start nagios-nrpe-server \
+	&& touch $target
