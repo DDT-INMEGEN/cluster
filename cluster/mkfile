@@ -330,6 +330,6 @@ dns:
 # reiniciar el servicio `nagios-nrpe-server`:
 #
 /var/lib/cluster/monitoring:	/etc/nagios/nrpe.cfg /etc/nagios/nrpe.d
-	systemctl stop nagios-nrpe-server
+	systemctl stop nagios-nrpe-server || true
 	systemctl start nagios-nrpe-server \
 	&& touch $target

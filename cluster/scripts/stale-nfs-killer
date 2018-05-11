@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Kill processes using an stale file system
+#
+# usage: $0 stale_fs
+
+STALE_FS="$1"
+
+kill -9 $(lsof |\
+    egrep "$STALE_FS" |\
+    awk '{print $2;}' |\
+    sort -fu )
+
+kill -9 $( for u in $( who | awk '{print $1;}' | sort -fu ) ; do \
+    pwdx $(pgrep -u $u) |\
+    grep "$STALE_FS" |\
+    awk -F: '{print $1;}' ; \
+done)
