@@ -186,7 +186,7 @@ MKSHELL=/bin/bash
 	#
 	# Regenerar el /etc/fstab si es necesario
 	#
-	/usr/lib/plan9/bin/mk -f /etc/cluster -e /etc/fstab
+	/usr/lib/plan9/bin/mk -f /etc/cluster/mkfile -a /etc/fstab
 	#
 	# Recargar los puntos de montaje.
 	#
