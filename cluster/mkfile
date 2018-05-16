@@ -186,7 +186,7 @@ MKSHELL=/bin/bash
 	#
 	# Regenerar el /etc/fstab si es necesario
 	#
-	/usr/lib/plan9/bin/mk -f /etc/cluster -e /etc/fstab
+	/usr/lib/plan9/bin/mk -f /etc/cluster/mkfile -a /etc/fstab
 	#
 	# Recargar los puntos de montaje.
 	#
@@ -330,6 +330,6 @@ dns:
 # reiniciar el servicio `nagios-nrpe-server`:
 #
 /var/lib/cluster/monitoring:	/etc/nagios/nrpe.cfg /etc/nagios/nrpe.d
-	systemctl stop nagios-nrpe-server
+	systemctl stop nagios-nrpe-server || true
 	systemctl start nagios-nrpe-server \
 	&& touch $target
