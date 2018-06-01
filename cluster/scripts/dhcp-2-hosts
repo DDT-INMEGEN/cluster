@@ -1,5 +1,5 @@
 #!/bin/sh
-YESTERDAY="$(date +"%F %R" -d @$(( $(date +%s) - 86400 )))"
+YESTERDAY="$(date +"%F %R" -d @$(( $(date +%s) - 86400 * 4 )))"
 journalctl \
 	-u isc-dhcp-server.service \
 	--since="$YESTERDAY" \
