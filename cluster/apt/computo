@@ -25,6 +25,7 @@ condormk
 daemontools
 delly-inmegen
 docker.io
+dos2unix
 edac-utils
 etckeeper
 fastqc
