@@ -1,4 +1,9 @@
 indra:/100g	/100g	nfs	timeo=14,nodev,noauto	0	0
+indra:/labs/lhim	/labs/lhim	nfs	timeo=14,nodev,noexec,noauto	0	0
+indra:/labs/ucif	/labs/ucif	nfs	timeo=14,nodev,noexec,noauto	0	0
+indra:/labs/umi	/labs/umi	nfs	timeo=14,nodev,noexec,noauto	0	0
+indra:/labs/upro	/labs/upro	nfs	timeo=14,nodev,noexec,noauto	0	0
+indra:/labs/usec	/labs/usec	nfs	timeo=14,nodev,noexec,noauto	0	0
 indra:/reference	/remote/reference	nfs	timeo=14,nodev,noexec,noauto	0	0
 indra:/respaldo/castillo/vault	/remote/vault	nfs	timeo=14,nodev,noauto	0	0
 visnu:/home	/home	nfs	timeo=14,nodev,noauto	0	0
