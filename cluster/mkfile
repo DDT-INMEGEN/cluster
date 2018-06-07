@@ -181,7 +181,7 @@ force_update:V:	 /var/lib/cluster/force_update
 # sin incluirse a sí mismos y sin duplicar entradas.
 #
 MKSHELL=/bin/bash
-/var/lib/cluster/montar_fs:
+/var/lib/cluster/montar_fs:V:
 	set -x
 	#
 	# Regenerar el /etc/fstab si es necesario
