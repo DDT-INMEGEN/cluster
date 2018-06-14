@@ -23,5 +23,6 @@ visnu:/labs/lgc		/labs/lgc	nfs	timeo=14,nodev,noauto	0	0
 visnu:/labs/lgec	/labs/lgec	nfs	timeo=14,nodev,noauto	0	0
 visnu:/labs/liem	/labs/liem	nfs	timeo=14,nodev,noauto	0	0
 visnu:/labs/sc		/labs/sc	nfs	timeo=14,nodev,noauto	0	0
+visnu:/labs/sb		/labs/sb	nfs	timeo=14,nodev,noauto	0	0
 visnu:/labs/usb		/labs/usb	nfs	timeo=14,nodev,noauto	0	0
 visnu:/labs/taller	/labs/taller	nfs	timeo=14,nodev,noauto	0	0
