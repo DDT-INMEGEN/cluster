@@ -1,4 +1,5 @@
 9base
+abra
 admixtools-inmegen
 admixture-inmegen
 agrep
@@ -12,6 +13,7 @@ basemount
 basespace-inmegen
 bcftools-inmegen
 bcl2fastq2
+bedtools
 bowtie
 bowtie2
 breakdancer-max-inmegen
@@ -26,6 +28,7 @@ daemontools
 delly-inmegen
 docker.io
 dos2unix
+eagle-master
 edac-utils
 etckeeper
 fastqc
@@ -82,6 +85,7 @@ nsclient++-client
 nsclient++-nsca
 nsclient++-server
 openjdk-9-jdk-headless
+oslom
 pandoc
 pandoc-citeproc
 parallel
@@ -91,18 +95,7 @@ picard-tools
 pindel-inmegen
 plink
 plink1.9
-python-biopython
-python-cutadapt
-python-htseq
-python-matplotlib
-python-networkx
-python-pandas
-python-pip
-python-regex
-python-requests
-python-scipy
-python-seaborn
-python-virtualenv
+prinseq-lite
 python3-biopython
 python3-cutadapt
 python3-matplotlib
@@ -115,6 +108,18 @@ python3-requests
 python3-scipy
 python3-seaborn
 python3-virtualenv
+python-biopython
+python-cutadapt
+python-htseq
+python-matplotlib
+python-networkx
+python-pandas
+python-pip
+python-regex
+python-requests
+python-scipy
+python-seaborn
+python-virtualenv
 qiime
 quagga
 qualimap-inmegen
@@ -123,6 +128,7 @@ r-base-dev
 r-cran-getopt
 r-cran-phangorn
 r-cran-rgl
+s6
 salmon-inmegen
 samtools-inmegen
 shapeit.inmegen
@@ -136,8 +142,8 @@ snprelate-inmegen
 soapdenovo
 soapdenovo2
 sra-toolkit
-sra-toolkit-libs-dev
 sra-toolkit-libs0
+sra-toolkit-libs-dev
 src
 stringtie
 suckless-tools
