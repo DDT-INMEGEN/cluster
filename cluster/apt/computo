@@ -1,4 +1,4 @@
-9base
+9baseq
 admixtools-inmegen
 agrep
 angsd-inmegen
@@ -20,6 +20,7 @@ bwa
 bwidget
 clustalo
 commfind
+condor
 condormk
 daemontools
 delly-inmegen
