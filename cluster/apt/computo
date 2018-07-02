@@ -1,7 +1,5 @@
 9base
-abra
 admixtools-inmegen
-admixture-inmegen
 agrep
 angsd-inmegen
 ant
@@ -22,7 +20,6 @@ bwa
 bwidget
 clustalo
 commfind
-condor
 condormk
 daemontools
 delly-inmegen
@@ -131,7 +128,6 @@ r-cran-rgl
 s6
 salmon-inmegen
 samtools-inmegen
-shapeit.inmegen
 silversearcher-ag
 singularity-condor
 smalt
