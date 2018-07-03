@@ -1,0 +1,17 @@
+[Unit]
+Description=Auto mounter
+After=network.target
+ConditionPathExists=!/etc/automount_not_to_be_run
+
+[Service]
+EnvironmentFile=-/etc/default/automount
+ExecStart=/usr/sbin/automount -f $AUTOFS_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
+Alias=autofs.service
