@@ -1,0 +1,2 @@
+reference	-fstype=nfs,timeo=14,nodev,noexec,noauto	indra:/reference
+vault	-fstype=nfs,timeo=14,nodev,noauto	indra:/respaldo/castillo/vault
