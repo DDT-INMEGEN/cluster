@@ -1,3 +1,1 @@
-/labs	/etc/auto.master.d/labs.map	--timeout=60
-/remote	/etc/auto.master.d/remote.map	--timeout=60
-/-	/etc/auto.master.d/root.map	--timeout=60
+/-	/etc/auto.master.d/direct.map	--timeout=60
