@@ -1,0 +1,2 @@
+/100g	-fstype=nfs,timeo=14,nodev,noauto	indra:/100g
+/home	-fstype=nfs,timeo=14,nodev,noauto	visnu:/home
