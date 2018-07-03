@@ -9,6 +9,7 @@ apt-file
 apt-rdepends
 aracne
 autoconf
+autofs
 basemount
 basespace-inmegen
 bcftools-inmegen

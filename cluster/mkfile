@@ -230,7 +230,7 @@ MKSHELL=/bin/bash
 	# excepto los que corresponden al propio nodo.
 	#
 	cat "${prereq}" \
-	| grep -vE '^'`hostname`':' \
+	| awk '$0 !~ /^'`hostname`':/' \
 	>> "${target}.build" \
 	&& mv "${target}.build" "${target}"
 	#
