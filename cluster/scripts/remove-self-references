@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Eliminar autoreferencias al servidor en el archivo de configuración indicado.
+#
+# Las autoreferencias se detectan usando el `hostname`
+# y los aliases configurados en `/etc/cluster/hostname-aliases/$(hostname)`
+
+usage() {
+cat << EOF
+$0 [archivo-de-configuración]
+EOF
+exit 1
+}
+
+HOSTNAME="$(hostname)"
+ALIAS_DIRECTORY="/etc/cluster/hostname-aliases/${HOSTNAME}"
+
+test -e ${ALIAS_DIRECTORY} && {
+	OPTS="-e ${ALIAS_DIRECTORY}"
+}
+
+exec grep \
+	-v \
+	-e "${HOSTNAME}" \
+	${OPTS} \
+	"${@}"
