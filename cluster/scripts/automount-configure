@@ -1,3 +1,4 @@
+#!/bin/bash
 main() {
     clean_remote_mountpoints \
     && install_autofs \
