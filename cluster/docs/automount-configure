@@ -121,5 +121,15 @@ directory_not_empty() {
     | grep "${test_directory}" \
     > /dev/null
 }
+#
+start_autofs() {
+#------------
+#
+#   We start autofs using systemctl,
+#   as we have already provided a `/etc/systemd/system/autofs.service`
+#   in this git repository.
+#
+    systemctl start autofs
+}
 
 main "${@}"

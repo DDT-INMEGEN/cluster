@@ -36,5 +36,8 @@ directory_not_empty() {
     | grep "${test_directory}" \
     > /dev/null
 }
+start_autofs() {
+    systemctl start autofs
+}
 
 main "${@}"
