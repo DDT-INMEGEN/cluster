@@ -62,6 +62,10 @@ configure_auto_mountpoints() {
 #   And the place where autofs reads it's instructions is the
     CONFIG_FILE="/etc/auto.master.d/direct.map"
 #
+#   We make sure we have a directory to store the config file
+#
+    mkdir -p "$(dirname ${CONFIG_FILE})"
+#
 #   To make sure we do not automount local mountpoints,
 #   we use the external command `remove-self-references`
 #   which is part of this git repository and it's located at

@@ -17,6 +17,7 @@ install_autofs() {
 configure_auto_mountpoints() {
     local TEMPLATE="/etc/cluster/automount/direct.map"
     CONFIG_FILE="/etc/auto.master.d/direct.map"
+    mkdir -p "$(dirname ${CONFIG_FILE})"
     remove-self-references "${TEMPLATE}" \
     > "${CONFIG_FILE}.new" \
     && mv "${CONFIG_FILE}.new" "${CONFIG_FILE}"
