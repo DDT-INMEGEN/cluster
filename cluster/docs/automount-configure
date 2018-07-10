@@ -6,7 +6,7 @@ main() {
 #
 #   1. The directory is not listed in /etc/fstab
 #
-    clean_remote_mounpoints \
+    clean_remote_mountpoints \
 #
 #   2. Autofs is installed.
 #

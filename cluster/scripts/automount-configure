@@ -1,5 +1,5 @@
 main() {
-    clean_remote_mounpoints \
+    clean_remote_mountpoints \
     && install_autofs \
     && configure_auto_mountpoints \
     && disable_mountpoints \
