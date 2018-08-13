@@ -118,7 +118,6 @@ force_update:V:	 /var/lib/cluster/force_update
 	&& apt-get update \
 	&& apt-get -y purge `cat '/etc/cluster/apt/'$stem'-'` \
 	&& apt-get -y \
-		-o Dpkg::Options::="--force-confold" \
 		install `cat '/etc/cluster/apt/'$stem` \
 	&& touch $target \
 	&& etckeeper commit -m 'Se instalan los paquetes de apt_ X requeridos.' || true

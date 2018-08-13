@@ -1,6 +1,8 @@
-# Manejo de infraestructura
+Aquí se indica cuándo se cumple con las buenas prácticas
+de infrastructures.org y cuándo hace falta trabajarlas.
 
-## Control de versiones
+[✓] Control de versiones
+========================
 
 Se utiliza `etckeeper` para mantener las siguientes clases de servidores:
 
@@ -21,7 +23,8 @@ La documentación del clúster se encuentra en `gitolite3@fai:usb`
 - Configurar git.inmegen.gob.mx.
     - Agregar repo de `usb`.
 
-## Servidor dorado
+[✓] Servidor dorado
+===================
 
 **PENDIENTE** Instalación de FAI (Iber).
 **PENDIENTE** Actualizar git en fai.
@@ -35,20 +38,14 @@ La implementación se hace mediante un crontab que:
 - Ejecute el mkfile para realizar las configuraciones necesarias.
 - **PENDIENTE** Instalar paquetes en las clases.
 
-## Servidor de instalación de nodos
+[ ] Servidor de instalación de nodos
+====================================
 
 Este servidor administra qué se instala y dónde.
 Es preferible que se encuentre en el servidor dorado,
 pero si hay demasiados nodos, debe distribuirse la carga.
 
-### Configuración de nodos de cómputo {#computo}
-
-- **PENDIENTE** Configurar las interfaces de red.
-    - **PENDIENTE** Agregar los dos sabores de configuración (por tipo de máquina)
-        en `/etc/
-- **PENDIENTE** Cambiar config de R para apuntar al dominio cran.inmegen.gob.mx, bioconductor.inmegen.gob.mx.
-
-#### Referencias {#referencias}
+## Referencias {#referencias}
 
 Los nodos de cómputo deben contener las referencias para mejorar el rendimiento.
 Se configurará una sincronización diaria en horario nocturno ¿o cuando se agrega un archivo?.

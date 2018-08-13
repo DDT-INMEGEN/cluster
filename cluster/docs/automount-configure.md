@@ -2,27 +2,23 @@
 #   This script makes sure we are ready to mount using autofs.
 #   In order to do that, we test the following four points:
 #
-main() {
 #
 #   1. The directory is not listed in /etc/fstab
 #
-    clean_remote_mountpoints \
-#
 #   2. Autofs is installed.
-#
-    && install_autofs \
 #
 #   3. The mountpoints are configured
 #      but we did not configure a local mountpoint as a remote one
 #
-    && configure_auto_mountpoints \
-#
 #   4.  The mounpoint is currently not mounted
-#
-    && disable_mountpoints \
 #
 #   Only then we can start autofs service
 #
+main() {
+    clean_remote_mountpoints \
+    && install_autofs \
+    && configure_auto_mountpoints \
+    && disable_mountpoints \
     && start_autofs
 }
 
@@ -31,8 +27,7 @@ main() {
 clean_remote_mountpoints() {
 #-----------------------
 #
-#  The files are declared in `/etc/fstab` as a posix requirement
-#
+#  The files are declared as a posix requirement on the
    local FILE="/etc/fstab"
 #
 #  So we remove every nfs reference from that file

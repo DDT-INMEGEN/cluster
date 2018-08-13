@@ -68,6 +68,7 @@ libglu1-mesa-dev
 libhtseq-inmegen
 liblapack-dev
 libnlopt-dev
+libpq-dev
 libstatistics-descriptive-perl
 libsys-statistics-linux-perl
 louvain
