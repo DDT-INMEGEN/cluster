@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# Our user server is named `castillo` on the interface that faces users
+# but it's name `visnu` on the interface that has a fast link to the cluster.
+#
+# All the references from the cluster to that node,
+# which contains most of the user files used for analyses,
+# are thus made to the internal reference.
+#
+# Most of the cluster configuration is stored in template files
+# each one configuring all the servers.
+#
+# The configuration for each server usually needs to remove itself
+# from the configuration file.
+#
+# As this was a common task,
+# and as aliases make this task a little complex,
+# this script is the cannonical place to implement this mechanism
+# so that we Don't Repeat (Y)ourselves.
+#
+#
+# Interface
+# =========
+#
+# Self–references are detected by searching our
+HOSTNAME="$(hostname)"
+#
+# Aliases are stored on the
+ALIAS_CONFIG_FILE="/etc/cluster/hostname-aliases/${HOSTNAME}"
+# which is named after the HOSTNAME
+#
+# if the ALIAS_CONFIG_FILE exists
+# then we use it for filtering
+#
+test -e ${ALIAS_CONFIG_FILE}\
+&& OPTS="-e ${ALIAS_CONFIG_FILE}"
+#
+# After we detected wether we should use the ALIAS_CONFIG_FILE
+# we exec to grep which handles the reference removal.
+#
+# If the filter do not find references it will exit 0 just the same.
+# This differs from grep behavior which can be used for tests.
+#
+# This behavior it's needed by `/etc/cron.hourly/configurador`
+# as a process blocks the following ones.
+#
+grep \
+	-v \
+	-e "${HOSTNAME}" \
+	${OPTS} \
+	"${@}" \
+|| true

@@ -1,0 +1,44 @@
+#!/bin/bash
+main() {
+    clean_remote_mountpoints \
+    && install_autofs \
+    && configure_auto_mountpoints \
+    && disable_mountpoints \
+    && start_autofs
+}
+
+clean_remote_mountpoints() {
+   local FILE="/etc/fstab"
+   grep -v -e nfs "${FILE}" > "${FILE}.new" \
+   && mv "${FILE}.new" "${FILE}"
+}
+install_autofs() {
+    apt install autofs
+}
+configure_auto_mountpoints() {
+    local TEMPLATE="/etc/cluster/automount/direct.map"
+    CONFIG_FILE="/etc/auto.master.d/direct.map"
+    mkdir -p "$(dirname ${CONFIG_FILE})"
+    remove-self-references "${TEMPLATE}" \
+    > "${CONFIG_FILE}.new" \
+    && mv "${CONFIG_FILE}.new" "${CONFIG_FILE}"
+}
+disable_mountpoints() {
+    for  fs in $(awk '{print $1}' "${CONFIG_FILE}"); do
+        fuser  -m -k "${fs}"
+        umount "${fs}"
+        directory_not_empty "${fs}" \
+        && mv "${fs}" "${fs}.old"
+    done
+}
+directory_not_empty() {
+    local test_directory="${1}"
+    find "${test_directory}" -maxdepth 0 -type d '!' -empty \
+    | grep "${test_directory}" \
+    > /dev/null
+}
+start_autofs() {
+    systemctl start autofs
+}
+
+main "${@}"

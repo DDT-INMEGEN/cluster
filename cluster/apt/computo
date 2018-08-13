@@ -1,4 +1,5 @@
 9base
+abra
 admixtools-inmegen
 admixture-inmegen
 agrep
@@ -8,6 +9,7 @@ apt-file
 apt-rdepends
 aracne
 autoconf
+autofs
 basemount
 basespace-inmegen
 bcftools-inmegen
@@ -25,6 +27,7 @@ condormk
 daemontools
 delly-inmegen
 docker.io
+dos2unix
 edac-utils
 etckeeper
 fastqc
@@ -65,6 +68,7 @@ libglu1-mesa-dev
 libhtseq-inmegen
 liblapack-dev
 libnlopt-dev
+libpq-dev
 libstatistics-descriptive-perl
 libsys-statistics-linux-perl
 louvain
@@ -125,6 +129,7 @@ r-cran-rgl
 salmon-inmegen
 samtools-inmegen
 shapeit.inmegen
+silversearcher-ag
 singularity-condor
 smalt
 smartmontools
