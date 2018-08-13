@@ -14,6 +14,7 @@ basemount
 basespace-inmegen
 bcftools-inmegen
 bcl2fastq2
+bedtools
 bowtie
 bowtie2
 breakdancer-max-inmegen
@@ -28,6 +29,7 @@ daemontools
 delly-inmegen
 docker.io
 dos2unix
+eagle-master
 edac-utils
 etckeeper
 fastqc
@@ -85,6 +87,7 @@ nsclient++-client
 nsclient++-nsca
 nsclient++-server
 openjdk-9-jdk-headless
+oslom
 pandoc
 pandoc-citeproc
 parallel
@@ -94,6 +97,7 @@ picard-tools
 pindel-inmegen
 plink
 plink1.9
+prinseq-lite
 python3-biopython
 python3-cutadapt
 python3-matplotlib
@@ -126,6 +130,7 @@ r-base-dev
 r-cran-getopt
 r-cran-phangorn
 r-cran-rgl
+s6
 salmon-inmegen
 samtools-inmegen
 shapeit.inmegen
