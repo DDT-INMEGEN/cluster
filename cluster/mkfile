@@ -268,3 +268,18 @@ dns:
 	systemctl stop nagios-nrpe-server || true
 	systemctl start nagios-nrpe-server \
 	&& touch $target
+
+
+# Automontado
+# ===========
+#
+# Se genera el mapa de automontaje quitando el nodo donde se ejecuta el proceso
+# del archivo `/etc/cluster/automount/direct.map`.
+#
+/etc/auto.master.d/direct.map:	/etc/cluster/automount/direct.map
+	grep -v `hostname` \
+		$prereq \
+	> $target
+
+autofs:	/etc/auto.master.d/direct.map
+	systemctl restart autofs
