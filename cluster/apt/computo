@@ -109,6 +109,7 @@ python3-regex
 python3-requests
 python3-scipy
 python3-seaborn
+python3-unidecode
 python3-virtualenv
 python-biopython
 python-cutadapt
@@ -121,6 +122,7 @@ python-regex
 python-requests
 python-scipy
 python-seaborn
+python-unidecode
 python-virtualenv
 qiime
 quagga
