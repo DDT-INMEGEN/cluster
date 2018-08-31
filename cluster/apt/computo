@@ -132,9 +132,11 @@ r-base-dev
 r-cran-getopt
 r-cran-phangorn
 r-cran-rgl
+rna-star
 s6
 salmon-inmegen
 samtools-inmegen
+seqtk
 shapeit.inmegen
 silversearcher-ag
 singularity-condor
