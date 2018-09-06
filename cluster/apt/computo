@@ -15,6 +15,7 @@ basespace-inmegen
 bcftools-inmegen
 bcl2fastq2
 bedtools
+blat
 bowtie
 bowtie2
 breakdancer-max-inmegen
@@ -31,6 +32,7 @@ docker.io
 dos2unix
 eagle-master
 edac-utils
+ericscript
 etckeeper
 fastqc
 fastx-toolkit
