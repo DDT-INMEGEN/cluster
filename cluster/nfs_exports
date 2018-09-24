@@ -1,8 +1,8 @@
 # Aquí se manejan todos los nodos de nfs.
 #hostname:dir	parameters
 castillo:/home	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
-indra:/100g	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
-indra:/reference	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
+warwick:/home/100g	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
+warwick:/home/reference	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
 indra:/respaldo/castillo/vault	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
 indra:/labs/lhim	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
 indra:/labs/ucif	192.168.21.0/24(rw,async,no_root_squash,no_subtree_check)
