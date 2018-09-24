@@ -33,7 +33,7 @@ ALIAS_CONFIG_FILE="/etc/cluster/hostname-aliases/${HOSTNAME}"
 # then we use it for filtering
 #
 test -e ${ALIAS_CONFIG_FILE}\
-&& OPTS="-e ${ALIAS_CONFIG_FILE}"
+&& OPTS="-f ${ALIAS_CONFIG_FILE}"
 #
 # After we detected wether we should use the ALIAS_CONFIG_FILE
 # we exec to grep which handles the reference removal.
