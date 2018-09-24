@@ -1,4 +1,4 @@
-/100g	-fstype=nfs,timeo=14,nodev,noauto,async	indra:/100g
+/100g	-fstype=nfs,timeo=14,nodev,noauto,async	warwick:/home/100g
 /home	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/home
 /labs/cb	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/cb
 /labs/crve-ere	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/crve-ere
