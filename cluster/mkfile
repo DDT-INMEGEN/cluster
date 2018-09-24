@@ -282,4 +282,5 @@ dns:
 	> $target
 
 autofs:	/etc/auto.master.d/direct.map
+	systemctl enable autofs
 	systemctl restart autofs
