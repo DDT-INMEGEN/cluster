@@ -277,7 +277,7 @@ dns:
 # del archivo `/etc/cluster/automount/direct.map`.
 #
 /etc/auto.master.d/direct.map:	/etc/cluster/automount/direct.map
-	grep -v `hostname` \
+	remove-self-references \
 		$prereq \
 	> $target
 
