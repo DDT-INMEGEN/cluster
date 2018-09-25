@@ -145,6 +145,7 @@ force_update:V:	 /var/lib/cluster/force_update
 	rm -f /var/lib/cluster/htc_* /etc/condor/config.d/00node_*
 	cp '/etc/cluster/condor_nodes/00node_'$stem '/etc/condor/config.d/00node_'$stem \
 	&& chown condor:root /etc/condor/condor.key /etc/condor/condor.crt \
+	&& chown -R condor:condor /var/lib/condor/ /var/run/condor/ /var/log/condor/ /var/lock/condor/ \
 	&& chmod 440 /etc/condor/condor.key /etc/condor/condor.crt \
 	&& etckeeper commit -m 'Configuración de nodo de condor correspondiente.' || true \
 	&& sudo /etc/init.d/condor restart \
@@ -152,7 +153,8 @@ force_update:V:	 /var/lib/cluster/force_update
 
 /var/lib/cluster/condor_init:
 	set -x
-	service docker restart \
+	sudo apt install docker.io condor \
+	&& service docker restart \
 	&& sudo chown -R condor:condor /var/log/condor/ /var/lock/condor /var/run/condor/ /var/lib/condor \
 	&& service condor restart \
 	&& touch $target
