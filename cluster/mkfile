@@ -4,15 +4,15 @@
 # Nodo por defecto
 # ----------------
 #
-dummy:V:	htc_computo renombrar_git log	usuarios java monitoring
+dummy:V:	htc_computo renombrar_git log	usuarios java monitoring autofs
 	echo "nothing to do"
 
 # Nodos con condiciones particulares
 #
-castillo:V:	compartir_fs htc_submit log java apt_castillo monitoring
-notron:V:	compartir_fs htc_computo log usuarios java monitoring
-indra:V:	compartir_fs htc_computo log usuarios java monitoring
-ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns monitoring
+castillo:V:	compartir_fs htc_submit log java apt_castillo monitoring autofs
+notron:V:	compartir_fs htc_computo log usuarios java monitoring autofs
+indra:V:	compartir_fs htc_computo log usuarios java monitoring autofs
+ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns monitoring autofs
 
 # Clases de configuración
 # =======================
