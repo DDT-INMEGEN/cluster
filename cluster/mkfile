@@ -268,8 +268,8 @@ dns:
 # reiniciar el servicio `nagios-nrpe-server`:
 #
 /var/lib/cluster/monitoring:	/etc/nagios/nrpe.cfg /etc/nagios/nrpe.d/plugins.cfg
-	systemctl stop nagios-nrpe-server || true
-	systemctl start nagios-nrpe-server \
+	apt-get -y install nagios-nrpe-server
+	systemctl restart nagios-nrpe-server \
 	&& touch $target
 
 
