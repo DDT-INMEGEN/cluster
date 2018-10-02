@@ -10,6 +10,7 @@ dummy:V:	htc_computo renombrar_git log	usuarios java monitoring autofs
 # Nodos con condiciones particulares
 #
 castillo:V:	compartir_fs htc_submit log java apt_castillo monitoring autofs
+warwick:V:	compartir_fs renombrar_git log	usuarios java monitoring
 notron:V:	compartir_fs htc_computo log usuarios java monitoring autofs
 indra:V:	compartir_fs htc_computo log usuarios java monitoring autofs
 ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns monitoring autofs
