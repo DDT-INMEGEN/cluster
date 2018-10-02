@@ -153,7 +153,7 @@ force_update:V:	 /var/lib/cluster/force_update
 
 /var/lib/cluster/condor_init:
 	set -x
-	sudo apt install docker.io condor \
+	sudo apt-get -y install docker.io condor \
 	&& service docker restart \
 	&& sudo chown -R condor:condor /var/log/condor/ /var/lock/condor /var/run/condor/ /var/lib/condor \
 	&& service condor restart \
