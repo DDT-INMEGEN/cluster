@@ -25,14 +25,14 @@ if [ ${CUR_CONF_LEN} -eq 0 ]; then
 # In case of error, we try to fix the issue.
 #
 	sudo umask 0022 /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile -a autofs
-	exit STATE_CRITICAL
+	exit ${STATE_CRITICAL}
 fi
 if [ ${CUR_CONF_LEN} -lt $(length ${MASTER_CONF}) ] ; then
 	echo "OK"
-	exit STATE_OK
+	exit ${STATE_OK}
 fi
 
 if [ $AUTOFS_CONFIG_LENGTH -gt $(length ${MASTER_CONFIG}) ] ; then
 	echo "UNKNOWN: ${CURR_CONF} has more lines than ${MASTER_CONF}"
-	exit STATE_UNKNOWN
+	exit ${STATE_UNKNOWN}
 fi
