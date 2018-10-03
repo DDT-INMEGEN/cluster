@@ -1,5 +1,9 @@
-#!/bin/sh
-umask '0002'
+#!/bin/bash
+umask '0022'
+s6-setlock -w /var/lib/cluster/lock true || {
+	echo "configurador is already running."
+	exit 1
+}
 etckeeper commit -m 'Auto commit before applying cluster config.'
 etckeeper vcs pull origin auto-conf -X theirs -s recursive --no-edit
 etckeeper init
