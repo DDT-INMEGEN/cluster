@@ -5,15 +5,19 @@
 # The rules for nagios monitoring are described at
 . /usr/lib/nagios/plugins/utils.sh
 #
+length() {
+	FILE="$1"
+	wc -l "${FILE}" | cut -f 1
+}
 #
 # The current configuration of the node
 CUR_CONF=/etc/auto.master.d/direct.map
 # should have a
-CUR_CONF_LEN=$(wc -l ${CUR_CONF})
+CUR_CONF_LEN=$(length ${CUR_CONF})
 # less than should be less than the length of the
 MASTER_CONF=/etc/cluster/automount/direct.map
 #
-if [ check_range ${CUR_CONF_LEN} 1:$(wc -l ${MASTER_CONF}) ] {
+if [ check_range ${CUR_CONF_LEN} 1:$(length ${MASTER_CONF}) ] {
 	exit STATE_OK
 }
 #
@@ -27,7 +31,7 @@ if [ check_range ${CUR_CONF_LEN} 0 ] {
 	sudo umask 0022 /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile -a autofs
 	exit STATE_CRITICAL
 }
-if [ check_range $AUTOFS_CONFIG_LENGTH $(wc -l ${MASTER_CONFIG}):1000 ] {
+if [ check_range $AUTOFS_CONFIG_LENGTH $(length ${MASTER_CONFIG}):1000 ] {
 	echo "UNKNOWN: ${CURR_CONF} has more lines than ${MASTER_CONF}"
 	exit STATE_UNKNOWN
 }
