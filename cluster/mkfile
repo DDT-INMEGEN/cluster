@@ -279,11 +279,16 @@ dns:
 # Se genera el mapa de automontaje quitando el nodo donde se ejecuta el proceso
 # del archivo `/etc/cluster/automount/direct.map`.
 #
+autofs:	/var/lib/cluster/autofs
+
+/var/lib/cluster/autofs:	/etc/auto.master.d/direct.map
+	systemctl enable autofs || true
+	systemctl restart autofs \
+	&& touch ${target}
+
 /etc/auto.master.d/direct.map:	/etc/cluster/automount/direct.map
+	TMPFILE=$(mktemp ${target}.XXXXXX)
 	remove-self-references \
 		$prereq \
-	> $target
-
-autofs:	/etc/auto.master.d/direct.map
-	systemctl enable autofs || true
-	systemctl restart autofs
+	> ${TMPFILE} \
+	&& mv ${TMPFILE} ${target}
