@@ -17,21 +17,21 @@ CUR_CONF_LEN=$(length ${CUR_CONF})
 # less than should be less than the length of the
 MASTER_CONF=/etc/cluster/automount/direct.map
 #
-if [ check_range ${CUR_CONF_LEN} 1:$(length ${MASTER_CONF}) ] {
+if check_range ${CUR_CONF_LEN} 1:$(length ${MASTER_CONF}) ; then
 	exit STATE_OK
-}
+fi
 #
 # But more than 0.
 #
-if [ check_range ${CUR_CONF_LEN} 0 ] {
+if check_range ${CUR_CONF_LEN} 0; then
 	echo "ERR: There are no mountpoints configured on node $(hostname)"
 #
 # In case of error, we try to fix the issue.
 #
 	sudo umask 0022 /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile -a autofs
 	exit STATE_CRITICAL
-}
-if [ check_range $AUTOFS_CONFIG_LENGTH $(length ${MASTER_CONFIG}):1000 ] {
+fi
+if check_range $AUTOFS_CONFIG_LENGTH $(length ${MASTER_CONFIG}):1000 ; then
 	echo "UNKNOWN: ${CURR_CONF} has more lines than ${MASTER_CONF}"
 	exit STATE_UNKNOWN
-}
+fi
