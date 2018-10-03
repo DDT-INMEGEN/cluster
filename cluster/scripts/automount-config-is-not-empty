@@ -16,7 +16,7 @@ CUR_CONF_LEN=$(length ${CUR_CONF})
 MASTER_CONF=/etc/cluster/automount/direct.map
 
 if [ ${CUR_CONF_LEN} -eq 0 ]; then
-	echo "ERR: There are no mountpoints configured on node $(hostname)"
+	echo "ERR: There are no mountpoints configured on node $(hostname);"
 #
 # In case of error, we try to fix the issue.
 #
@@ -24,11 +24,11 @@ if [ ${CUR_CONF_LEN} -eq 0 ]; then
 	exit ${STATE_CRITICAL}
 fi
 if [ ${CUR_CONF_LEN} -lt $(length ${MASTER_CONF}) ] || [ ${CUR_CONF_LEN} -eq $(length ${MASTER_CONF}) ]; then
-	echo "OK"
+	echo "OK;"
 	exit ${STATE_OK}
 fi
 
 if [ ${CUR_CONF_LEN} -gt $(length ${MASTER_CONF}) ] ; then
-	echo "UNKNOWN: ${CURR_CONF} has more lines than ${MASTER_CONF}"
+	echo "UNKNOWN: ${CURR_CONF} has more lines than ${MASTER_CONF};"
 	exit ${STATE_UNKNOWN}
 fi
