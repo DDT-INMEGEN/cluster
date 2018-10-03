@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# Check whether there exist a non-empty configuration for autofs
+#
+# The rules for nagios monitoring are described at
+. /usr/lib/nagios/plugins/utils.sh
+
+length() {
+	FILE="$1"
+	wc -l "${FILE}" \
+	| awk '{print $1}'
+}
+
+CUR_CONF=/etc/auto.master.d/direct.map
+CUR_CONF_LEN=$(length ${CUR_CONF})
+MASTER_CONF=/etc/cluster/automount/direct.map
+
+if [ ${CUR_CONF_LEN} -eq 0 ]; then
+	echo "ERR: There are no mountpoints configured on node $(hostname)"
+#
+# In case of error, we try to fix the issue.
+#
+	sudo umask 0022 /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile -a autofs
+	exit ${STATE_CRITICAL}
+fi
+if [ ${CUR_CONF_LEN} -lt $(length ${MASTER_CONF}) ] || [ ${CUR_CONF_LEN} -eq $(length ${MASTER_CONF}) ]; then
+	echo "OK"
+	exit ${STATE_OK}
+fi
+
+if [ ${CUR_CONF_LEN} -gt $(length ${MASTER_CONF}) ] ; then
+	echo "UNKNOWN: ${CURR_CONF} has more lines than ${MASTER_CONF}"
+	exit ${STATE_UNKNOWN}
+fi
