@@ -4,20 +4,16 @@
 #
 # The rules for nagios monitoring are described at
 . /usr/lib/nagios/plugins/utils.sh
-#
+
 length() {
 	FILE="$1"
 	wc -l "${FILE}" \
 	| awk '{print $1}'
 }
-#
-# The current configuration of the node
+
 CUR_CONF=/etc/auto.master.d/direct.map
-# should have a
 CUR_CONF_LEN=$(length ${CUR_CONF})
-# less than should be less than the length of the
 MASTER_CONF=/etc/cluster/automount/direct.map
-#
 
 if [ ${CUR_CONF_LEN} -eq 0 ]; then
 	echo "ERR: There are no mountpoints configured on node $(hostname)"
@@ -27,12 +23,12 @@ if [ ${CUR_CONF_LEN} -eq 0 ]; then
 	sudo umask 0022 /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile -a autofs
 	exit ${STATE_CRITICAL}
 fi
-if [ ${CUR_CONF_LEN} -lt $(length ${MASTER_CONF}) ] ; then
+if [ ${CUR_CONF_LEN} -lt $(length ${MASTER_CONF}) ] || [ ${CUR_CONF_LEN} -eq $(length ${MASTER_CONF}) ]; then
 	echo "OK"
 	exit ${STATE_OK}
 fi
 
-if [ $AUTOFS_CONFIG_LENGTH -gt $(length ${MASTER_CONFIG}) ] ; then
+if [ ${CUR_CONF_LEN} -gt $(length ${MASTER_CONF}) ] ; then
 	echo "UNKNOWN: ${CURR_CONF} has more lines than ${MASTER_CONF}"
 	exit ${STATE_UNKNOWN}
 fi
