@@ -283,7 +283,8 @@ autofs:	/var/lib/cluster/autofs
 
 /var/lib/cluster/autofs:	/etc/auto.master.d/direct.map
 	systemctl enable autofs || true
-	systemctl restart autofs
+	systemctl restart autofs \
+	&& touch ${target}
 
 /etc/auto.master.d/direct.map:	/etc/cluster/automount/direct.map
 	TMPFILE=$(mktemp ${target}.XXXXXX)
