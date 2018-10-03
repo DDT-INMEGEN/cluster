@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Check whether there exist a non-empty configuration for autofs
 #
 # The rules for nagios monitoring are described at
-  source /usr/lib/nagios/plugins/utils.sh
+. /usr/lib/nagios/plugins/utils.sh
 #
 #
 # The current configuration of the node
