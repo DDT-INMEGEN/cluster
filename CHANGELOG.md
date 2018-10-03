@@ -1,3 +1,10 @@
+0.8.4.2
+=======
+
+Se monitorea el estado de configuración del automontador.
+El autoconfigurador escribe en un directorio temporal.
+Sólo una instancia del configurador puede ejecutarse a la vez.
+
 0.8.3.2
 =======
 
