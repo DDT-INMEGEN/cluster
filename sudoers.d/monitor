@@ -2,6 +2,7 @@ User_Alias MONITOR = \
         nagios
 
 MONITOR        ALL=(ALL:ALL) NOPASSWD:\
+        /etc/cluster/scripts/automount-config-is-not-empty, \
         /etc/cluster/scripts/check-condor, \
         /etc/cluster/scripts/check-linux-stats, \
         /etc/cluster/scripts/check-mountpoints, \
