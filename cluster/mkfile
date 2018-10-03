@@ -286,6 +286,8 @@ autofs:	/var/lib/cluster/autofs
 	systemctl restart autofs
 
 /etc/auto.master.d/direct.map:	/etc/cluster/automount/direct.map
+	TMPFILE=$(mktemp ${target}.XXXXXX)
 	remove-self-references \
 		$prereq \
-	> $target
+	> ${TMPFILE} \
+	&& mv ${TMPFILE} ${target}
