@@ -1,6 +1,7 @@
 0.8.5
 =====
 
+Se selecciona la rama como selector y no como fallback.
 Comando para comprobar si los sistemas de archivos funcionan.
 
 0.8.4.2

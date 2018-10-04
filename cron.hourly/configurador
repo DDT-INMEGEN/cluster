@@ -7,6 +7,10 @@ s6-setlock -w /var/lib/cluster/lock true || {
 etckeeper commit -m 'Auto commit before applying cluster config.'
 etckeeper vcs pull origin auto-conf -X theirs -s recursive --no-edit
 etckeeper init
-/usr/lib/plan9/bin/mk -f /etc/cluster/mkfile `hostname` || /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile
+# Run the correct piece of code for this host
+grep -E "^$(hostname):" /etc/cluster/mkfile \
+&& /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile `hostname` \
+|| /usr/lib/plan9/bin/mk -f /etc/cluster/mkfile
+
 etckeeper init
 etckeeper commit -m 'Auto commit after applying cluster config.'
