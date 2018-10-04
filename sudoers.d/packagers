@@ -1,10 +1,8 @@
-Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/etc/cluster/scripts"
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/etc/cluster/scripts:/usr/lib/plan9/bin"
 
 User_Alias PACKAGER = \
         cfresno, \
         hachepunto, \
-        jaalvarado, \
-        raulfj, \
         xihh
 
 PACKAGER        ALL=(ALL:ALL) NOPASSWD:\
