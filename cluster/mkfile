@@ -28,15 +28,15 @@ monitoring:V:	/var/lib/cluster/monitoring
 #
 # **Las clases htc_% son mutuamente excluyentes.**
 #
-htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init pip
-htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init pip
-htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init pip
+htc_computo:V:	/var/lib/cluster/htc_computo
+htc_submit:V:	/var/lib/cluster/htc_submit
+htc_master:V:	/var/lib/cluster/htc_master
 
 # Configuración inicial de los servidores
 # ---------------------------------------
 #
 port_mirror:V:	 /var/lib/cluster/port_mirror
-condor_init:V:	/var/lib/cluster/condor_init	server_init
+condor_init:V:	server_init /var/lib/cluster/condor_init
 server_init:V:	/var/lib/cluster/server_init	locale
 renombrar_git:V: /var/lib/cluster/renombrar_git
 locale:V:	 /var/lib/cluster/locale
