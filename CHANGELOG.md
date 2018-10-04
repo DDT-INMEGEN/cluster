@@ -1,3 +1,8 @@
+0.8.5
+=====
+
+Comando para comprobar si los sistemas de archivos funcionan.
+
 0.8.4.2
 =======
 
