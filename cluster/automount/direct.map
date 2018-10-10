@@ -23,5 +23,5 @@
 /labs/upro	-fstype=nfs,timeo=14,nodev,noexec,async	indra:/labs/upro
 /labs/usb	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/usb
 /labs/usec	-fstype=nfs,timeo=14,nodev,noexec,async	indra:/labs/usec
-/remote/reference	-fstype=nfs,timeo=14,nodev,noexec,noauto,async	warwick:/home/reference
+/remote/reference	-fstype=nfs,timeo=14,nodev,noexec,noauto,async	indra:/reference
 /remote/vault	-fstype=nfs,timeo=14,nodev,noauto,async	indra:/respaldo/castillo/vault
