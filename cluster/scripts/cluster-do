@@ -1,0 +1,5 @@
+#!/bin/execlineb -S0
+umask 0022
+/usr/lib/plan9/bin/mk
+	-f /etc/cluster/mkfile
+	${@}

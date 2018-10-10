@@ -10,6 +10,7 @@ dummy:V:	htc_computo renombrar_git log	usuarios java monitoring autofs
 # Nodos con condiciones particulares
 #
 castillo:V:	compartir_fs htc_submit log java apt_castillo monitoring autofs
+warwick:V:	compartir_fs renombrar_git log	usuarios java monitoring
 notron:V:	compartir_fs htc_computo log usuarios java monitoring autofs
 indra:V:	compartir_fs htc_computo log usuarios java monitoring autofs
 ibm1:V:		apt_computo apt_ldap apt_fai htc_master log usuarios java dns monitoring autofs
@@ -27,15 +28,15 @@ monitoring:V:	/var/lib/cluster/monitoring
 #
 # **Las clases htc_% son mutuamente excluyentes.**
 #
-htc_computo:V:	/var/lib/cluster/htc_computo	apt_computo	condor_init pip
-htc_submit:V:	/var/lib/cluster/htc_submit	apt_computo	condor_init pip
-htc_master:V:	/var/lib/cluster/htc_master	apt_computo	condor_init pip
+htc_computo:V:	/var/lib/cluster/htc_computo
+htc_submit:V:	/var/lib/cluster/htc_submit
+htc_master:V:	/var/lib/cluster/htc_master
 
 # Configuración inicial de los servidores
 # ---------------------------------------
 #
 port_mirror:V:	 /var/lib/cluster/port_mirror
-condor_init:V:	/var/lib/cluster/condor_init	server_init
+condor_init:V:	server_init /var/lib/cluster/condor_init
 server_init:V:	/var/lib/cluster/server_init	locale
 renombrar_git:V: /var/lib/cluster/renombrar_git
 locale:V:	 /var/lib/cluster/locale
@@ -268,8 +269,8 @@ dns:
 # reiniciar el servicio `nagios-nrpe-server`:
 #
 /var/lib/cluster/monitoring:	/etc/nagios/nrpe.cfg /etc/nagios/nrpe.d/plugins.cfg
-	systemctl stop nagios-nrpe-server || true
-	systemctl start nagios-nrpe-server \
+	apt-get -y install nagios-nrpe-server
+	systemctl restart nagios-nrpe-server \
 	&& touch $target
 
 
