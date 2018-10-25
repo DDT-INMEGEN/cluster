@@ -301,3 +301,12 @@ autofs:V:	/var/lib/cluster/autofs
 # There should be a test environment to run unit tests.
 #
 # This is constructed as a docker machine, using pristine ubuntu.
+test:V:
+	docker build \
+		-t cluster-initial \
+		docker/test-init
+	docker run \
+		--dns 10.0.1.78 \
+		--dns 192.168.105.220 \
+		cluster-initial:latest \
+		/root/configurar-nodo-computo.sh
