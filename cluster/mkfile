@@ -60,7 +60,7 @@ force_update:V:	 /var/lib/cluster/force_update
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
 	set -x
 	apt update
-	apt install ifenslave
+	apt-get -y install ifenslave
 	if [ `grep "bonding" /etc/modules | wc -l` -eq 0 ]; then
 		echo "bonding" | sudo tee -a /etc/modules
 	fi

@@ -1,0 +1,5 @@
+#!/bin/execlineb
+docker run -ti
+	--dns 192.168.105.220
+	cluster-initial
+	/bin/bash

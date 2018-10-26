@@ -5,6 +5,7 @@ WORKDIR .
 COPY supercomputo.asc \
 	configurar-nodo-computo.sh \
 	computo.key \
+	known_hosts \
 	/root/
 
 RUN \
@@ -14,5 +15,4 @@ RUN \
 
 COPY cluster.list /etc/apt/sources.list.d
 
-ENTRYPOINT [ "/bin/bash" ]
-CMD bash
+CMD [ "/bin/bash" ]
