@@ -60,7 +60,7 @@ force_update:V:	 /var/lib/cluster/force_update
 /var/lib/cluster/port_mirror: /var/lib/cluster/repo_cluster renombrar_git
 	set -x
 	apt update
-	apt install ifenslave
+	apt-get -y install ifenslave
 	if [ `grep "bonding" /etc/modules | wc -l` -eq 0 ]; then
 		echo "bonding" | sudo tee -a /etc/modules
 	fi
@@ -280,7 +280,7 @@ dns:
 # Se genera el mapa de automontaje quitando el nodo donde se ejecuta el proceso
 # del archivo `/etc/cluster/automount/direct.map`.
 #
-autofs:	/var/lib/cluster/autofs
+autofs:V:	/var/lib/cluster/autofs
 
 /var/lib/cluster/autofs:	/etc/auto.master.d/direct.map
 	systemctl enable autofs || true
@@ -293,3 +293,20 @@ autofs:	/var/lib/cluster/autofs
 		$prereq \
 	> ${TMPFILE} \
 	&& mv ${TMPFILE} ${target}
+
+
+# Test
+# ====
+#
+# There should be a test environment to run unit tests.
+#
+# This is constructed as a docker machine, using pristine ubuntu.
+test:V:
+	docker build \
+		-t cluster-initial \
+		docker/test-init
+	docker run \
+		--dns 10.0.1.78 \
+		--dns 192.168.105.220 \
+		cluster-initial:latest \
+		/root/configurar-nodo-computo.sh

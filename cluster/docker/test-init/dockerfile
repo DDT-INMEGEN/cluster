@@ -1,0 +1,18 @@
+FROM ubuntu:16.04
+
+WORKDIR .
+
+COPY supercomputo.asc \
+	configurar-nodo-computo.sh \
+	computo.key \
+	known_hosts \
+	/root/
+
+RUN \
+	apt-get update \
+	&& apt-get install -y iputils-ping curl \
+	&& apt-key add /root/supercomputo.asc
+
+COPY cluster.list /etc/apt/sources.list.d
+
+CMD [ "/bin/bash" ]
