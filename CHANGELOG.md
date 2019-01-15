@@ -1,3 +1,8 @@
+0.8.5.1
+=======
+
+El script check-fs revisa el punto de montaje `/remote/reference`.
+
 0.8.5
 =====
 

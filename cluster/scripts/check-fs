@@ -1,2 +1,2 @@
 #!/bin/execlineb -P
-ls /100g /labs/csbig /labs/usec /labs/lf /home
+ls /labs/csbig /labs/usec /labs/lf /home /remote/reference
