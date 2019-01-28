@@ -4,6 +4,7 @@
 /labs/crve-ere	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/crve-ere
 /labs/crve-fabian	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/crve-fabian
 /labs/csbig	-fstype=nfs,timeo=14,nodev,noauto,async	notron:/labs/csbig
+/labs/ep	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/ep
 /labs/genut	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/genut
 /labs/gmo	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/gmo
 /labs/gpyb	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/gpyb
