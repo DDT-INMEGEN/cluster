@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Our user server is named `castillo` on the interface that faces users
 # but it's name `visnu` on the interface that has a fast link to the cluster.

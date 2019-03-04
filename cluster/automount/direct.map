@@ -1,7 +1,7 @@
 /100g	-fstype=nfs,timeo=14,nodev,noauto,async	warwick:/home/100g
 /home	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/home
 /labs/cb	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/cb
-/labs/cgei	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/cb
+/labs/cgei	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/cgei
 /labs/crve-ere	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/crve-ere
 /labs/crve-fabian	-fstype=nfs,timeo=14,nodev,noauto,async	visnu:/labs/crve-fabian
 /labs/csbig	-fstype=nfs,timeo=14,nodev,noauto,async	notron:/labs/csbig
