@@ -10,7 +10,7 @@ chmod go-r ~root/.ssh/id_rsa
 # Requisitos de instalación
 curl repo.cluster.inmegen.gob.mx/supercomputo.asc | apt-key add -
 apt update
-apt-get install -y 9base execline etckeeper
+apt-get install -y 9base etckeeper s6 execline
 
 #Sincronizamos etckeeper
 git config --global user.email `hostname`"@cluster.inmegen.gob.mx"
