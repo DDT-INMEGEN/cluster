@@ -65,6 +65,9 @@ force_update:V:	 /var/lib/cluster/force_update
 		echo "bonding" | sudo tee -a /etc/modules
 	fi
 	case `hostname` in
+		dell1)
+			true
+		;;
 		"ibm"* )
 			cp '/etc/cluster/network/interfaces.ibm' '/etc/network/interfaces'
 		;;
